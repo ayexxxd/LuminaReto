@@ -7,6 +7,5 @@ public class Formulario
     public bool DobleTokens { get; set; }
     public bool Expira { get; set; }
 
-    // 🔥 ESTO ES LO NUEVO
     public List<Preguntas> ListaPreguntas { get; set; }
 }
