@@ -482,3 +482,12 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Archivos generados por compilación de LuminaReto
+LuminaReto/bin/
+LuminaReto/obj/
+
+# Archivos específicos generados en Debug net9.0
+LuminaReto/bin/Debug/net9.0/*.dll
+LuminaReto/bin/Debug/net9.0/*.pdb
+LuminaReto/bin/Debug/net9.0/*.staticwebassets.endpoints.json
