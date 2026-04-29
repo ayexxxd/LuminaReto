@@ -1,25 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj": {}
+    "/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/LuminaReto.csproj": {}
   },
   "projects": {
-    "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj": {
+    "/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/LuminaReto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj",
+        "projectUniqueName": "/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/LuminaReto.csproj",
         "projectName": "LuminaReto",
-        "projectPath": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj",
-        "packagesPath": "/Users/alex./.nuget/packages/",
-        "outputPath": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/obj/",
+        "projectPath": "/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/LuminaReto.csproj",
+        "packagesPath": "/Users/lyasalgadocastrejon/.nuget/packages/",
+        "outputPath": "/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/alex./.nuget/NuGet/NuGet.Config"
+          "/Users/lyasalgadocastrejon/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.313/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
