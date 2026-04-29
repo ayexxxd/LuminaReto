@@ -1,0 +1,326 @@
+html {
+    font-size: 14px;
+    
+  }
+  
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+      
+    }
+  }
+  
+  .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  }
+  
+  html {
+    position: relative;
+    min-height: 100%;
+    font-family: "Roboto", sans-serif;
+  }
+  
+  body {
+    margin-bottom: 60px;
+    background-color: #FFFFFF; /*! COLOR DE FONDO DE TODA LA PAGINA*/
+    font-family: "Roboto", sans-serif; 
+  }
+  
+  .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
+  }
+  
+  .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+    text-align: start;
+  }
+  
+  /*!------PAGINA DE INICIO---------*/
+  
+  .pagina-inicio {
+    padding: 32px; /* espacio interno que tiene un elemento entre su borde y el contenido que está adentro */
+    background-color: #FFFFFF; /* fondo gris */
+    min-height: 100vh; /* Para que el fondo cubra toda la altura de la pantalla */
+  }
+  
+  
+  /*!------BANNER BIENVENIDA---------*/
+  
+  .banner-bienvenida {
+    background-color: #004F9E; /* azul oscuro */
+    color: white; /* texto de adentro  */
+    padding: 32px; /* espacio interno que tiene un elemento entre su borde y el contenido que está adentro */
+    border-radius: 18px; /* este hace redondas las esquinas */
+    margin-bottom: 24px; /*  espacio que va a dejar abajo del banner */
+  }
+  
+  /* lo de "Bienvenido a whilrpool */
+  .banner-bienvenida h1 {
+    margin: 0;  /*esto quita el margen que se pone automaticamente en un  título */
+    font-size: 38px; /* Define el tamaño del título */
+    font-weight: 700; /* Hace el título más grueso */
+  }
+  
+  /* Texto descriptivo dentro del banner */
+  .banner-bienvenida p {
+    margin: 10px 0 0 0; /* 10px de la parte de arriba del texto y quita otros márgenes */
+    font-size: 20px; 
+  }
+  
+  /*!------ESTADÍSTICAS---------*/
+  
+  /* contenedor en donde van las 4 tarjetas */
+  .estadisticas-tarjetas {
+    display: grid;  /*acomoda las tarjetas en forma de cuadrícula y si lo quitas aparece como en columnas */
+    grid-template-columns: repeat(4, 1fr);  /*Crea 4 columnas del mismo tamaño pero como es en columnas pues lo agarra en columnas - fr:fracción del espacio disponible */
+    gap: 20px; /*  espacio entre  tarjetas */
+    margin-bottom: 28px; /*  espacio debajo de  tarjetas */
+    margin-top: 28px; /*  espacio arriba de  tarjetas */
+  }
+  
+  /* tarjeta individual */
+  .tarjeta-estadisticas {
+    background-color: white; 
+    border-radius: 16px; /*   esquinas redondas */
+    padding: 25px; /* espacio interno  */
+    display: flex;  /*Acomoda el icono y el texto en una misma fila */
+    align-items: center; /* centra verticalmente el contenido */
+    gap: 18px; /*  espacio entre el icono y el texto */
+    border: 3px solid #E5E7EB; /*   borde gris claro , el solid es el tipo de borde: ese es una linea contínua*/
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Agrega una sombra suave */
+    /*izquierda/derecha  arriba/abajo  qué tan borrosa de color;*/
+    /*rgba(rojo, verde, azul, transparencia)*/
+  }
+  
+  /* Espacio visual donde irá el icono de cada tarjeta
+  .icono-estadistica {
+    width: 44px; /* Define el ancho del icono 
+    height: 44px; /* Define la altura del icono 
+    border-radius: 12px; /* Redondea el contenedor del icono 
+    background-color: #E8EEFF; /* Pone un fondo azul claro temporal al icono 
+    flex-shrink: 0; /* Evita que el icono se haga más pequeño 
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    
+  } 
+  
+  .icono-estadistica image {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    
+  } */
+  
+  
+  /* ------------- */
+  /* ICONOS CON IMAGENES PUES DE ICONOS */
+  .icono-estadistica {
+    width: 55px; /* Define el ancho del icono*/
+    height: 55px; /* Define la altura del icono*/
+    border-radius: 12px; /* Redondea el contenedor del icono*/
+    flex-shrink: 0; /* Evita que el icono se haga más pequeño */
+  
+    display: flex; /* como que activa flexbox para acomodar */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+  }
+  
+  .icono-estadistica img {
+    width: 55px; /* Define el ancho de la imagen*/
+    height: 55px; /* Define la altura de la imagen*/
+    object-fit: contain; /* Hace que la imagen se ajuste completa sin deformarse */
+    display: block; /* Evita espacios extra debajo de la imagen */
+  }
+  /* ------------- */
+  
+  
+  
+  /* Contenedor del texto de la tarjeta */
+  .contenido-estadistica {
+    display: flex; /* /* como que activa flexbox para acomodar */ 
+    flex-direction: column;  /*Acomoda el título arriba y el valor abajo, o sea lo acomoda en columna para que no se ponga automaticamente en fila */
+  }
+  
+  /* Texto pequeño de cada tarjeta */
+  .contenido-estadistica p {
+    margin: 0; /* Quita margen que pone automático */
+    font-size: 14px; /* tamaño texto*/
+    color: #6B7280; /* Pone el texto en gris */
+  }
+  
+  /* Valor grande de cada tarjeta */
+  .contenido-estadistica h2 {
+    margin: 4px 0 0 0; /* espacio arriba del titulo de la tarjeta mini */
+    font-size: 28px; /* tamaño texto */
+    font-weight: 700; /* grosor del texto */
+    color: #111827; 
+    
+  }
+  
+  
+  /*!------SECCIONES INFERIORES---------*/
+  
+  /* Contenedor donde van Acciones Rápidas y Actividad Reciente */
+  .secciones-inferiores {
+    display: grid; /* Acomoda los dos paneles en cuadrícula */
+    grid-template-columns: 1fr 1fr; /* Crea dos columnas del mismo tamaño */
+    gap: 24px; /* Deja espacio entre los dos paneles */
+  }
+  
+  /* Diseño general de los paneles inferiores */
+  .panel-inicio {
+    background-color: white; /* Pone fondo blanco al panel */
+    border-radius: 16px; /* esquinas redondas */
+    padding: 25px; /* Da espacio interno dentro del panel */
+    border: 3px solid #E5E7EB; /* Agrega borde gris claro */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Agrega sombra suave */
+  }
+  
+  /* Título de cada panel inferior */
+  .panel-inicio h2 {
+    margin: 0 0 18px 0; /* Quita margen superior y deja espacio debajo */
+    font-size: 25px; /* Define el tamaño del título */
+    font-weight: 700; /* Hace el título más grueso */
+    color: #111827; /* Pone el título en color oscuro */
+  }
+  
+  
+  /*!------ACCIONES RÁPIDAS---------*/
+  
+  /* Contenedor de la lista de acciones rápidas */
+  .lista-acciones {
+    display: flex; /* Activa flexbox que permite acomodar */
+    flex-direction: column; /* Acomoda las acciones una debajo de otra */
+    gap: 20px; /* Deja espacio entre cada acción */
+    font-size: 18px;
+  }
+  
+  /* Diseño de cada acción rápida */
+  .accion-rapida {
+    display: flex; /* Acomoda icono y texto en una misma fila */
+    align-items: center; /* Centra verticalmente icono y texto */
+    gap: 15px; /* Deja espacio entre el icono y el texto */
+    padding: 14px 16px; /* Da espacio interno al renglón */
+    /*arriba-abajo izquierda-derecha;*/
+    border-radius: 12px; /* Redondea las esquinas del renglón */
+    text-decoration: none; /* Quita el subrayado del link */
+    color: #111827; /* Pone el texto en color oscuro */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Hace suave el cambio al pasar el mouse */
+    border: 3px solid #E5E7EB; /*   borde gris claro , el solid es el tipo de borde: ese es una linea contínua*/
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); /* Agrega una sombra suave */
+  }
+  
+  /* Efecto cuando el mouse pasa sobre una acción rápida */
+  .accion-rapida:hover {
+    background-color: #E8EEFF; /* Pinta el renglón de azul claro */
+    color: #1E3A8A; /* Cambia el texto a azul */
+    cursor: pointer; /* Cambia el cursor a manita */
+  }
+  
+  /* Espacio visual donde irá el icono de cada acción rápida 
+  .icono-accion {
+    width: 32px; /* Define el ancho del icono 
+    height: 32px; /* Define la altura del icono 
+    border-radius: 10px; /* Redondea el contenedor del icono 
+    background-color: #EEF2FF; /* Pone fondo azul claro temporal 
+    flex-shrink: 0; /* Evita que el icono se reduzca 
+  }
+  */
+  
+  /* ------------- */
+  /* ICONOS CON IMAGENES PUES DE ICONOS */
+  .icono-accion {
+    width: 55px; /* Define el ancho del icono*/
+    height: 55px; /* Define la altura del icono*/
+    border-radius: 12px; /* Redondea el contenedor del icono*/
+    flex-shrink: 0; /* Evita que el icono se haga más pequeño */
+  
+    display: flex; /* como que activa flexbox para acomodar */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+  }
+  
+  .icono-accion img {
+    width: 55px; /* Define el ancho de la imagen*/
+    height: 55px; /* Define la altura de la imagen*/
+    object-fit: contain; /* Hace que la imagen se ajuste completa sin deformarse */
+    display: block; /* Evita espacios extra debajo de la imagen */
+  }
+  /* ------------- */
+  
+  
+  
+  
+  /*!------ACTIVIDAD RECIENTE---------*/
+  
+  /* Contenedor de la lista de actividades recientes */
+  .lista-actividades {
+    display: flex; /* Activa flexbox */
+    flex-direction: column; /* Acomoda las actividades una debajo de otra */
+    gap: 12px; /* Deja espacio entre cada actividad */
+  }
+  
+  /* Renglón individual de actividad reciente */
+  .actividad-item {
+    display: flex; /* Acomoda la descripción y el tiempo en una misma fila */
+    align-items: center; /* Centra verticalmente el contenido */
+    justify-content: space-between; /* Manda descripción a la izquierda y tiempo a la derecha */
+    padding: 14px 0; /* Da espacio vertical dentro del renglón */
+    border-bottom: 1px solid #E5E7EB; /* Agrega una línea separadora abajo */
+  }
+  
+  /* Quita la línea inferior del último elemento de actividad */
+  .actividad-item:last-child {
+    border-bottom: none; /* El último renglón ya no tendrá línea abajo */
+  }
+  
+  /* Agrupa el icono y la descripción de la actividad */
+  .actividad-info {
+    display: flex; /* Acomoda icono y texto en una misma fila */
+    align-items: center; /* Centra verticalmente icono y texto */
+    gap: 12px; /* Deja espacio entre icono y descripción */
+    color: #111827; /* Pone el texto en color oscuro */
+    font-size: 18px; /* Define el tamaño del texto */
+  }
+  
+  /* Espacio visual donde irá el icono de actividad reciente 
+  .icono-actividad {
+    width: 32px; /* Define el ancho del icono 
+    height: 32px; /* Define la altura del icono 
+    border-radius: 10px; /* Redondea el contenedor del icono 
+    background-color: #EEF2FF; /* Pone fondo azul claro temporal 
+    flex-shrink: 0; /* Evita que el icono se reduzca 
+  }*/
+  
+  /* ------------- */
+  /* ICONOS CON IMAGENES PUES DE ICONOS */
+  .icono-actividad {
+    width: 55px; /* Define el ancho del icono*/
+    height: 55px; /* Define la altura del icono*/
+    border-radius: 12px; /* Redondea el contenedor del icono*/
+    flex-shrink: 0; /* Evita que el icono se haga más pequeño */
+  
+    display: flex; /* como que activa flexbox para acomodar */
+    align-items: center; /* Centra la imagen verticalmente */
+    justify-content: center; /* Centra la imagen horizontalmente */
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+  }
+  
+  .icono-actividad img {
+    width: 55px; /* Define el ancho de la imagen*/
+    height: 55px; /* Define la altura de la imagen*/
+    object-fit: contain; /* Hace que la imagen se ajuste completa sin deformarse */
+    display: block; /* Evita espacios extra debajo de la imagen */
+  }
+  /* ------------- */
+  
+  /* Texto del tiempo de la actividad */
+  .tiempo-actividad {
+    font-size: 14px; /* Define tamaño pequeño para el tiempo */
+    color: #6B7280; /* Pone el tiempo en gris */
+    white-space: nowrap; /* Evita que el tiempo se parta en dos líneas */
+  }
+  

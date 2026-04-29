@@ -1,21 +1,56 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using LuminaReto.Models;
+using System.Diagnostics; /*Permite usar herramientas de diagnóstico, aquí se usa para obtener información del error con Activity*/
+using Microsoft.AspNetCore.Mvc; /*Importa las herramientas principales de MVC, como Controller, IActionResult y View*/
+using LuminaReto.Models; /*Permite usar los modelos que están en la carpeta Models*/
 
-namespace LuminaReto.Controllers;
+namespace LuminaReto.Controllers; /*Indica que este archivo pertenece al área de Controllers del proyecto LuminaReto*/
 
-public class HomeController : Controller
+public class HomeController : Controller /*Crea el controlador HomeController y hereda de Controller para poder manejar vistas y respuestas web*/
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly ILogger<HomeController> _logger; /*Crea una variable privada para registrar información, errores o eventos del controlador*/
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger) /*Constructor del controlador, se ejecuta cuando se crea HomeController*/
     {
-        _logger = logger;
+        _logger = logger; /*Guarda el logger recibido dentro de la variable _logger para poder usarlo después*/
     }
 
-    public IActionResult Index()
+    /*----------------------------------------------------------------*/
+
+    /*ACCIÓN INDEX*/
+    public IActionResult Index() /*Representa la página principal o inicio*/
     {
-                var formularios = new List<Formulario>
+        ModeloInicioGeneral modelo = new ModeloInicioGeneral(); /*Crea un objeto del modelo general donde se guardará toda la información del inicio*/
+
+        modelo.ListaEstadisticas = new List<Estadisticas>() /*Con esto se crea la lista de tarjetas de estadísticas*/
+        {
+            new Estadisticas { Titulo = "Whirl-Tokens Totales" , Valor = "1,250" , Icono = "imagenes/WTokens.png"},
+            new Estadisticas { Titulo = "Formularios Completados" , Valor = "12" , Icono = "imagenes/Formulario.png"},
+            new Estadisticas { Titulo = "Nivel Alcanzado" , Valor = "5" , Icono = "imagenes/Nivel.png"},
+            new Estadisticas { Titulo = "Racha Activa" , Valor = "7 días" , Icono = "imagenes/Racha.png"}
+        };
+
+        modelo.ListaAccionesRapidas = new List<AccionesRapidas>() /*Crea la lista de acciones rápidas que serán clickeables y te llevan a su respectiva página*/
+        {
+            new AccionesRapidas { Texto = "Completar un nuevo formulario" , Controlador = "Home" , Accion = "Formularios" , Icono = "imagenes/Formulario.png"},
+            new AccionesRapidas { Texto = "Jugar ahora" , Controlador = "Juego" , Accion = "Index" , Icono = "imagenes/Racha.png"},
+            new AccionesRapidas { Texto = "Ver mis Whirl-Tokens" , Controlador = "Whirl-Tockens" , Accion = "Index" , Icono = "imagenes/WTokens.png"}
+        };
+
+        modelo.ListaActividadReciente = new List<ActividadReciente>() /*Crea la lista de actividades recientes*/
+        {
+            new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "Hace 2 horas" , Icono = "imagenes/Formulario.png"},
+            new ActividadReciente { Descripcion = "+150 Whirl-Tokens ganados" , Tiempo = "Hace 5 horas" , Icono = "imagenes/WTokens.png"},
+            new ActividadReciente { Descripcion = "Nivel alcanzado = 5" , Tiempo = "Hace 1 día" , Icono = "imagenes/Nivel.png"}
+        };
+
+        return View(modelo); /*Manda el modelo con los datos simulados hacia la vista Index.cshtml*/
+    }
+
+    /*----------------------------------------------------------------*/
+
+    /*ACCIÓN FORMULARIOS*/
+    public IActionResult Formularios()
+    {
+        var formularios = new List<Formulario>
         {
             new Formulario
             {
@@ -81,14 +116,19 @@ public class HomeController : Controller
         return View(formularios);
     }
 
-    public IActionResult Privacy()
+    /*----------------------------------------------------------------*/
+
+    /*ACCIÓN PRIVACY*/
+    public IActionResult Privacy() /*Representa la página de privacidad que viene por default*/
     {
-        return View();
+        return View(); /*Muestra la vista Privacy.cshtml ubicada en Views/Home/Privacy.cshtml*/
     }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] /*Indica que la página de error no debe guardarse en caché*/
+
+    /*ACCIÓN ERROR*/
+    public IActionResult Error() /*Se usa cuando ocurre un error en la aplicación*/
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }); /*Crea un ErrorViewModel con un RequestId para identificar el error y manda ese modelo a la vista de error*/
     }
 }
