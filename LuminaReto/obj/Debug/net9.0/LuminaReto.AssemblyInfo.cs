@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LuminaReto")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8b079b367731e3d6e37fcadc52814b7b95254e5a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9b8a869801155798e17ef8027f204ddf56ce6915")]
 [assembly: System.Reflection.AssemblyProductAttribute("LuminaReto")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LuminaReto")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
