@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj": {}
+    "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {}
   },
   "projects": {
-    "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj": {
+    "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj",
+        "projectUniqueName": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
         "projectName": "LuminaReto",
-        "projectPath": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/LuminaReto.csproj",
-        "packagesPath": "/Users/alex./.nuget/packages/",
-        "outputPath": "/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/obj/",
+        "projectPath": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
+        "packagesPath": "C:\\Users\\betsy\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/alex./.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\betsy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -62,7 +69,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.312/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.312/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
