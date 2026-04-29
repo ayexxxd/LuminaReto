@@ -1,8 +1,93 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model LuminaReto.Models.ModeloInicioGeneral /*Indica que esta vista recibirá un modelo de tipo ModeloInicioGeneral con los datos de la página de inicio*/
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteLya.css" asp-append-version="true" />
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{ /*Abre un bloque de C# dentro del archivo .cshtml.*/
+    ViewData["Title"] = "Inicio";
+}
+
+<div class = "pagina-inicio"> <!-- Este es el conteneder general que va a llevar pues todo lo de la página de inicio-->
+    <!-- va a llevar lo del banner, las estadisticas, acciones rápidas y actividad reciente-->
+
+
+    <!------BANNER BIENVENIDA--------->
+    <section class = "banner-bienvenida"> <!-- Este es el conteneder especifico (o sea la seccion vaya) para el banner de bienvenida-->
+        <h1>¡Bienvenido a Whirlpool!</h1>
+        <p>Completa formularios, gana Whirl-Tokens y disfruta del juego</p>
+    </section>
+
+
+    <!------ESTADÍSTICAS--------->
+    <section class = "estadisticas-tarjetas">  <!--En esta parte van a estar las 4 tarjetas de las estadisticas-->
+        <!--foreach dice que por cada elemento de una lista, va a repetir lo que esté dentor de las llaves-->
+        @foreach (var estadistica in Model.ListaEstadisticas)  
+        {
+            <div class = "tarjeta-estadisticas"> <!--adentro vendrá lo que va a contener cada tarjeta que anteriormente va a ser una instruccion repetida por foreach-->
+                <div class = "icono-estadistica"><!--para que en el cs le pueda poner el icono y su formato-->
+                    <img src="@estadistica.Icono" />
+                </div> 
+                <div class = "contenido-estadistica"> <!-- Para poner el contenido de cada tarjeta-->
+                    <p>@estadistica.Titulo</p> <!-- Jala la info de los controllers mediante el arroba y jala la info de Titulo-->
+                    <h2>@estadistica.Valor</h2> <!-- Jala la info de los controllers mediante el arroba y jala la info de Valor-->
+                </div>
+            </div>
+        }
+    </section>
+
+
+
+    <!------SECCIONES INFERIORES--------->
+    <section class = "secciones-inferiores"> <!--aqui entran las dos secciones de abajo-->
+
+        <!------ACCIONES RAPIDAS--------->
+        <div class = "panel-inicio acciones-rapidas"> <!-- el panel de inicio es el estilo general del cuadrado -->
+            <h2>Acciones Rápidas</h2>
+            <div class = "lista-acciones"> <!--clase para engoblar la lista de acciones -->
+                <!-- con el foreach va a recorrer cada elemento de la lista para aplicarle lo que viene adentro-->
+                @foreach ( var accion in Model.ListaAccionesRapidas) 
+                {
+                    <a class = "accion-rapida" asp-controller ="@accion.Controlador" asp-action = "@accion.Accion">
+                        <!-- a es la etiqueta a enlace-->
+                        <!--la clase es para darle diseño a cada renglo -->
+                        <!--el primer asp te define la seccion y el segundo te define a la pagina a la que va-->
+                        <span class = "icono-accion"> <!--span para poner el icono en pequeño respetando la misma linea-->
+                            <img src="@accion.Icono" />
+                        </span>
+                        <span>@accion.Texto</span> <!--jala el texto del controller .Texto-->
+                    </a>
+                }
+            </div>
+        </div>
+
+
+        <!------ACTIVIDAD RECIENTE--------->
+
+        <div class = "panel-inicio actividad-reciente"> <!--aqui es lo de la derecha, la de actividad reciente-->
+            <h2>Actividad Reciente</h2>
+            <div class = "lista-actividades"> <!--agrupa todos los registros de actividad-->
+                <!--el foreach recorre cada elemento de la lista dentro del molde para aplicarle a cada elemento todo lo que esté dentor de los corchetes-->
+                @foreach ( var actividad in Model.ListaActividadReciente) 
+                {
+                    <div class = "actividad-item"> <!--cada renglon de actividad reciente-->
+                        <div class = "actividad-info"> <!--agrupa el icono y el texto para que queden juntos-->
+                            <span class = "icono-actividad">
+                                <img src="@actividad.Icono" />
+                            </span>
+                            <span>@actividad.Descripcion</span> <!--jala la info de controller pero de lo de Descripcion-->
+                        </div>
+                        <span class = "tiempo actividad">@actividad.Tiempo</span>
+
+
+                    
+                    </div>
+                }
+            </div>
+        </div>
+
+    </section>
+
+
+
 </div>
