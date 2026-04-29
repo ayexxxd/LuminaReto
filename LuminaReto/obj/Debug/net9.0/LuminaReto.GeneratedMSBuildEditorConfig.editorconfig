@@ -9,41 +9,41 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = LuminaReto
 build_property.RootNamespace = LuminaReto
-build_property.ProjectDir = /Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/
+build_property.ProjectDir = /Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 9.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto
+build_property.MSBuildProjectDirectory = /Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/Home/Index.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/Home/Privacy.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/Shared/Error.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/Shared/_ValidationScriptsPartial.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/_ViewImports.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/_ViewStart.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/alex./Documents/Semester 4/SW Construcion and Decision Making/web/LuminaReto/LuminaReto/Views/Shared/_Layout.cshtml]
+[/Users/lyasalgadocastrejon/Desktop/Git/LuminaReto/LuminaReto/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-s73vlyhbth
