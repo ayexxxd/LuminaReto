@@ -27,6 +27,8 @@ mono_crash.*
 x64/
 x86/
 [Ww][Ii][Nn]32/
+
+
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -491,3 +493,11 @@ LuminaReto/obj/
 LuminaReto/bin/Debug/net9.0/*.dll
 LuminaReto/bin/Debug/net9.0/*.pdb
 LuminaReto/bin/Debug/net9.0/*.staticwebassets.endpoints.json
+
+# Archivos generados por .NET
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+LuminaReto/bin/
+LuminaReto/obj/
