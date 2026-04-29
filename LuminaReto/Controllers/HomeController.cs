@@ -131,4 +131,42 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }); /*Crea un ErrorViewModel con un RequestId para identificar el error y manda ese modelo a la vista de error*/
     }
+
+    // Para RECIBIR los datos cuando das clic en "Guardar cambios"
+    [HttpPost]
+    public IActionResult Perfil(string nombre, string correo, string departamento, string id, string modo)
+    {
+        // C# recibe lo que escribiste en los inputs gracias al atributo "name"
+        ViewData["NombreCliente"] = nombre;
+        ViewData["CorreoCliente"] = correo;
+        ViewData["DepaCliente"] = departamento;
+        ViewData["IdCliente"] = id;
+
+        if (modo == "editar")
+        {
+            ViewData["Editable"] = true; // desbloquear
+        }
+        else
+        {
+            ViewData["Editable"] = false; //  bloquear al guardar
+        }
+
+        // Regresa la misma vista pero ahora con los nuevos datos
+        return View("Index");
+    }
+
+    // Para MOSTRAR la página la primera vez
+    public IActionResult Perfil()
+    {
+        
+        ViewData["NombreCliente"] = "";
+        ViewData["DepaCliente"] = "";
+        ViewData["CorreoCliente"] = "";
+        ViewData["IdCliente"] = "";
+        ViewData["Editable"] = false; // empieza bloqueado
+        return View();
+
+        
+    }
+    
 }
