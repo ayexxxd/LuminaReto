@@ -13,7 +13,7 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public IActionResult Formularios()
     {
                 var formularios = new List<Formulario>
         {
@@ -79,6 +79,11 @@ public class HomeController : Controller
         };
 
         return View(formularios);
+    }
+
+    public IActionResult Index()
+    {
+        return View();
     }
 
     public IActionResult Privacy()
