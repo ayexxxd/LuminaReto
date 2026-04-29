@@ -1,12 +1,8 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-@model List<Formulario>
 
-@section Styles {
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/siteFormularios.css" asp-append-version="true" />
-}
+@model List<Formulario>
 
 <div class="container py-4 fondo">
 
@@ -31,6 +27,7 @@
             <h5 class="fw-bold text-white">¡Cada respuesta cuenta!</h5>
             <p class="text-white mb-0">Completa formularios y gana tokens</p>
         </div>
+
         <div class="tokens-display">
             <span class="fs-3 fw-bold text-white">+450</span>
             <small class="text-white d-block">tokens este mes</small>
@@ -41,252 +38,188 @@
     <h5 class="mb-3 fw-semibold">Formularios Disponibles</h5>
 
     <div class="row g-4">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var form = Model[i];
 
-        <!-- Card 1 -->
-        <div class="col-md-4">
-            <div class="form-card">
-                <img src="~/imagenes/formulario.png" class="form-icon" />
-                <div class="token-badge">+@Model[0].Tokens</div>
-                <h6 class="fw-semibold mt-3">@Model[0].Titulo</h6>
-                <p class="text-muted small">@Model[0].Descripcion</p>
-                <div class="meta d-flex justify-content-between small text-muted mb-3">
-                    <span>⭐ @Model[0].Preguntas preguntas</span>
+            <div class="col-md-4">
+                <div class="form-card @(form.DobleTokens ? "highlight" : "")">
+                    <img src="~/imagenes/formularioB.png" class="form-icon" />
+
+                    <div class="token-badge">+💰@form.Tokens</div>
+
+                    <h6 class="fw-semibold mt-3">@form.Titulo</h6>
+                    <p class="text-muted small">@form.Descripcion</p>
+
+                    <div class="meta d-flex justify-content-between small text-muted mb-2">
+                        <span>⭐ @form.Preguntas preguntas</span>
+                    </div>
+
+                    <button class="btn btn-primary w-100"
+                            data-bs-toggle="modal"
+                            data-bs-target="#formModal@(i)">
+                        Comenzar
+                    </button>
                 </div>
-                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#formModal0">Comenzar</button>
             </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="col-md-4">
-            <div class="form-card highlight">
-                <img src="~/imagenes/formulario.png" class="form-icon" />
-                <div class="token-badge">+@Model[1].Tokens</div>
-                <h6 class="fw-semibold mt-3">@Model[1].Titulo</h6>
-                <p class="text-muted small">@Model[1].Descripcion</p>
-                <div class="meta d-flex justify-content-between small text-muted mb-2">
-                    <span>⭐ @Model[1].Preguntas preguntas</span>
-                </div>
-                <div class="extra-badge success mb-2">🔥 Doble tokens hoy</div>
-                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#formModal1">Comenzar</button>
-            </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-md-4">
-            <div class="form-card">
-                <img src="~/imagenes/formulario.png" class="form-icon" />
-                <div class="token-badge">+@Model[2].Tokens</div>
-                <h6 class="fw-semibold mt-3">@Model[2].Titulo</h6>
-                <p class="text-muted small">@Model[2].Descripcion</p>
-                <div class="meta d-flex justify-content-between small text-muted mb-2">
-                    <span>⭐ @Model[2].Preguntas preguntas</span>
-                </div>
-                <div class="extra-badge danger mb-2">⏰ Expira en 2 días</div>
-                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#formModal2">Comenzar</button>
-            </div>
-        </div>
-
+        }
     </div>
 
     <!-- Completados -->
     <div class="completed mt-5 p-4">
         <h6 class="fw-semibold mb-3">Formularios Completados</h6>
-        <div class="completed-item d-flex justify-content-between align-items-center">
-            <div>✔ Encuesta Trimestral Q1</div>
-            <span class="text-success fw-semibold">+150</span>
-        </div>
+        <div id="listaCompletados"></div>
     </div>
 
 </div>
 
-<!-- Modal 0 -->
-<div class="modal fade" id="formModal0" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Model[0].Titulo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                @foreach (var pregunta in Model[0].ListaPreguntas ?? new List<Preguntas>())
-                {
-                    <div class="mb-3">
-                        <label class="fw-semibold">@pregunta.Texto</label>
+<!-- Modales -->
+@for (int i = 0; i < Model.Count; i++)
+{
+    var form = Model[i];
 
-                        @if (pregunta.Tipo == "abierta")
-                        {
-                            <textarea class="form-control" rows="2"></textarea>
-                        }
-                        else if (pregunta.Tipo == "escala")
-                        {
-                            <div class="d-flex gap-3 mt-1">
-                                @for (int n = 1; n <= 5; n++)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@n" />
-                                        <label class="form-check-label">@n</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "opcion")
-                        {
-                            <div class="d-flex gap-3 mt-1 flex-wrap">
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@op" />
-                                        <label class="form-check-label">@op</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "seleccion")
-                        {
-                            <select class="form-select mt-1">
-                                <option value="">-- Selecciona --</option>
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <option value="@op">@op</option>
-                                }
-                            </select>
-                        }
+    <div class="modal fade" id="formModal@(i)" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary">Enviar</button>
+                <div class="modal-header">
+                    <h5 class="modal-title">@form.Titulo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    @foreach (var pregunta in form.ListaPreguntas ?? new List<Preguntas>())
+                    {
+                        var esObligatoria = pregunta.Texto.TrimEnd().EndsWith("*");
+                        var textoMostrar = esObligatoria
+                            ? pregunta.Texto.TrimEnd().TrimEnd('*').TrimEnd()
+                            : pregunta.Texto;
+
+                        <div class="mb-3">
+                            <label class="fw-semibold">
+                                @textoMostrar
+                                @if (esObligatoria)
+                                {
+                                    <span class="text-danger">*</span>
+                                }
+                            </label>
+
+                            @if (pregunta.Tipo == "abierta")
+                            {
+                                <textarea class="form-control campo-respuesta"
+                                          rows="2"
+                                          data-obligatoria="@esObligatoria.ToString().ToLower()"></textarea>
+                            }
+                            else if (pregunta.Tipo == "escala")
+                            {
+                                <div class="d-flex gap-3 mt-1 grupo-radio"
+                                     data-obligatoria="@esObligatoria.ToString().ToLower()">
+                                    @for (int n = 1; n <= 5; n++)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio"
+                                                   name="modal@(i)_@pregunta.Texto.GetHashCode()" value="@n" />
+                                            <label class="form-check-label">@n</label>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else if (pregunta.Tipo == "opcion")
+                            {
+                                <div class="d-flex gap-3 mt-1 flex-wrap grupo-radio"
+                                     data-obligatoria="@esObligatoria.ToString().ToLower()">
+                                    @foreach (var op in pregunta.Opciones)
+                                    {
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio"
+                                                   name="modal@(i)_@pregunta.Texto.GetHashCode()" value="@op" />
+                                            <label class="form-check-label">@op</label>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else if (pregunta.Tipo == "seleccion")
+                            {
+                                <select class="form-select mt-1 campo-respuesta"
+                                        data-obligatoria="@esObligatoria.ToString().ToLower()">
+                                    <option value="">-- Selecciona --</option>
+                                    @foreach (var op in pregunta.Opciones)
+                                    {
+                                        <option value="@op">@op</option>
+                                    }
+                                </select>
+                            }
+                        </div>
+                    }
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+
+                    <button class="btn btn-primary btn-enviar"
+                            data-titulo="@form.Titulo"
+                            data-tokens="@form.Tokens"
+                            data-modal="formModal@(i)">
+                        Enviar
+                    </button>
+                </div>
+
             </div>
         </div>
     </div>
-</div>
+}
 
-<!-- Modal 1 -->
-<div class="modal fade" id="formModal1" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Model[1].Titulo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                @foreach (var pregunta in Model[0].ListaPreguntas ?? new List<Preguntas>())
-                {
-                    <div class="mb-3">
-                        <label class="fw-semibold">@pregunta.Texto</label>
+@section Scripts {
+    <script>
+        document.querySelectorAll('.btn-enviar').forEach(btn => {
+            btn.addEventListener('click', function () {
 
-                        @if (pregunta.Tipo == "abierta")
-                        {
-                            <textarea class="form-control" rows="2"></textarea>
-                        }
-                        else if (pregunta.Tipo == "escala")
-                        {
-                            <div class="d-flex gap-3 mt-1">
-                                @for (int n = 1; n <= 5; n++)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@n" />
-                                        <label class="form-check-label">@n</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "opcion")
-                        {
-                            <div class="d-flex gap-3 mt-1 flex-wrap">
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@op" />
-                                        <label class="form-check-label">@op</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "seleccion")
-                        {
-                            <select class="form-select mt-1">
-                                <option value="">-- Selecciona --</option>
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <option value="@op">@op</option>
-                                }
-                            </select>
-                        }
+                const modalId = this.dataset.modal;
+                const modalEl = document.getElementById(modalId);
+                const titulo = this.dataset.titulo;
+                const tokens = this.dataset.tokens;
 
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary">Enviar</button>
-            </div>
-        </div>
-    </div>
-</div>
+                let valido = true;
 
-<!-- Modal 2 -->
-<div class="modal fade" id="formModal2" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">@Model[2].Titulo</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-               @foreach (var pregunta in Model[0].ListaPreguntas ?? new List<Preguntas>())
-                {
-                    <div class="mb-3">
-                        <label class="fw-semibold">@pregunta.Texto</label>
+                // Inputs y selects
+                modalEl.querySelectorAll('.campo-respuesta[data-obligatoria="true"]').forEach(campo => {
+                    campo.classList.remove('is-invalid');
 
-                        @if (pregunta.Tipo == "abierta")
-                        {
-                            <textarea class="form-control" rows="2"></textarea>
-                        }
-                        else if (pregunta.Tipo == "escala")
-                        {
-                            <div class="d-flex gap-3 mt-1">
-                                @for (int n = 1; n <= 5; n++)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@n" />
-                                        <label class="form-check-label">@n</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "opcion")
-                        {
-                            <div class="d-flex gap-3 mt-1 flex-wrap">
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="@pregunta.Texto" value="@op" />
-                                        <label class="form-check-label">@op</label>
-                                    </div>
-                                }
-                            </div>
-                        }
-                        else if (pregunta.Tipo == "seleccion")
-                        {
-                            <select class="form-select mt-1">
-                                <option value="">-- Selecciona --</option>
-                                @foreach (var op in pregunta.Opciones)
-                                {
-                                    <option value="@op">@op</option>
-                                }
-                            </select>
-                        }
+                    if (!campo.value.trim()) {
+                        campo.classList.add('is-invalid');
+                        valido = false;
+                    }
+                });
 
-                    </div>
-                }
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button class="btn btn-primary">Enviar</button>
-            </div>
-        </div>
-    </div>
-</div>
+                // Radios
+                modalEl.querySelectorAll('.grupo-radio[data-obligatoria="true"]').forEach(grupo => {
+                    grupo.classList.remove('border', 'border-danger', 'rounded', 'p-1');
+
+                    const seleccionado = grupo.querySelector('input[type="radio"]:checked');
+
+                    if (!seleccionado) {
+                        grupo.classList.add('border', 'border-danger', 'rounded', 'p-1');
+                        valido = false;
+                    }
+                });
+
+                if (!valido) return;
+
+                const modalInstance = bootstrap.Modal.getInstance(modalEl);
+                modalInstance.hide();
+
+                const lista = document.getElementById('listaCompletados');
+
+                const item = document.createElement('div');
+                item.className = 'completed-item d-flex justify-content-between align-items-center';
+
+                item.innerHTML = `
+                    <div>✔ ${titulo}</div>
+                    <span class="text-success fw-semibold">+${tokens}</span>
+                `;
+
+                lista.appendChild(item);
+            });
+        });
+    </script>
+}
