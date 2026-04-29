@@ -31,8 +31,8 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
         modelo.ListaAccionesRapidas = new List<AccionesRapidas>() /*Crea la lista de acciones rápidas que serán clickeables y te llevan a su respectiva página*/
         {
             new AccionesRapidas { Texto = "Completar un nuevo formulario" , Controlador = "Home" , Accion = "Formularios" , Icono = "imagenes/Formulario.png"},
-            new AccionesRapidas { Texto = "Jugar ahora" , Controlador = "Juego" , Accion = "Index" , Icono = "imagenes/Racha.png"},
-            new AccionesRapidas { Texto = "Ver mis Whirl-Tokens" , Controlador = "Whirl-Tockens" , Accion = "Index" , Icono = "imagenes/WTokens.png"}
+            new AccionesRapidas { Texto = "Jugar ahora" , Controlador = "Home" , Accion = "Juego" , Icono = "imagenes/Racha.png"},
+            new AccionesRapidas { Texto = "Ver mis Whirl-Tokens" , Controlador = "Home" , Accion = "Tokens" , Icono = "imagenes/WTokens.png"}
         };
 
         modelo.ListaActividadReciente = new List<ActividadReciente>() /*Crea la lista de actividades recientes*/
@@ -123,7 +123,15 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
     {
         return View(); /*Muestra la vista Privacy.cshtml ubicada en Views/Home/Privacy.cshtml*/
     }
+    public IActionResult Juego() 
+    {
+        return View(); 
+    }
 
+    public IActionResult Tokens()
+    {
+        return View(); 
+    }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] /*Indica que la página de error no debe guardarse en caché*/
 
     /*ACCIÓN ERROR*/
