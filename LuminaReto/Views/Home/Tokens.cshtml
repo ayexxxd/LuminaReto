@@ -82,7 +82,7 @@
                 <strong class="amount-positive">+150</strong>
             </article>
 
-            <article class="transaction-item" data-reciente="hoy" data-tipo="juego">
+            <article class="transaction-item" data-reciente="hoy" data-tipo="pos">
                 <div class="tx-main">
                     <span class="tx-icon">
                         <img src="~/imagenes/Nivel.png" alt="Icono Nivel alcanzado en el juego" />
@@ -95,7 +95,7 @@
                 <strong class="amount-positive">+120</strong>
             </article>
 
-            <article class="transaction-item" data-reciente="3dias" data-tipo="bono">
+            <article class="transaction-item" data-reciente="3d" data-tipo="pos">
                 <div class="tx-main">
                     <span class="tx-icon">
                         <img src="~/imagenes/WTokens.png" alt="Icono Bono de asistencia semanal" />
@@ -108,7 +108,7 @@
                 <strong class="amount-positive">+180</strong>
             </article>
 
-            <article class="transaction-item" data-reciente="7dias" data-tipo="canje">
+            <article class="transaction-item" data-reciente="7d" data-tipo="neg">
                 <div class="tx-main">
                     <span class="tx-icon">
                         <img src="~/imagenes/Racha.png" alt="Icono Canje de recompensa" />
@@ -119,6 +119,45 @@
                     </div>
                 </div>
                 <strong class="amount-negative">-300</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="1m" data-tipo="pos">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/Formulario.png" alt="Icono Bonificación diaria" />
+                    </span>
+                    <div>
+                        <h4>Bonificación diaria</h4>
+                        <p>14 Mar, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-positive">+50</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="3m" data-tipo="neg">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/Racha.png" alt="Icono Canje adicional" />
+                    </span>
+                    <div>
+                        <h4>Canje adicional</h4>
+                        <p>18 Feb, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-negative">-200</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="6m" data-tipo="pos">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/WTokens.png" alt="Icono Reconocimiento semestral" />
+                    </span>
+                    <div>
+                        <h4>Reconocimiento semestral</h4>
+                        <p>02 Nov, 2025</p>
+                    </div>
+                </div>
+                <strong class="amount-positive">+400</strong>
             </article>
         </div>
     </section>
@@ -186,3 +225,26 @@
         <p class="progress-meta">Te faltan <strong>750</strong> tokens para desbloquear la siguiente recompensa.</p>
     </section>
 </div>
+
+@section Scripts {
+    <script>
+        const filtroReciente = document.getElementById('filtroReciente');
+        const filtroTipo = document.getElementById('filtroTipo');
+        const items = document.querySelectorAll('.transaction-item');
+
+        function aplicarFiltros() {
+            const reciente = filtroReciente.value;
+            const tipo = filtroTipo.value;
+
+            items.forEach(item => {
+                const coincideReciente = reciente === 'all' || item.dataset.reciente === reciente;
+                const coincideTipo = tipo === 'all' || item.dataset.tipo === tipo;
+                item.style.display = coincideReciente && coincideTipo ? 'flex' : 'none';
+            });
+        }
+
+        filtroReciente.addEventListener('change', aplicarFiltros);
+        filtroTipo.addEventListener('change', aplicarFiltros);
+        aplicarFiltros();
+    </script>
+}
