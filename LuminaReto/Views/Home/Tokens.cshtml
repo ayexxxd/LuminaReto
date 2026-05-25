@@ -1,3 +1,186 @@
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Tokens";
 }
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
+}
+
+<div class="tokens-page">
+    <h1 class="tokens-title">Mis Tokens</h1>
+
+    <section class="tokens-resumen">
+        <article class="token-card card-primary">
+            <div class="token-card-head">
+                <p>Balance Total</p>
+                <img src="~/imagenes/WTokens.png" alt="Icono Balance Total" />
+            </div>
+            <h2>1250</h2>
+            <span>tokens disponibles</span>
+        </article>
+
+        <article class="token-card card-positive">
+            <div class="token-card-head">
+                <p>Ganados este mes</p>
+                <img src="~/imagenes/Nivel.png" alt="Icono Ganados este mes" />
+            </div>
+            <h2>+450</h2>
+            <span>↑ 23% vs mes anterior</span>
+        </article>
+
+        <article class="token-card card-goal">
+            <div class="token-card-head">
+                <p>Próxima Recompensa</p>
+                <img src="~/imagenes/Racha.png" alt="Icono Próxima Recompensa" />
+            </div>
+            <h2>750</h2>
+            <span>tokens restantes</span>
+        </article>
+    </section>
+
+    
+
+    <section class="panel-tokens chart-panel">
+        <h3>Historial de Tokens </h3>
+        <h6>(Ultimos 7 días)</h6>
+
+        <h1>Gráfico de Tokens Ganados vs Gastados</h1>
+    </section>
+
+    <section class="panel-tokens">
+        <div class="transactions-head">
+            <h3>Transacciones Recientes</h3>
+            <div class="transactions-filters">
+                <select id="filtroReciente" class="form-select form-select-sm">
+                    <option value="all">Reciente: Todas</option>
+                    <option value="hoy">Reciente: Hoy</option>
+                    <option value="3d">Reciente: Últimos 3 días</option>
+                    <option value="7d">Reciente: Últimos 7 días</option>
+                    <option value="1m">Reciente: Último mes </option>
+                    <option value="3m">Reciente: Últimos 3 meses</option>
+                    <option value="6m">Reciente: Últimos 6 meses</option>
+                </select>
+                <select id="filtroTipo" class="form-select form-select-sm">
+                    <option value="all">Tipo: Todas</option>
+                    <option value="pos">Adquiridas</option>
+                    <option value="neg">Gastadas</option>
+                </select>
+            </div>
+        </div>
+<!-- TRANSACTIONS -->
+        <div class="transactions-list" id="listaTransacciones">
+            <article class="transaction-item" data-reciente="hoy" data-tipo="pos">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/Formulario.png" alt="Icono Formulario completado" />
+                    </span>
+                    <div>
+                        <h4>Formulario completado</h4>
+                        <p>16 Abr, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-positive">+150</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="hoy" data-tipo="juego">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/Nivel.png" alt="Icono Nivel alcanzado en el juego" />
+                    </span>
+                    <div>
+                        <h4>Nivel alcanzado en el juego</h4>
+                        <p>15 Abr, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-positive">+120</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="3dias" data-tipo="bono">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/WTokens.png" alt="Icono Bono de asistencia semanal" />
+                    </span>
+                    <div>
+                        <h4>Bono de asistencia semanal</h4>
+                        <p>14 Abr, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-positive">+180</strong>
+            </article>
+
+            <article class="transaction-item" data-reciente="7dias" data-tipo="canje">
+                <div class="tx-main">
+                    <span class="tx-icon">
+                        <img src="~/imagenes/Racha.png" alt="Icono Canje de recompensa" />
+                    </span>
+                    <div>
+                        <h4>Canje de recompensa</h4>
+                        <p>12 Abr, 2026</p>
+                    </div>
+                </div>
+                <strong class="amount-negative">-300</strong>
+            </article>
+        </div>
+    </section>
+
+    <!-- Recompensas Disponibles -->
+    <section class="panel-tokens rewards-panel">
+        <h3>Recompensas Disponibles</h3>
+
+        <div class="rewards-grid">
+            <article class="reward-card available">
+                <div class="reward-icon"><img src="~/imagenes/gift.png" alt="Cupón"/></div>
+                <h4>Cupón $10 de descuento</h4>
+                <div class="reward-price"> 500</div>
+                <button class="btn btn-primary reward-btn">Canjear</button>
+            </article>
+
+            <article class="reward-card disabled">
+                <div class="reward-icon"><img src="~/imagenes/calendar.png" alt="Día libre"/></div>
+                <h4>Día libre adicional</h4>
+                <div class="reward-price"> 2000</div>
+                <div class="reward-need">Necesitas 750 más</div>
+            </article>
+
+            <article class="reward-card available">
+                <div class="reward-icon"><img src="~/imagenes/card.png" alt="Gift Card"/></div>
+                <h4>Gift Card $25</h4>
+                <div class="reward-price"> 1000</div>
+                <button class="btn btn-primary reward-btn">Canjear</button>
+            </article>
+
+            <article class="reward-card available">
+                <div class="reward-icon"><img src="~/imagenes/car.png" alt="Estacionamiento"/></div>
+                <h4>Estacionamiento Premium (1 mes)</h4>
+                <div class="reward-price"> 800</div>
+                <button class="btn btn-primary reward-btn">Canjear</button>
+            </article>
+
+            <article class="reward-card available">
+                <div class="reward-icon"><img src="~/imagenes/coffee.png" alt="Cafetería"/></div>
+                <h4>Cupón Cafetería</h4>
+                <div class="reward-price"> 300</div>
+                <button class="btn btn-primary reward-btn">Canjear</button>
+            </article>
+
+            <article class="reward-card disabled">
+                <div class="reward-icon"><img src="~/imagenes/gift.png" alt="Cupón grande"/></div>
+                <h4>Cupón $50 de descuento</h4>
+                <div class="reward-price"> 1500</div>
+                <div class="reward-need">Necesitas 250 más</div>
+            </article>
+        </div>
+    </section>
+
+    <section class="tokens-progress panel-tokens">
+        <div class="progress-head">
+            <h3>Progreso hacia la próxima recompensa</h3>
+            <strong>1250 / 2000</strong>
+        </div>
+
+        <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="2000" aria-valuenow="1250">
+            <div class="progress-fill" style="width:62.5%;"></div>
+        </div>
+        <p class="progress-meta">Te faltan <strong>750</strong> tokens para desbloquear la siguiente recompensa.</p>
+    </section>
+</div>

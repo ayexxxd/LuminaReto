@@ -130,7 +130,24 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
 
     public IActionResult Tokens()
     {
-        return View(); 
+        ModeloInicioGeneral modelo = new ModeloInicioGeneral();
+
+        modelo.ListaEstadisticas = new List<Estadisticas>()
+        {
+            new Estadisticas { Titulo = "Balance Total" , Valor = "1250" , Icono = "imagenes/WTokens.png"},
+            new Estadisticas { Titulo = "Ganados este mes" , Valor = "+450" , Icono = "imagenes/Nivel.png"},
+            new Estadisticas { Titulo = "Próxima Recompensa" , Valor = "750" , Icono = "imagenes/Racha.png"}
+        };
+
+        modelo.ListaActividadReciente = new List<ActividadReciente>()
+        {
+            new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "16 Abr, 2026" , Icono = "imagenes/Formulario.png"},
+            new ActividadReciente { Descripcion = "Nivel alcanzado en el juego" , Tiempo = "15 Abr, 2026" , Icono = "imagenes/Nivel.png"},
+            new ActividadReciente { Descripcion = "Bono de asistencia semanal" , Tiempo = "14 Abr, 2026" , Icono = "imagenes/WTokens.png"},
+            new ActividadReciente { Descripcion = "Canje de recompensa" , Tiempo = "12 Abr, 2026" , Icono = "imagenes/Racha.png"}
+        };
+
+        return View(modelo);
     }
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] /*Indica que la página de error no debe guardarse en caché*/
 
