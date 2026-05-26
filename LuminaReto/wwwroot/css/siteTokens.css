@@ -5,7 +5,8 @@ body {
 .tokens-page {
     width: min(1180px, 96%);
     margin: 28px auto;
-    font-family: "Roboto", sans-serif;
+    /* inherit global body font to match other pages */
+    font-family: inherit;
     color: #1f2937;
 }
 
@@ -129,6 +130,32 @@ body {
     margin-bottom: 10px;
 }
 
+/* Chart container and placeholder sizing tweaks */
+.chart-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#tokensChart {
+    width: 100%;
+    max-width: 480px; /* smaller max width for the placeholder graph */
+    height: 220px;    /* control height explicitly */
+    display: block;
+    border-radius: 8px;
+    background: linear-gradient(180deg,#f8fbff,#ffffff);
+}
+
+.chart-icon {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 32px;
+    height: 32px;
+    opacity: 0.85;
+}
+
 .chart-wrapper {
     overflow-x: auto;
 }
@@ -192,6 +219,11 @@ body {
 .transactions-list {
     display: flex;
     flex-direction: column;
+    height: 260px;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-gutter: stable;
+    
 }
 
 .transaction-item {
@@ -269,6 +301,13 @@ body {
 
 /* Recompensas */
 .rewards-panel h3 { margin-bottom: 12px; }
+.rewards-window {
+    /* increased height so more reward rows are visible without scrolling */
+    height: 400px;
+    overflow-y: auto;
+    padding-right: 8px;
+    scrollbar-gutter: stable;
+}
 .rewards-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -283,7 +322,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 14px;
-    min-height: 170px;
+    min-height: 200px;
 }
 .reward-card.available { background: linear-gradient(180deg, #eef7ff, #ffffff); border-color: #0d5aad; }
 .reward-card.disabled { background: #f7f8fa; border-color: #efefef; color: #9aa3ad; }
@@ -297,4 +336,26 @@ body {
 
 @media (max-width: 900px) {
     .rewards-grid { grid-template-columns: 1fr; }
+    .transactions-list,
+    .rewards-window {
+        height: auto;
+        max-height: none;
+    }
+}
+
+/* Scrollbars */
+.transactions-list::-webkit-scrollbar,
+.rewards-window::-webkit-scrollbar {
+    width: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb,
+.rewards-window::-webkit-scrollbar-thumb {
+    background: #c7d3e3;
+    border-radius: 999px;
+}
+
+.transactions-list::-webkit-scrollbar-track,
+.rewards-window::-webkit-scrollbar-track {
+    background: transparent;
 }
