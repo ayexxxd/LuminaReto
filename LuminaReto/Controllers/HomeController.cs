@@ -1,17 +1,13 @@
 using System.Diagnostics; /*Permite usar herramientas de diagnóstico, aquí se usa para obtener información del error con Activity*/
 using Microsoft.AspNetCore.Mvc; /*Importa las herramientas principales de MVC, como Controller, IActionResult y View*/
 using LuminaReto.Models; /*Permite usar los modelos que están en la carpeta Models*/
+using Microsoft.AspNetCore.Http;
 
 namespace LuminaReto.Controllers; /*Indica que este archivo pertenece al área de Controllers del proyecto LuminaReto*/
 
 public class HomeController : Controller /*Crea el controlador HomeController y hereda de Controller para poder manejar vistas y respuestas web*/
 {
-    private readonly ILogger<HomeController> _logger; /*Crea una variable privada para registrar información, errores o eventos del controlador*/
-
-    public HomeController(ILogger<HomeController> logger) /*Constructor del controlador, se ejecuta cuando se crea HomeController*/
-    {
-        _logger = logger; /*Guarda el logger recibido dentro de la variable _logger para poder usarlo después*/
-    }
+    // HomeController intentionally has no service constructor to avoid affecting other controllers/views.
 
     /*----------------------------------------------------------------*/
 
@@ -119,36 +115,18 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
     /*----------------------------------------------------------------*/
 
     /*ACCIÓN PRIVACY*/
-    public IActionResult Privacy() /*Representa la página de privacidad que viene por default*/
-    {
-        return View(); /*Muestra la vista Privacy.cshtml ubicada en Views/Home/Privacy.cshtml*/
-    }
     public IActionResult Juego() 
     {
         return View(); 
     }
 
-    public IActionResult Tokens()
+    public async Task<IActionResult> Tokens()
     {
-        ModeloInicioGeneral modelo = new ModeloInicioGeneral();
-
-        modelo.ListaEstadisticas = new List<Estadisticas>()
-        {
-            new Estadisticas { Titulo = "Balance Total" , Valor = "1250" , Icono = "imagenes/WTokens.png"},
-            new Estadisticas { Titulo = "Ganados este mes" , Valor = "+450" , Icono = "imagenes/Nivel.png"},
-            new Estadisticas { Titulo = "Próxima Recompensa" , Valor = "750" , Icono = "imagenes/Racha.png"}
-        };
-
-        modelo.ListaActividadReciente = new List<ActividadReciente>()
-        {
-            new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "16 Abr, 2026" , Icono = "imagenes/Formulario.png"},
-            new ActividadReciente { Descripcion = "Nivel alcanzado en el juego" , Tiempo = "15 Abr, 2026" , Icono = "imagenes/Nivel.png"},
-            new ActividadReciente { Descripcion = "Bono de asistencia semanal" , Tiempo = "14 Abr, 2026" , Icono = "imagenes/WTokens.png"},
-            new ActividadReciente { Descripcion = "Canje de recompensa" , Tiempo = "12 Abr, 2026" , Icono = "imagenes/Racha.png"}
-        };
-
-        return View(modelo);
+        // Redirect to TokensController which handles API calls so HomeController changes don't affect other views
+        return RedirectToAction("Index", "Tokens");
     }
+
+    
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] /*Indica que la página de error no debe guardarse en caché*/
 
     /*ACCIÓN ERROR*/
@@ -177,6 +155,12 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
         }
 
         // Regresa la misma vista pero ahora con los nuevos datos
+        // Save user id to session so other pages (Tokens) can read it
+        if (!string.IsNullOrEmpty(id))
+        {
+            HttpContext.Session.SetString("UserId", id);
+        }
+
         return View("Perfil");
     }
 
