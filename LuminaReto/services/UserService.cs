@@ -65,10 +65,7 @@ public class UserService : IUserService
         return int.Parse(responseJson);
     }
 
-    public async Task CrearTransaccion(int userId,
-    int recompensaId,
-    int monto,
-    string descripcion)
+    public async Task CrearTransaccion(int userId,int recompensaId,int monto,string descripcion)
 {
     var url =
         "https://127.0.0.1:5010/transaccion/"

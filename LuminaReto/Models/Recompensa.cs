@@ -10,4 +10,8 @@ public class Recompensa
     public string Imagen { get; set; }
 
     public int Costo { get; set; }
+
+    public bool PuedeCanjear { get; set; }
+
+    public int TokensFaltantes { get; set; }
 }

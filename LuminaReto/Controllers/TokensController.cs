@@ -16,12 +16,11 @@ namespace LuminaReto.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string filter = "todas")
+        public async Task<IActionResult> Index(string DateFilter = "todas", string TypeFilter = "todas")
         {
-            //FECHA PARA EL ENDPOINT
             string fecha = "2000-01-01";
 
-            switch (filter)
+            switch (DateFilter)
             {
                 case "hoy":
                     fecha = DateTime.Today.ToString("yyyy-MM-dd");
@@ -43,24 +42,24 @@ namespace LuminaReto.Controllers
             int tokensActuales = points;
 
             // Tokens ganados
-            int ganados = transactions
-                .Where(t => t.Monto > 0)
-                .Sum(t => t.Monto);
+            int ganados = transactions.Where(t => t.Monto > 0).Sum(t => t.Monto);
 
             // Próxima recompensa
-            var proxima = rewards
-                .Where(r => r.Costo > tokensActuales)
-                .OrderBy(r => r.Costo)
-                .FirstOrDefault();
+            var proxima = rewards.Where(r => r.Costo > tokensActuales).OrderBy(r => r.Costo).FirstOrDefault();
+
+            foreach (var recompensa in rewards)
+            {
+                recompensa.PuedeCanjear = points >= recompensa.Costo;
+                recompensa.TokensFaltantes = recompensa.Costo - points;
+            }
 
             int costoProxima = proxima?.Costo ?? tokensActuales;
 
             // Progreso
             int target = Math.Max(costoProxima, tokensActuales);
 
-            int porcentaje = target > 0
-                ? (int)((double)tokensActuales / target * 100)
-                : 0;
+            int porcentaje = target > 0 
+                ? (int)((double)tokensActuales / target * 100) : 0;
 
             int faltantes = target - tokensActuales;
 
@@ -77,8 +76,6 @@ namespace LuminaReto.Controllers
                 ListaRecompensas = rewards
             };
 
-            ViewBag.Filter = filter;
-
             return View("~/Views/Home/Tokens.cshtml", model);
         }
 
@@ -86,24 +83,30 @@ namespace LuminaReto.Controllers
         {
             return RedirectToAction(nameof(Index), "Home");
         }
+
         [HttpPost]
-public async Task<IActionResult> Canjear(int recompensaId)
-{
-    int userId = 1;
-
-    var rewards = await _service.GetRecompensas();
-
-    var recompensa = rewards
-        .FirstOrDefault(r => r.Id == recompensaId);
-
-    if (recompensa == null)
+    public async Task<IActionResult> Canjear(int recompensaId)
     {
-        return RedirectToAction(nameof(Index));
-    }
+        int userId = 1;
 
-    await _service.UpdatePoints(userId, -recompensa.Costo);
+        var rewards = await _service.GetRecompensas();
 
-    await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa
+        var recompensa = rewards.FirstOrDefault(r => r.Id == recompensaId);
+
+        if (recompensa == null)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+        var points = await _service.GetUserPoints(1);
+
+        if (points < recompensa.Costo)
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        await _service.UpdatePoints(userId, -recompensa.Costo);
+
+        await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa
     );
 
     return RedirectToAction(nameof(Index));
