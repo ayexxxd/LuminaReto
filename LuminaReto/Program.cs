@@ -12,14 +12,13 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
-// HttpClient apuntando a la API Flask
-builder.Services.AddHttpClient("LuminaApi", client =>
+// HttpClient tipado para ClasificacionService (API Flask)
+builder.Services.AddHttpClient<IClasificacionService, ClasificacionService>(client =>
 {
     client.BaseAddress = new Uri("https://127.0.0.1:5001");
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
-    // Necesario porque la API usa certificado autofirmado
     ServerCertificateCustomValidationCallback =
         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
