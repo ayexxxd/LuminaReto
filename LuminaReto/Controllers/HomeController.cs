@@ -1,18 +1,13 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace LuminaReto.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
+    /*ACCIÓN INDEX*/
     public IActionResult Index()
     {
         ModeloInicioGeneral modelo = new ModeloInicioGeneral();
@@ -42,6 +37,7 @@ public class HomeController : Controller
         return View(modelo);
     }
 
+    /*ACCIÓN FORMULARIOS*/
     public IActionResult Formularios()
     {
         var formularios = new List<Formulario>
@@ -110,27 +106,26 @@ public class HomeController : Controller
         return View(formularios);
     }
 
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
+    /*ACCIÓN JUEGO*/
     public IActionResult Juego()
     {
         return View();
     }
 
-    public IActionResult Tokens()
+    /*ACCIÓN TOKENS — redirige al controlador de tokens que maneja la API*/
+    public async Task<IActionResult> Tokens()
     {
-        return View();
+        return RedirectToAction("Index", "Tokens");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    /*ACCIÓN ERROR*/
     public IActionResult Error()
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
+    /*ACCIÓN LOGIN — guarda el id de usuario en sesión*/
     [HttpPost]
     public IActionResult Login()
     {
@@ -138,6 +133,7 @@ public class HomeController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    /*ACCIÓN PERFIL POST — recibe datos del formulario y los guarda*/
     [HttpPost]
     public IActionResult Perfil(string nombre, string correo, string departamento, string id, string modo)
     {
@@ -155,9 +151,16 @@ public class HomeController : Controller
             ViewData["Editable"] = false;
         }
 
+        // Guarda el id en sesión para que otras páginas (Tokens) puedan leerlo
+        if (!string.IsNullOrEmpty(id))
+        {
+            HttpContext.Session.SetString("UserId", id);
+        }
+
         return View("Perfil");
     }
 
+    /*ACCIÓN PERFIL GET — muestra la página la primera vez*/
     public IActionResult Perfil()
     {
         ViewData["NombreCliente"] = "";

@@ -1,0 +1,412 @@
+body {
+    background-color: #f3f6fb;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+}
+
+.tokens-page {
+    width: min(1180px, 96%);
+    margin: 28px auto;
+    /* inherit global body font to match other pages */
+    font-family: inherit;
+    color: #1f2937;
+}
+
+.tokens-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    margin: 0 0 18px;
+}
+
+.tokens-resumen {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.token-card {
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 20px rgba(19, 43, 71, 0.06);
+}
+
+.token-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.token-card-head p {
+    margin: 0;
+    color: #667085;
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.token-card-head img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.token-card h2 {
+    margin: 0;
+    font-size: 1.7rem;
+    letter-spacing: 0.4px;
+}
+
+.token-card span {
+    display: inline-block;
+    margin-top: 8px;
+    font-size: 0.82rem;
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.card-primary h2 {
+    color: #0d5aad;
+}
+
+.card-positive h2,
+.card-positive span {
+    color: #0d9f51;
+}
+
+.card-goal h2 {
+    color: #8b5cf6; /* lighter purple for better contrast */
+}
+
+.panel-tokens {
+    background: #ffffff;
+    border: 1px solid #dbe2ea;
+    border-radius: 14px;
+    padding: 14px;
+    box-shadow: 0 8px 20px rgba(19, 43, 71, 0.06);
+    margin-bottom: 16px;
+}
+
+.panel-tokens h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+.chart-panel h3 {
+    margin-bottom: 10px;
+}
+
+/* Chart container and placeholder sizing tweaks */
+.chart-container {
+    width: 100%;
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px 0;
+}
+
+.chart-icon {
+    width: 100%;
+    max-width: 1600px;
+
+    height: auto;
+
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .chart-icon {
+        width: 300px;
+        height: auto;
+    }
+}
+
+.transactions-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.transactions-filters {
+    display: flex;
+    gap: 8px;
+}
+.transactions-panel {
+    height: 510px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.transactions-filters .form-select {
+    width: auto;
+    min-width: 170px;
+    font-size: 0.85rem;
+}
+
+.transactions-list,
+.rewards-window {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 14px;
+    padding-right: 16px; /* breathing room from scrollbar */
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
+}
+
+.transaction-item {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 14px 0;
+
+    border-top: 1px solid #ebeff5;
+}
+
+.transaction-item:first-child {
+    border-top: 0;
+}
+
+.tx-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tx-text h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.tx-text p {
+    margin: 2px 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.tx-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 999px;
+    background-color: #ecf2f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tx-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
+
+.amount-positive {
+    color: #0a9f4c;
+    font-size: 0.95rem;
+}
+
+.amount-negative {
+    color: #d11f34;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 992px) {
+    .tokens-resumen {
+        grid-template-columns: 1fr;
+    }
+
+    .transactions-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .transactions-filters {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+/* Recompensas */
+.rewards-panel h3 { margin-bottom: 12px; }
+.rewards-grid {
+    display: grid;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+}
+.reward-card {
+    position: relative;
+    border-radius: 12px;
+    padding: 12px;
+    background: #fff;
+    border: 2px solid #e6edf8;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    min-height: 132px;
+    box-shadow: 0 8px 20px rgba(19, 43, 71, 0.05);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+.reward-card.reward-active {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+.reward-card.reward-disabled {
+    background: #f5f5f5;
+    border-color: #ececec;
+    opacity: 0.55;
+}
+.reward-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(13,90,173,0.08); display:flex; align-items:center; justify-content:center; }
+.reward-icon img { width: 30px; height: 30px; object-fit: contain; opacity: 0.95; }
+.reward-card h4 { margin: 0; text-align: center; font-size: 0.9rem; font-weight: 700; color: #10243b; line-height: 1.15; }
+.reward-price { color: #b36a00; font-weight: 700; font-size: 0.85rem; }
+.btn-red {
+    width: 100%;
+    margin-top: 4px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: #fff;
+    background: linear-gradient(135deg, #0f5eb5, #1f79df);
+    box-shadow: 0 8px 16px rgba(15, 94, 181, 0.2);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+.btn-red:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(15, 94, 181, 0.26);
+    filter: brightness(1.03);
+}
+.btn-red:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 12px rgba(15, 94, 181, 0.18);
+}
+.btn-disabled {
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid #d7dde6;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: #7b8794;
+    background: #eef2f7;
+    box-shadow: none;
+    cursor: not-allowed;
+}
+
+
+
+@media (min-width: 1200px) {
+    .rewards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .rewards-window {
+        height: auto;
+        overflow: visible;
+        padding-right: 16px;
+    }
+}
+
+/* Scrollbars */
+.transactions-list::-webkit-scrollbar,
+.rewards-window::-webkit-scrollbar {
+    width: 10px;
+}
+
+.transactions-list::-webkit-scrollbar-thumb,
+.rewards-window::-webkit-scrollbar-thumb {
+    background: #c7d3e3;
+    border-radius: 999px;
+}
+
+.transactions-list::-webkit-scrollbar-track,
+.rewards-window::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/*alerts*/
+.MESSAGE {
+    position: fixed;
+
+    top: 70px;
+    right: 20px;
+
+    width: fit-content;
+    max-width: 300px;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    z-index: 9999;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    backdrop-filter: blur(8px);
+
+    animation:
+        message-slide 0.3s ease,
+        message-fade 0.5s ease 9.5s forwards;
+}
+
+.MESSAGE-success {
+    background: rgba(17, 24, 39, 0.82);
+
+    color: white;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+@keyframes message-slide {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes message-fade {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+    }
+}
+.tx-positive {
+    background-color: rgba(16, 185, 129, 0.14);
+}
+
+.tx-negative {
+    background-color: rgba(239, 68, 68, 0.14);
+}
+
+.tx-positive img {
+    filter: brightness(0) saturate(100%) invert(52%) sepia(83%) saturate(455%) hue-rotate(100deg) brightness(92%) contrast(88%);
+}
+
+.tx-negative img {
+    filter: brightness(0) saturate(100%) invert(39%) sepia(98%) saturate(1672%) hue-rotate(336deg) brightness(97%) contrast(95%);
+}

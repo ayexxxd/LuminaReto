@@ -2,14 +2,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// Sesión
-builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout        = TimeSpan.FromHours(8);
-    options.Cookie.HttpOnly    = true;
-    options.Cookie.IsEssential = true;
-});
+// Servicio UserService con HttpClient (requiere certificado autofirmado)
+builder.Services
+    .AddHttpClient<IUserService, UserService>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
 
 // HttpClient apuntando a la API Flask
 builder.Services.AddHttpClient("LuminaApi", client =>
@@ -23,6 +24,15 @@ builder.Services.AddHttpClient("LuminaApi", client =>
         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
+// Configuración de sesión
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout        = TimeSpan.FromHours(8);
+    options.Cookie.HttpOnly    = true;
+    options.Cookie.IsEssential = true;
+});
+
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -33,11 +43,10 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseSession(); // ← antes de UseAuthorization
+app.UseSession(); // antes de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
