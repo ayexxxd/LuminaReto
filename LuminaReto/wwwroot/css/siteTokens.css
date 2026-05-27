@@ -95,39 +95,6 @@ body {
     font-weight: 700;
 }
 
-.tokens-progress .progress-head {
-    display: flex;
-    justify-content: space-between;
-    gap: 16px;
-    align-items: baseline;
-    margin-bottom: 12px;
-}
-
-.tokens-progress .progress-head strong {
-    font-size: 0.9rem;
-    color: #374151;
-}
-
-.progress-track {
-    width: 100%;
-    height: 11px;
-    border-radius: 999px;
-    background: #dfe6ef;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, #0f5eb5, #3288df);
-}
-
-.progress-meta {
-    margin: 12px 0 0;
-    color: #5b6472;
-    font-size: 0.82rem;
-}
-
 .chart-panel h3 {
     margin-bottom: 10px;
 }
@@ -153,71 +120,11 @@ body {
     display: block;
 }
 
-#tokensChart {
-    width: 100% !important;
-    height: 320px !important;
-
-    display: block;
-
-    border-radius: 8px;
-    background: linear-gradient(180deg,#f8fbff,#ffffff);
-}
-
-
-
-canvas {
-    position: relative;
-    z-index: 2;
-}
 @media (max-width: 768px) {
     .chart-icon {
         width: 300px;
         height: auto;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
     }
-}
-
-.chart-wrapper {
-    overflow-x: auto;
-}
-
-.token-chart {
-    width: 100%;
-    min-width: 760px;
-    display: block;
-}
-
-.chart-labels {
-    min-width: 760px;
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 8px;
-    margin-top: 4px;
-}
-
-.chart-labels span {
-    text-align: center;
-    color: #6b7280;
-    font-size: 0.78rem;
-}
-
-.grid-line {
-    stroke: #e5eaf1;
-    stroke-width: 1;
-}
-
-.line-main {
-    fill: none;
-    stroke: #0f5eb5;
-    stroke-width: 3;
-}
-
-.line-point {
-    fill: #0f5eb5;
-    stroke: #ffffff;
-    stroke-width: 2;
 }
 
 .transactions-head {
@@ -238,14 +145,6 @@ canvas {
     display: flex;
     flex-direction: column;
 }
-.form-label {
-    display: block;
-    margin: 0 0 8px;
-    font-size: 0.78rem;
-    font-weight: 700;
-    color: #6b7280;
-    letter-spacing: 0.02em;
-}
 
 .transactions-filters .form-select {
     width: auto;
@@ -257,9 +156,13 @@ canvas {
 .rewards-window {
     flex: 1;
     min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 14px;
+    padding-right: 16px; /* breathing room from scrollbar */
+    box-sizing: border-box;
+    scrollbar-gutter: stable;
 }
-
-
 
 .transaction-item {
     display: flex;
@@ -271,10 +174,6 @@ canvas {
     padding: 14px 0;
 
     border-top: 1px solid #ebeff5;
-}
-
-.transaction-item:first-child {
-    border-top: 0;
 }
 
 .transaction-item:first-child {
@@ -316,18 +215,6 @@ canvas {
     object-fit: contain;
 }
 
-.tx-main h4 {
-    margin: 0;
-    font-size: 0.95rem;
-    font-weight: 700;
-}
-
-.tx-main p {
-    margin: 2px 0 0;
-    color: #6b7280;
-    font-size: 0.8rem;
-}
-
 .amount-positive {
     color: #0a9f4c;
     font-size: 0.95rem;
@@ -356,25 +243,6 @@ canvas {
 
 /* Recompensas */
 .rewards-panel h3 { margin-bottom: 12px; }
-.transactions-list {
-    flex: 1;
-    min-height: 0;
-} 
-.transactions-list {
-    flex: 1;
-
-    min-height: 0;
-
-    overflow-y: auto;
-
-    overflow-x: hidden;
-
-    padding-right: 12px;
-
-    box-sizing: border-box;
-
-    scrollbar-gutter: stable;
-}
 .rewards-grid {
     display: grid;
 
@@ -396,10 +264,6 @@ canvas {
     box-shadow: 0 8px 20px rgba(19, 43, 71, 0.05);
     transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
-.reward-card-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 24px rgba(7, 56, 113, 0.09);
-}
 .reward-card.reward-active {
     background: #eff6ff;
     border-color: #2563eb;
@@ -414,8 +278,6 @@ canvas {
 .reward-icon img { width: 30px; height: 30px; object-fit: contain; opacity: 0.95; }
 .reward-card h4 { margin: 0; text-align: center; font-size: 0.9rem; font-weight: 700; color: #10243b; line-height: 1.15; }
 .reward-price { color: #b36a00; font-weight: 700; font-size: 0.85rem; }
-.reward-need { width: 100%; text-align: center; background: #dbeaf8; color: #244b86; padding: 8px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; }
-.reward-btn,
 .btn-red {
     width: 100%;
     margin-top: 4px;
@@ -429,13 +291,11 @@ canvas {
     box-shadow: 0 8px 16px rgba(15, 94, 181, 0.2);
     transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
 }
-.reward-btn:hover,
 .btn-red:hover {
     transform: translateY(-2px);
     box-shadow: 0 12px 20px rgba(15, 94, 181, 0.26);
     filter: brightness(1.03);
 }
-.reward-btn:active,
 .btn-red:active {
     transform: translateY(0);
     box-shadow: 0 6px 12px rgba(15, 94, 181, 0.18);
@@ -453,7 +313,6 @@ canvas {
     box-shadow: none;
     cursor: not-allowed;
 }
-.reward-card.disabled .reward-btn { display: none; }
 
 
 
@@ -463,10 +322,6 @@ canvas {
         height: auto;
         overflow: visible;
         padding-right: 16px;
-    }
-    .dashboard-bottom > .rewards-panel {
-        align-self: start;
-        height: auto;
     }
 }
 
@@ -540,16 +395,18 @@ canvas {
         visibility: hidden;
     }
 }
+.tx-positive {
+    background-color: rgba(16, 185, 129, 0.14);
+}
 
+.tx-negative {
+    background-color: rgba(239, 68, 68, 0.14);
+}
 
+.tx-positive img {
+    filter: brightness(0) saturate(100%) invert(52%) sepia(83%) saturate(455%) hue-rotate(100deg) brightness(92%) contrast(88%);
+}
 
-.transactions-list,
-.rewards-window {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
-    padding-left: 14px;
-    padding-right: 16px; /* breathing room from scrollbar */
-    box-sizing: border-box;
-    scrollbar-gutter: stable;
+.tx-negative img {
+    filter: brightness(0) saturate(100%) invert(39%) sepia(98%) saturate(1672%) hue-rotate(336deg) brightness(97%) contrast(95%);
 }
