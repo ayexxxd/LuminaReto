@@ -1,7 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-// register application services - UserService requires HttpClient, register as typed client
+
+// Servicio UserService con HttpClient (requiere certificado autofirmado)
 builder.Services
     .AddHttpClient<IUserService, UserService>()
     .ConfigurePrimaryHttpMessageHandler(() =>
@@ -11,26 +12,38 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
-// enable session support (must be registered before Build)
+// HttpClient apuntando a la API Flask
+builder.Services.AddHttpClient("LuminaApi", client =>
+{
+    client.BaseAddress = new Uri("https://127.0.0.1:5001");
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    // Necesario porque la API usa certificado autofirmado
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
 
+// Configuración de sesión
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout        = TimeSpan.FromHours(8);
+    options.Cookie.HttpOnly    = true;
+    options.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error"); 
+    app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
 }
 
 app.UseHttpsRedirection();
 app.UseRouting();
-
-// enable session middleware before authorization
-app.UseSession();
-
+app.UseSession(); // antes de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -38,6 +51,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

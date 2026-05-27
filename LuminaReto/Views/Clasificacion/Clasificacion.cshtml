@@ -1,0 +1,303 @@
+@model LuminaReto.Models.ClasificacionViewModel
+@{
+    ViewData["Title"] = "Clasificación";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteClasificacion.css" asp-append-version="true" />
+}
+
+<div class="py-4">
+
+    @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+    {
+        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+            <span>⚠️</span>
+            <span>@Model.ErrorMessage</span>
+        </div>
+    }
+
+    @* Encabezado + Badge de temporada *@
+    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
+        <div>
+            <h1 class="fw-bold mb-1">Tabla de Clasificación</h1>
+            <p class="text-muted mb-0">Compite con tus compañeros y sube en el ranking</p>
+        </div>
+        <span class="badge rounded-pill border border-primary text-primary bg-white fs-6 px-3 py-2 d-inline-flex align-items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+                <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+                <path d="M4 22h16"/>
+                <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+                <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+                <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+            </svg>
+            Temporada @DateTime.Now.ToString("MMMM yyyy", new System.Globalization.CultureInfo("es-MX"))
+        </span>
+    </div>
+
+    @* Tarjetas del usuario actual *@
+    @if (Model.UsuarioActual != null)
+    {
+        <div class="row row-cols-2 row-cols-md-5 g-3 mb-4">
+
+            <div class="col">
+                <div class="card stat-card h-100 shadow-sm">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <div class="stat-icon-box stat-icon-blue">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
+                                <polyline points="16 7 22 7 22 13"/>
+                            </svg>
+                        </div>
+                        <div class="stat-text">
+                            <p class="stat-label">Tu Posición</p>
+                            <p class="stat-value text-primary">#@Model.UsuarioActual.Posicion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card stat-card h-100 shadow-sm">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <div class="stat-icon-box stat-icon-green">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </div>
+                        <div class="stat-text">
+                            <p class="stat-label">Empleado</p>
+                            <p class="stat-value-sm text-truncate">@Model.UsuarioActual.Nombre</p>
+                            <small class="text-muted">Tu perfil</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card stat-card h-100 shadow-sm">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <div class="stat-icon-box stat-icon-gold">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                            </svg>
+                        </div>
+                        <div class="stat-text">
+                            <p class="stat-label">Tus Tokens</p>
+                            <p class="stat-value text-gold">@Model.UsuarioActual.WhirlTokens.ToString("N0")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card stat-card h-100 shadow-sm">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <div class="stat-icon-box stat-icon-purple">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="6" y1="11" x2="10" y2="11"/>
+                                <line x1="8" y1="9" x2="8" y2="13"/>
+                                <line x1="15" y1="12" x2="15.01" y2="12"/>
+                                <line x1="18" y1="10" x2="18.01" y2="10"/>
+                                <path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-text">
+                            <p class="stat-label">Puntos Juego</p>
+                            <p class="stat-value">@Model.UsuarioActual.TotalPuntos.ToString("N0")</p>
+                            <small class="text-muted">En total</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card stat-card h-100 shadow-sm">
+                    <div class="card-body d-flex align-items-center gap-3">
+                        <div class="stat-icon-box stat-icon-fire">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
+                            </svg>
+                        </div>
+                        <div class="stat-text">
+                            <p class="stat-label">Racha Actual</p>
+                            <p class="stat-value text-fire">@Model.UsuarioActual.RachaActual días</p>
+                            <small class="text-muted">¡Sigue así!</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    }
+
+    @* Top 3 *@
+    @if (Model.Top3 != null && Model.Top3.Count >= 3)
+    {
+        var primero = Model.Top3[0];
+        var segundo = Model.Top3[1];
+        var tercero = Model.Top3[2];
+
+        <div class="card text-white mb-4 shadow" style="background: linear-gradient(135deg, #0D47A1, #1976D2);">
+            <div class="card-body py-4">
+                <h2 class="text-center fw-bold mb-4">🏆 Top 3 Empleados 🏆</h2>
+
+                <div class="row g-3 align-items-end">
+
+                    @* Segundo lugar *@
+                    <div class="col-12 col-md-4">
+                        <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
+                            <div class="card-body py-3">
+                                <div class="lb-medal-circle lb-medal-silver mb-2">🥈</div>
+                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@segundo.Iniciales</div>
+                                <span class="badge badge-silver rounded-pill px-3 mb-2 d-inline-block">#2</span>
+                                <p class="fw-bold mb-1">@segundo.Nombre</p>
+                                <p class="fs-4 fw-bold mb-3">@segundo.WhirlTokens.ToString("N0")</p>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    <span class="badge bg-white bg-opacity-25">@segundo.TotalPuntos Pts</span>
+                                    <span class="badge bg-white bg-opacity-25">@segundo.RachaActual Racha</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Primer lugar *@
+                    <div class="col-12 col-md-4">
+                        <div class="card bg-white bg-opacity-25 border border-white border-opacity-50 text-white text-center">
+                            <div class="card-body py-4">
+                                <div class="lb-crown-circle mb-2">👑</div>
+                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white" style="width:80px;height:80px;font-size:1.7rem;">@primero.Iniciales</div>
+                                <span class="badge badge-gold rounded-pill px-3 mb-2 d-inline-block">#1</span>
+                                <p class="fw-bold mb-1">@primero.Nombre</p>
+                                <p class="fs-3 fw-bold mb-3">@primero.WhirlTokens.ToString("N0")</p>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    <span class="badge bg-white bg-opacity-25">@primero.TotalPuntos Pts</span>
+                                    <span class="badge bg-white bg-opacity-25">@primero.RachaActual Racha</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @* Tercer lugar *@
+                    <div class="col-12 col-md-4">
+                        <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
+                            <div class="card-body py-3">
+                                <div class="lb-medal-circle lb-medal-bronze mb-2">🥉</div>
+                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@tercero.Iniciales</div>
+                                <span class="badge badge-bronze rounded-pill px-3 mb-2 d-inline-block">#3</span>
+                                <p class="fw-bold mb-1">@tercero.Nombre</p>
+                                <p class="fs-4 fw-bold mb-3">@tercero.WhirlTokens.ToString("N0")</p>
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    <span class="badge bg-white bg-opacity-25">@tercero.TotalPuntos Pts</span>
+                                    <span class="badge bg-white bg-opacity-25">@tercero.RachaActual Racha</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+
+    @* Tabla completa - emojis conservados *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-body p-0">
+            <h2 class="fw-bold p-3 mb-0 border-bottom">Clasificación Completa</h2>
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Posición</th>
+                            <th>Empleado</th>
+                            <th>Tokens</th>
+                            <th class="d-none d-md-table-cell">Puntos Juego</th>
+                            <th class="d-none d-md-table-cell">Racha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Ranking != null && Model.Ranking.Any())
+                        {
+                            @foreach (var empleado in Model.Ranking)
+                            {
+                                bool esYo = Model.UsuarioActual != null
+                                            && empleado.IdUsuario == Model.UsuarioActual.IdUsuario;
+
+                                <tr class="@(esYo ? "fila-yo" : "")">
+
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span>@(empleado.Posicion switch { 1 => "👑", 2 => "🥈", 3 => "🥉", _ => "" })</span>
+                                            <span class="fw-bold text-secondary">#@empleado.Posicion</span>
+                                        </div>
+                                    </td>
+
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <div class="lb-avatar @(esYo ? "bg-primary text-white" : "bg-primary bg-opacity-10 text-primary")">
+                                                @empleado.Iniciales
+                                            </div>
+                                            <div>
+                                                <div class="fw-semibold">@empleado.Nombre</div>
+                                                @if (esYo) { <small class="text-primary fw-semibold">Tú</small> }
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                    <td class="align-middle">
+                                        <span class="text-gold">⭐ @empleado.WhirlTokens.ToString("N0")</span>
+                                    </td>
+
+                                    <td class="align-middle text-secondary d-none d-md-table-cell">@empleado.TotalPuntos.ToString("N0")</td>
+
+                                    <td class="align-middle d-none d-md-table-cell">
+                                        <span class="text-fire">🔥 @empleado.RachaActual días</span>
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    ℹ️ No hay datos de clasificación disponibles en este momento.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    @* Cómo ganar tokens *@
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h3 class="fw-bold mb-3">🏆 Cómo Ganar Tokens</h3>
+            <div class="row row-cols-1 row-cols-md-3 g-3">
+                <div class="col">
+                    <div class="card border-primary text-center p-3 h-100" style="background-color:#E3F2FD;">
+                        <p class="fs-2 fw-bold text-primary mb-1">+150</p>
+                        <p class="text-secondary mb-0">Por cada formulario completado</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center p-3 h-100" style="background-color:#FFF8E1; border-color:#FFE082;">
+                        <p class="fs-2 fw-bold text-gold mb-1">+50</p>
+                        <p class="text-secondary mb-0">Por cada partida en el juego</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-center p-3 h-100" style="background-color:#FFF3E0; border-color:#FFCC80;">
+                        <p class="fs-2 fw-bold text-fire mb-1">+200</p>
+                        <p class="text-secondary mb-0">Bonus por racha de 7 días</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
