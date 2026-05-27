@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
-using System.Text.Json;
 
 namespace LuminaReto.Controllers;
 
 public class ClasificacionController : Controller
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IClasificacionService _clasificacionService;
 
-    public ClasificacionController(IHttpClientFactory httpClientFactory)
+    public ClasificacionController(IClasificacionService clasificacionService)
     {
-        _httpClientFactory = httpClientFactory;
+        _clasificacionService = clasificacionService;
     }
 
     public async Task<IActionResult> Clasificacion()
@@ -19,30 +18,15 @@ public class ClasificacionController : Controller
 
         var idUsuario = HttpContext.Session.GetInt32("IdUsuario");
         if (idUsuario is null)
-        {
             return RedirectToAction("Index", "Home");
-        }
 
         try
         {
-            var client   = _httpClientFactory.CreateClient("LuminaApi");
-            var response = await client.GetAsync($"/ranking?id_usuario={idUsuario.Value}&limite=20");
-
-            if (!response.IsSuccessStatusCode)
-            {
-                modelo.ErrorMessage = $"Error al obtener el ranking ({(int)response.StatusCode})";
-                return View(modelo);
-            }
-
-            var json = await response.Content.ReadAsStringAsync();
-            var dto = JsonSerializer.Deserialize<RankingResponseDto>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
+            var dto = await _clasificacionService.GetRanking(idUsuario.Value);
 
             if (dto is null)
             {
-                modelo.ErrorMessage = "dto es null";
+                modelo.ErrorMessage = "Error al obtener el ranking";
                 return View(modelo);
             }
 
@@ -68,11 +52,10 @@ public class ClasificacionController : Controller
                 TotalPuntos = dto.UsuarioActual.TotalPuntos,
                 RachaActual = dto.UsuarioActual.RachaActual
             };
-
         }
         catch (Exception ex)
         {
-            modelo.ErrorMessage = ex.Message; // temporal para debug
+            modelo.ErrorMessage = ex.Message;
         }
 
         return View(modelo);
