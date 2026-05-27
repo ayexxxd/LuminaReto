@@ -48,7 +48,7 @@
         </article>
     </section>
 
- <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+    <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
         <h3>Historial de Tokens</h3><h6>(Últimos 7 días)</h6>
         <div class="chart-container">
             <img src="~/imagenes/placeholder.png"alt="Gráfico"class="chart-icon" />
@@ -61,53 +61,50 @@
         <div class="transactions-head">
             <h3>Transacciones Recientes</h3>
             <div class="transactions-filters">
-            <form method="get" asp-controller="Tokens" asp-action="Index">
-                <div class="transactions-filters">
-                    <select name="DateFilter" class="form-select" onchange="this.form.submit()">
-                        <option value="todas" selected="@(Model.DateFilter == "todas")">Filtro por fecha</option>
-                        <option value="hoy" selected="@(Model.DateFilter == "hoy")">Hoy</option>
-                        <option value="semana" selected="@(Model.DateFilter == "semana")">Esta semana</option>
-                        <option value="mes" selected="@(Model.DateFilter == "mes")">Este mes</option>
-                    </select>
+                <form method="get" asp-controller="Tokens" asp-action="Index">
+                    <div class="transactions-filters">
+                        <select name="DateFilter" class="form-select" onchange="this.form.submit()">
+                            <option value="todas" selected="@(Model.DateFilter == "todas")">Filtro por fecha</option>
+                            <option value="hoy" selected="@(Model.DateFilter == "hoy")">Hoy</option>
+                            <option value="semana" selected="@(Model.DateFilter == "semana")">Esta semana</option>
+                            <option value="mes" selected="@(Model.DateFilter == "mes")">Este mes</option>
+                        </select>
                     
-                    <select name="TypeFilter" class="form-select" onchange="this.form.submit()">
-                        <option value="todas" selected="@(Model.TypeFilter == "todas")">Filtro por tipo</option>
-                        <option value="ganadas" selected="@(Model.TypeFilter == "ganadas")">Adquiridas</option>
-                        <option value="gastadas" selected="@(Model.TypeFilter == "gastadas")">Gastadas</option>
-                    </select>
-                </div>
-            </form>
+                        <select name="TypeFilter" class="form-select" onchange="this.form.submit()">
+                            <option value="todas" selected="@(Model.TypeFilter == "todas")">Filtro por tipo</option>
+                            <option value="ganadas" selected="@(Model.TypeFilter == "ganadas")">Adquiridas</option>
+                            <option value="gastadas" selected="@(Model.TypeFilter == "gastadas")">Gastadas</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="transactions-list" id="listaTransacciones">
-    @foreach (var t in Model.ListaTransacciones)
-    {
-        <article class="transaction-item">
-            <div class="tx-main">
-                <div class="tx-icon @(t.Monto > 0 ? "tx-positive" : "tx-negative")">
-                    @if (t.Monto > 0)
-                    {
-                        <img src="~/imagenes/trend.png" alt="Ganada" />
-                    }
-                    else
-                    {
-                        <img src="~/imagenes/downtrend.png" alt="Gastada" />}
-                </div>
+        <div class="transactions-list" id="listaTransacciones">
+            @foreach (var t in Model.ListaTransacciones)
+            {
+                <article class="transaction-item">
+                    <div class="tx-main">
+                        <div class="tx-icon @(t.Monto > 0 ? "tx-positive" : "tx-negative")">
+                            @if (t.Monto > 0)
+                            {
+                                <img src="~/imagenes/trend.png" alt="Ganada" />
+                            }
+                            else
+                            {
+                                <img src="~/imagenes/downtrend.png" alt="Gastada" />}
+                        </div>
 
-                <div class="tx-text">
-                    <h4>@t.Descripcion</h4>
-                    <p>@t.Fecha.Substring(4, 12)</p><!--el valor de r.Fecha es algo como Sun May 05 2026 14:48:00 GMT-0500 y entonces solo quiero mostrar May 05 2026-->
-                </div>
-            </div>
+                        <div class="tx-text">
+                            <h4>@t.Descripcion</h4>
+                            <p>@t.Fecha.Substring(4, 12)</p><!--el valor de r.Fecha es algo como Sun May 05 2026 14:48:00 GMT-0500 y entonces solo quiero mostrar May 05 2026-->
+                        </div>
+                    </div>
 
-            <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">
-                @(t.Monto > 0 ? "+" : "")
-                @t.Monto
-            </div>
-        </article>
-    }
-    </div>
-</section>
+                    <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">@(t.Monto > 0 ? "+" : "")@t.Monto</div>
+                </article>
+            }
+        </div>
+    </section>
 
     <section class="panel-tokens rewards-panel"><!-- Recompensas OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
         <h3>Tienda</h3>
