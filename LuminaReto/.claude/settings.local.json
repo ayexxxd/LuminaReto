@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"C:\\\\Users\\\\leand\\\\Documents\\\\VScode\\\\semestre4\" -name \"*.sql\" -type f)",
+      "Read(//c/Users/leand/Documents/VScode/semestre4/**)"
+    ]
+  }
+}

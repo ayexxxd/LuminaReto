@@ -1,26 +1,23 @@
-using System.Diagnostics; /*Permite usar herramientas de diagnóstico, aquí se usa para obtener información del error con Activity*/
-using Microsoft.AspNetCore.Mvc; /*Importa las herramientas principales de MVC, como Controller, IActionResult y View*/
-using LuminaReto.Models; /*Permite usar los modelos que están en la carpeta Models*/
+using System.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using LuminaReto.Models;
 
-namespace LuminaReto.Controllers; /*Indica que este archivo pertenece al área de Controllers del proyecto LuminaReto*/
+namespace LuminaReto.Controllers;
 
-public class HomeController : Controller /*Crea el controlador HomeController y hereda de Controller para poder manejar vistas y respuestas web*/
+public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger; /*Crea una variable privada para registrar información, errores o eventos del controlador*/
+    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger) /*Constructor del controlador, se ejecuta cuando se crea HomeController*/
+    public HomeController(ILogger<HomeController> logger)
     {
-        _logger = logger; /*Guarda el logger recibido dentro de la variable _logger para poder usarlo después*/
+        _logger = logger;
     }
 
-    /*----------------------------------------------------------------*/
-
-    /*ACCIÓN INDEX*/
-    public IActionResult Index() /*Representa la página principal o inicio*/
+    public IActionResult Index()
     {
-        ModeloInicioGeneral modelo = new ModeloInicioGeneral(); /*Crea un objeto del modelo general donde se guardará toda la información del inicio*/
+        ModeloInicioGeneral modelo = new ModeloInicioGeneral();
 
-        modelo.ListaEstadisticas = new List<Estadisticas>() /*Con esto se crea la lista de tarjetas de estadísticas*/
+        modelo.ListaEstadisticas = new List<Estadisticas>()
         {
             new Estadisticas { Titulo = "Whirl-Tokens Totales" , Valor = "1,250" , Icono = "imagenes/WTokens.png"},
             new Estadisticas { Titulo = "Formularios Completados" , Valor = "12" , Icono = "imagenes/Formulario.png"},
@@ -28,26 +25,23 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
             new Estadisticas { Titulo = "Racha Activa" , Valor = "7 días" , Icono = "imagenes/Racha.png"}
         };
 
-        modelo.ListaAccionesRapidas = new List<AccionesRapidas>() /*Crea la lista de acciones rápidas que serán clickeables y te llevan a su respectiva página*/
+        modelo.ListaAccionesRapidas = new List<AccionesRapidas>()
         {
             new AccionesRapidas { Texto = "Completar un nuevo formulario" , Controlador = "Home" , Accion = "Formularios" , Icono = "imagenes/Formulario.png"},
             new AccionesRapidas { Texto = "Jugar ahora" , Controlador = "Home" , Accion = "Juego" , Icono = "imagenes/Racha.png"},
             new AccionesRapidas { Texto = "Ver mis Whirl-Tokens" , Controlador = "Home" , Accion = "Tokens" , Icono = "imagenes/WTokens.png"}
         };
 
-        modelo.ListaActividadReciente = new List<ActividadReciente>() /*Crea la lista de actividades recientes*/
+        modelo.ListaActividadReciente = new List<ActividadReciente>()
         {
             new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "Hace 2 horas" , Icono = "imagenes/Formulario.png"},
             new ActividadReciente { Descripcion = "+150 Whirl-Tokens ganados" , Tiempo = "Hace 5 horas" , Icono = "imagenes/WTokens.png"},
             new ActividadReciente { Descripcion = "Nivel alcanzado = 5" , Tiempo = "Hace 1 día" , Icono = "imagenes/Nivel.png"}
         };
 
-        return View(modelo); /*Manda el modelo con los datos simulados hacia la vista Index.cshtml*/
+        return View(modelo);
     }
 
-    /*----------------------------------------------------------------*/
-
-    /*ACCIÓN FORMULARIOS*/
     public IActionResult Formularios()
     {
         var formularios = new List<Formulario>
@@ -116,35 +110,37 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
         return View(formularios);
     }
 
-    /*----------------------------------------------------------------*/
-
-    /*ACCIÓN PRIVACY*/
-    public IActionResult Privacy() /*Representa la página de privacidad que viene por default*/
+    public IActionResult Privacy()
     {
-        return View(); /*Muestra la vista Privacy.cshtml ubicada en Views/Home/Privacy.cshtml*/
+        return View();
     }
-    public IActionResult Juego() 
+
+    public IActionResult Juego()
     {
-        return View(); 
+        return View();
     }
 
     public IActionResult Tokens()
     {
-        return View(); 
+        return View();
     }
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)] /*Indica que la página de error no debe guardarse en caché*/
 
-    /*ACCIÓN ERROR*/
-    public IActionResult Error() /*Se usa cuando ocurre un error en la aplicación*/
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier }); /*Crea un ErrorViewModel con un RequestId para identificar el error y manda ese modelo a la vista de error*/
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 
-    // Para RECIBIR los datos cuando das clic en "Guardar cambios"
+    [HttpPost]
+    public IActionResult Login()
+    {
+        HttpContext.Session.SetInt32("IdUsuario", 4);
+        return RedirectToAction("Index", "Home");
+    }
+
     [HttpPost]
     public IActionResult Perfil(string nombre, string correo, string departamento, string id, string modo)
     {
-        // C# recibe lo que escribiste en los inputs gracias al atributo "name"
         ViewData["NombreCliente"] = nombre;
         ViewData["CorreoCliente"] = correo;
         ViewData["DepaCliente"] = departamento;
@@ -152,29 +148,23 @@ public class HomeController : Controller /*Crea el controlador HomeController y 
 
         if (modo == "editar")
         {
-            ViewData["Editable"] = true; // desbloquear
+            ViewData["Editable"] = true;
         }
         else
         {
-            ViewData["Editable"] = false; //  bloquear al guardar
+            ViewData["Editable"] = false;
         }
 
-        // Regresa la misma vista pero ahora con los nuevos datos
         return View("Perfil");
     }
 
-    // Para MOSTRAR la página la primera vez
     public IActionResult Perfil()
     {
-        
         ViewData["NombreCliente"] = "";
         ViewData["DepaCliente"] = "";
         ViewData["CorreoCliente"] = "";
         ViewData["IdCliente"] = "";
-        ViewData["Editable"] = false; // empieza bloqueado
+        ViewData["Editable"] = false;
         return View();
-
-        
     }
-    
 }

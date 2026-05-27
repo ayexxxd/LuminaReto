@@ -1,0 +1,142 @@
+:root {
+    --gold:   #F9A825;
+    --silver: #9E9E9E;
+    --bronze: #BF6F20;
+    --fire:   #FF6D00;
+}
+
+/* ── Tarjetas de estadísticas ── */
+.stat-card {
+    border: 1px solid #E5E7EB;
+    border-radius: 14px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08) !important;
+}
+
+.stat-card .card-body {
+    padding: 1.1rem 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.stat-text {
+    min-width: 0;          /* evita overflow del flex */
+    flex: 1;
+}
+
+.stat-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #6B7280;
+    margin: 0 0 0.25rem;
+    line-height: 1.2;
+}
+
+.stat-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 0;
+}
+
+.stat-value-sm {
+    font-size: 1rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 0.1rem;
+}
+
+/* ── Icon boxes (mismo patrón que el dashboard) ── */
+.stat-icon-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.stat-icon-blue   { background-color: #E0E7FF; color: #4338CA; }
+.stat-icon-green  { background-color: #DCFCE7; color: #16A34A; }
+.stat-icon-gold   { background-color: #FEF3C7; color: #D97706; }
+.stat-icon-purple { background-color: #F3E8FF; color: #9333EA; }
+.stat-icon-fire   { background-color: #FFEDD5; color: #EA580C; }
+
+/* ── Avatares ── */
+.lb-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.lb-avatar-lg {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin: 0 auto 0.75rem;
+}
+
+/* ── Badges de medalla ── */
+.badge-gold   { background-color: var(--gold);   color: #5D3A00; }
+.badge-silver { background-color: var(--silver); color: #fff;    }
+.badge-bronze { background-color: var(--bronze); color: #fff;    }
+
+/* ── Fila del usuario actual ── */
+.fila-yo {
+    border-left: 4px solid #0071DB !important;
+    background-color: #E3F2FD !important;
+}
+
+/* ── Colores de texto ── */
+.text-fire { color: var(--fire); font-weight: 700; }
+.text-gold { color: var(--gold); font-weight: 700; }
+
+/* ── Círculos de medalla del Top 3 ── */
+.lb-medal-circle,
+.lb-crown-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    margin: 0 auto;
+    box-sizing: border-box;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.lb-crown-circle {
+    background: #311B92;
+    border: 2px solid #FFD54F;
+    padding-bottom: 6px;
+}
+
+.lb-medal-silver {
+    background: #37474F;
+    border: 2px solid #CFD8DC;
+}
+
+.lb-medal-bronze {
+    background: #4E342E;
+    border: 2px solid #D7843E;
+}
