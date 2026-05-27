@@ -4,3 +4,8 @@ https://github.com/ayexxxd/repoLuminaJuego Y este es el repositorio de el proyec
 
 
 dotnet watch run --project LuminaReto/LuminaReto.csproj, puedes ver cambios live
+
+dotnet clean
+dotnet restore
+dotnet build
+dotnet watch

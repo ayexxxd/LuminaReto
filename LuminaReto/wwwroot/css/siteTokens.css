@@ -1,5 +1,7 @@
 body {
     background-color: #f3f6fb;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
 }
 
 .tokens-page {
@@ -11,7 +13,7 @@ body {
 }
 
 .tokens-title {
-    font-size: 2.05rem;
+    font-size: 1.65rem;
     font-weight: 700;
     margin: 0 0 18px;
 }
@@ -53,14 +55,14 @@ body {
 
 .token-card h2 {
     margin: 0;
-    font-size: 2.2rem;
+    font-size: 1.7rem;
     letter-spacing: 0.4px;
 }
 
 .token-card span {
     display: inline-block;
     margin-top: 8px;
-    font-size: 0.92rem;
+    font-size: 0.82rem;
     color: #6b7280;
     font-weight: 500;
 }
@@ -75,21 +77,21 @@ body {
 }
 
 .card-goal h2 {
-    color: #7d28db;
+    color: #8b5cf6; /* lighter purple for better contrast */
 }
 
 .panel-tokens {
     background: #ffffff;
     border: 1px solid #dbe2ea;
     border-radius: 14px;
-    padding: 18px;
+    padding: 14px;
     box-shadow: 0 8px 20px rgba(19, 43, 71, 0.06);
     margin-bottom: 16px;
 }
 
 .panel-tokens h3 {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     font-weight: 700;
 }
 
@@ -102,7 +104,7 @@ body {
 }
 
 .tokens-progress .progress-head strong {
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #374151;
 }
 
@@ -123,7 +125,7 @@ body {
 .progress-meta {
     margin: 12px 0 0;
     color: #5b6472;
-    font-size: 0.95rem;
+    font-size: 0.82rem;
 }
 
 .chart-panel h3 {
@@ -132,28 +134,49 @@ body {
 
 /* Chart container and placeholder sizing tweaks */
 .chart-container {
-    position: relative;
+    width: 100%;
+    overflow: hidden;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 20px 0;
+}
+
+.chart-icon {
+    width: 100%;
+    max-width: 1600px;
+
+    height: auto;
+
+    display: block;
 }
 
 #tokensChart {
-    width: 100%;
-    max-width: 480px; /* smaller max width for the placeholder graph */
-    height: 220px;    /* control height explicitly */
+    width: 100% !important;
+    height: 320px !important;
+
     display: block;
+
     border-radius: 8px;
     background: linear-gradient(180deg,#f8fbff,#ffffff);
 }
 
-.chart-icon {
-    position: absolute;
-    right: 12px;
-    top: 12px;
-    width: 32px;
-    height: 32px;
-    opacity: 0.85;
+
+
+canvas {
+    position: relative;
+    z-index: 2;
+}
+@media (max-width: 768px) {
+    .chart-icon {
+        width: 300px;
+        height: auto;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
 
 .chart-wrapper {
@@ -177,7 +200,7 @@ body {
 .chart-labels span {
     text-align: center;
     color: #6b7280;
-    font-size: 0.87rem;
+    font-size: 0.78rem;
 }
 
 .grid-line {
@@ -210,29 +233,41 @@ body {
     gap: 8px;
 }
 
+.form-label {
+    display: block;
+    margin: 0 0 8px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #6b7280;
+    letter-spacing: 0.02em;
+}
+
 .transactions-filters .form-select {
     width: auto;
     min-width: 170px;
     font-size: 0.85rem;
 }
 
-.transactions-list {
-    display: flex;
-    flex-direction: column;
-    height: 260px;
-    overflow-y: auto;
-    padding-right: 8px;
-    scrollbar-gutter: stable;
-    
+.transactions-list,
+.rewards-window {
+    flex: 1;
+    min-height: 0;
 }
 
 .transaction-item {
     display: flex;
+
     justify-content: space-between;
+
     align-items: center;
-    gap: 12px;
+
+    padding: 14px 0;
+
     border-top: 1px solid #ebeff5;
-    padding: 12px 0;
+}
+
+.transaction-item:first-child {
+    border-top: 0;
 }
 
 .transaction-item:first-child {
@@ -243,6 +278,19 @@ body {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+.tx-text h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.tx-text p {
+    margin: 2px 0 0;
+    font-size: 0.8rem;
+    color: #6b7280;
 }
 
 .tx-icon {
@@ -263,24 +311,24 @@ body {
 
 .tx-main h4 {
     margin: 0;
-    font-size: 1rem;
-    font-weight: 650;
+    font-size: 0.95rem;
+    font-weight: 700;
 }
 
 .tx-main p {
     margin: 2px 0 0;
     color: #6b7280;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 .amount-positive {
     color: #0a9f4c;
-    font-size: 1.08rem;
+    font-size: 0.95rem;
 }
 
 .amount-negative {
     color: #d11f34;
-    font-size: 1.08rem;
+    font-size: 0.95rem;
 }
 
 @media (max-width: 992px) {
@@ -301,37 +349,88 @@ body {
 
 /* Recompensas */
 .rewards-panel h3 { margin-bottom: 12px; }
-.rewards-window {
-    /* increased height so more reward rows are visible without scrolling */
-    height: 400px;
-    overflow-y: auto;
-    padding-right: 8px;
-    scrollbar-gutter: stable;
-}
+.transactions-list {
+    flex: 1;
+    min-height: 0;
+} 
 .rewards-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
 }
 .reward-card {
+    position: relative;
     border-radius: 12px;
-    padding: 22px;
+    padding: 12px;
     background: #fff;
     border: 2px solid #e6edf8;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
-    min-height: 200px;
+    gap: 10px;
+    min-height: 132px;
+    box-shadow: 0 8px 20px rgba(19, 43, 71, 0.05);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
 }
-.reward-card.available { background: linear-gradient(180deg, #eef7ff, #ffffff); border-color: #0d5aad; }
-.reward-card.disabled { background: #f7f8fa; border-color: #efefef; color: #9aa3ad; }
-.reward-icon { width: 84px; height: 84px; border-radius: 50%; background: rgba(13,90,173,0.08); display:flex; align-items:center; justify-content:center; }
-.reward-icon img { width: 36px; height: 36px; object-fit: contain; opacity: 0.95; }
-.reward-card h4 { margin: 0; text-align: center; font-size: 1rem; font-weight: 700; color: #10243b; }
-.reward-price { color: #b36a00; font-weight: 700; }
-.reward-need { width: 100%; text-align: center; background: #dbeaf8; color: #244b86; padding: 10px; border-radius: 8px; font-weight: 600; }
-.reward-btn { width: 100%; margin-top: 6px; background: #0957a8; color: #fff; border: none; padding: 8px 12px; border-radius: 8px; font-weight: 600; }
+.reward-card-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 20px 24px rgba(7, 56, 113, 0.09);
+}
+.reward-card.reward-active {
+    background: #eff6ff;
+    border-color: #2563eb;
+}
+
+.reward-card.reward-disabled {
+    background: #f5f5f5;
+    border-color: #ececec;
+    opacity: 0.55;
+}
+.reward-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(13,90,173,0.08); display:flex; align-items:center; justify-content:center; }
+.reward-icon img { width: 30px; height: 30px; object-fit: contain; opacity: 0.95; }
+.reward-card h4 { margin: 0; text-align: center; font-size: 0.9rem; font-weight: 700; color: #10243b; line-height: 1.15; }
+.reward-price { color: #b36a00; font-weight: 700; font-size: 0.85rem; }
+.reward-need { width: 100%; text-align: center; background: #dbeaf8; color: #244b86; padding: 8px; border-radius: 8px; font-weight: 600; font-size: 0.85rem; }
+.reward-btn,
+.btn-red {
+    width: 100%;
+    margin-top: 4px;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: #fff;
+    background: linear-gradient(135deg, #0f5eb5, #1f79df);
+    box-shadow: 0 8px 16px rgba(15, 94, 181, 0.2);
+    transition: transform 0.16s ease, box-shadow 0.16s ease, filter 0.16s ease;
+}
+.reward-btn:hover,
+.btn-red:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px rgba(15, 94, 181, 0.26);
+    filter: brightness(1.03);
+}
+.reward-btn:active,
+.btn-red:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 12px rgba(15, 94, 181, 0.18);
+}
+.btn-disabled {
+    width: 100%;
+    margin-top: 4px;
+    border: 1px solid #d7dde6;
+    padding: 8px 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.86rem;
+    color: #7b8794;
+    background: #eef2f7;
+    box-shadow: none;
+    cursor: not-allowed;
+}
 .reward-card.disabled .reward-btn { display: none; }
 
 @media (max-width: 900px) {
@@ -358,4 +457,80 @@ body {
 .transactions-list::-webkit-scrollbar-track,
 .rewards-window::-webkit-scrollbar-track {
     background: transparent;
+}
+
+/*alerts*/
+.MESSAGE {
+    position: fixed;
+
+    top: 70px;
+    right: 20px;
+
+    width: fit-content;
+    max-width: 300px;
+
+    padding: 12px 18px;
+
+    border-radius: 14px;
+
+    z-index: 9999;
+
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    backdrop-filter: blur(8px);
+
+    animation:
+        message-slide 0.3s ease,
+        message-fade 0.5s ease 9.5s forwards;
+}
+
+.MESSAGE-success {
+    background: rgba(17, 24, 39, 0.82);
+
+    color: white;
+
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+@keyframes message-slide {
+    from {
+        opacity: 0;
+        transform: translateY(-15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes message-fade {
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        visibility: hidden;
+    }
+}
+
+.dashboard-bottom {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 24px;
+    align-items: stretch;
+}
+
+.dashboard-bottom > .panel-tokens {
+    height: 510px;
+    display: flex;
+    flex-direction: column;
+}
+
+.transactions-list,
+.rewards-window {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: 16px; /* breathing room from scrollbar */
+    scrollbar-gutter: stable;
 }
