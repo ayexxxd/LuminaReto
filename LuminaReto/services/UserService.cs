@@ -10,30 +10,18 @@ public class UserService : IUserService
         _httpClient = httpClient;
     }
 
-   /* public async Task<User> GetUserById(int id)
-    {
-        var url = "https://127.0.0.1:5001/user/" + id;
 
-        var response = await _httpClient.GetAsync(url);
-
-        if (!response.IsSuccessStatusCode)
-            return new User();
-
-        var responseJson = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<User>(responseJson) ?? new User();
-    }*/
-
-
-    // 💡 CORREGIDO: Ahora coincide exactamente con "Task UpdatePoints" de tu interfaz
     public async Task UpdatePoints(int id, int points)
 {
-    var url =
-        "https://127.0.0.1:5010/updatepoints/"
-        + id + "/"
-        + points;
+    var url = "https://127.0.0.1:5010/updatepoints";
 
-    await _httpClient.PostAsync(url, null);
+    var body = new
+    {
+        idUser = id,
+        points = points
+    };
+
+    await _httpClient.PutAsJsonAsync(url, body);
 }
 
     public async Task<List<Recompensa>> GetRecompensas()
@@ -64,16 +52,37 @@ public class UserService : IUserService
         var responseJson = await response.Content.ReadAsStringAsync();
         return int.Parse(responseJson);
     }
-
-    public async Task CrearTransaccion(int userId,int recompensaId,int monto,string descripcion)
+    public async Task<int> GetUserPointsMonth(int id)
 {
-    var url ="https://127.0.0.1:5010/transaccion/"+ userId + "/"+ recompensaId + "/"+ monto+ "/"+ descripcion;
+    var url = "https://127.0.0.1:5010/getpointsMes/" + id;
 
-    /*var body = new
-    {description = descripcion
-    };*/
+    var response = await _httpClient.GetAsync(url);
 
-    await _httpClient.PostAsJsonAsync(url, "");
+    if (!response.IsSuccessStatusCode)
+        return 0;
+
+    var responseJson = await response.Content.ReadAsStringAsync();
+
+    return int.Parse(responseJson);
+}
+
+    public async Task CrearTransaccion(
+    int userId,
+    int recompensaId,
+    int monto,
+    string descripcion)
+{
+    var url = "https://127.0.0.1:5010/transaccion";
+
+    var body = new
+    {
+        idUser = userId,
+        idReward = recompensaId,
+        monto = monto,
+        description = descripcion
+    };
+
+    await _httpClient.PostAsJsonAsync(url, body);
 }
     public async Task<string> GetUltimaRecompensa(int userId)
 {
@@ -87,4 +96,6 @@ public class UserService : IUserService
 
     return (await response.Content.ReadAsStringAsync())        .Trim('"'); // Elimina comillas si la respuesta es un string JSON
 }
+
+
 }
