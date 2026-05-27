@@ -3,7 +3,7 @@ using System;
 public class Recompensa
 {
 
-    public int Id { get; set; }
+    public int IdRecompensa { get; set; }
 
     public string NombreRecompensa { get; set; }
 

@@ -18,33 +18,40 @@ namespace LuminaReto.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string DateFilter = "todas", string TypeFilter = "todas")
         {
-            string fecha = "2000-01-01";
-
+            string fechaStandard = "2000-01-01";
+            
             switch (DateFilter)
             {
                 case "hoy":
-                    fecha = DateTime.Today.ToString("yyyy-MM-dd");
+                    fechaStandard = DateTime.Today.ToString("yyyy-MM-dd");
                     break;
 
                 case "semana":
-                    fecha = DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd");
+                    fechaStandard = DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd");
                     break;
 
                 case "mes":
-                    fecha = DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd");
+                    fechaStandard = DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd");
                     break;
             }
+            var transactions = await _service.GetTransacciones(1, fechaStandard);
 
-            var transactions = await _service.GetTransacciones(1, fecha);
+            int ganados = transactions.Where(t => t.Monto > 0).Sum(t => t.Monto);
+            if (TypeFilter == "ganadas")
+            {
+                transactions = transactions.Where(t => t.Monto > 0).ToList();
+            }
+            else if (TypeFilter == "gastadas")
+            {
+                transactions = transactions.Where(t => t.Monto < 0).ToList();
+            }
+
             var rewards = await _service.GetRecompensas();
+            string ultimaRecompensa = await _service.GetUltimaRecompensa(1);
             var points = await _service.GetUserPoints(1);
-
             int tokensActuales = points;
 
-            // Tokens ganados
-            int ganados = transactions.Where(t => t.Monto > 0).Sum(t => t.Monto);
 
-            // Próxima recompensa
             var proxima = rewards.Where(r => r.Costo > tokensActuales).OrderBy(r => r.Costo).FirstOrDefault();
 
             foreach (var recompensa in rewards)
@@ -58,8 +65,7 @@ namespace LuminaReto.Controllers
             // Progreso
             int target = Math.Max(costoProxima, tokensActuales);
 
-            int porcentaje = target > 0 
-                ? (int)((double)tokensActuales / target * 100) : 0;
+            int porcentaje = target > 0  ? (int)((double)tokensActuales / target * 100) : 0;
 
             int faltantes = target - tokensActuales;
 
@@ -68,13 +74,17 @@ namespace LuminaReto.Controllers
             {
                 WhirlTokens = points,
                 GanadosMes = ganados,
-                ProximaRecompensa = costoProxima,
+                UltimaRecompensa = ultimaRecompensa,
                 TargetProgreso = target,
                 PorcentajeProgreso = porcentaje,
                 RestantesProgreso = faltantes,
+
+                DateFilter = DateFilter,
+                TypeFilter = TypeFilter,
+
                 ListaTransacciones = transactions,
                 ListaRecompensas = rewards
-            };
+};
 
             return View("~/Views/Home/Tokens.cshtml", model);
         }
@@ -91,14 +101,14 @@ namespace LuminaReto.Controllers
 
         var rewards = await _service.GetRecompensas();
 
-        var recompensa = rewards.FirstOrDefault(r => r.Id == recompensaId);
+        var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
 
-        if (recompensa == null)
+        /*if (recompensa == null)troubleshoot
         {
             return RedirectToAction(nameof(Index));
-        }
-        var points = await _service.GetUserPoints(1);
+        }*/
 
+        var points = await _service.GetUserPoints(1);
         if (points < recompensa.Costo)
         {
             return RedirectToAction(nameof(Index));
@@ -106,9 +116,10 @@ namespace LuminaReto.Controllers
 
         await _service.UpdatePoints(userId, -recompensa.Costo);
 
-        await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa
-    );
+        await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa);
 
-    return RedirectToAction(nameof(Index));
+        TempData["SuccessMessage"] = "Canjeaste " + recompensa.NombreRecompensa;
+
+        return RedirectToAction(nameof(Index));
 }
     }}

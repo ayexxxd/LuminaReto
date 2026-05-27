@@ -67,17 +67,24 @@ public class UserService : IUserService
 
     public async Task CrearTransaccion(int userId,int recompensaId,int monto,string descripcion)
 {
+    var url ="https://127.0.0.1:5010/transaccion/"+ userId + "/"+ recompensaId + "/"+ monto+ "/"+ descripcion;
+
+    /*var body = new
+    {description = descripcion
+    };*/
+
+    await _httpClient.PostAsJsonAsync(url, "");
+}
+    public async Task<string> GetUltimaRecompensa(int userId)
+{
     var url =
-        "https://127.0.0.1:5010/transaccion/"
-        + userId + "/"
-        + recompensaId + "/"
-        + monto;
+        "https://127.0.0.1:5010/lastreward/"+ userId;
 
-    var body = new
-    {
-        description = descripcion
-    };
+    var response = await _httpClient.GetAsync(url);
 
-    await _httpClient.PostAsJsonAsync(url, body);
+    if (!response.IsSuccessStatusCode)
+        return "Sin canjes";
+
+    return (await response.Content.ReadAsStringAsync())        .Trim('"'); // Elimina comillas si la respuesta es un string JSON
 }
 }
