@@ -232,7 +232,12 @@ canvas {
     display: flex;
     gap: 8px;
 }
+.transactions-panel {
+    height: 510px;
 
+    display: flex;
+    flex-direction: column;
+}
 .form-label {
     display: block;
     margin: 0 0 8px;
@@ -253,6 +258,8 @@ canvas {
     flex: 1;
     min-height: 0;
 }
+
+
 
 .transaction-item {
     display: flex;
@@ -353,6 +360,21 @@ canvas {
     flex: 1;
     min-height: 0;
 } 
+.transactions-list {
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding-right: 12px;
+
+    box-sizing: border-box;
+
+    scrollbar-gutter: stable;
+}
 .rewards-grid {
     display: grid;
 
@@ -433,12 +455,18 @@ canvas {
 }
 .reward-card.disabled .reward-btn { display: none; }
 
-@media (max-width: 900px) {
-    .rewards-grid { grid-template-columns: 1fr; }
-    .transactions-list,
+
+
+@media (min-width: 1200px) {
+    .rewards-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .rewards-window {
         height: auto;
-        max-height: none;
+        overflow: visible;
+        padding-right: 16px;
+    }
+    .dashboard-bottom > .rewards-panel {
+        align-self: start;
+        height: auto;
     }
 }
 
@@ -513,24 +541,15 @@ canvas {
     }
 }
 
-.dashboard-bottom {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 24px;
-    align-items: stretch;
-}
 
-.dashboard-bottom > .panel-tokens {
-    height: 510px;
-    display: flex;
-    flex-direction: column;
-}
 
 .transactions-list,
 .rewards-window {
     flex: 1;
     min-height: 0;
     overflow-y: auto;
+    padding-left: 14px;
     padding-right: 16px; /* breathing room from scrollbar */
+    box-sizing: border-box;
     scrollbar-gutter: stable;
 }
