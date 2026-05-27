@@ -36,7 +36,7 @@ namespace LuminaReto.Controllers
             }
             var transactions = await _service.GetTransacciones(1, fechaStandard);
 
-            int ganados = transactions.Where(t => t.Monto > 0).Sum(t => t.Monto);
+            
             if (TypeFilter == "ganadas")
             {
                 transactions = transactions.Where(t => t.Monto > 0).ToList();
@@ -45,7 +45,8 @@ namespace LuminaReto.Controllers
             {
                 transactions = transactions.Where(t => t.Monto < 0).ToList();
             }
-
+            
+            var ganados = await _service.GetUserPointsMonth(1);
             var rewards = await _service.GetRecompensas();
             string ultimaRecompensa = await _service.GetUltimaRecompensa(1);
             var points = await _service.GetUserPoints(1);
@@ -62,12 +63,6 @@ namespace LuminaReto.Controllers
 
             int costoProxima = proxima?.Costo ?? tokensActuales;
 
-            // Progreso
-            int target = Math.Max(costoProxima, tokensActuales);
-
-            int porcentaje = target > 0  ? (int)((double)tokensActuales / target * 100) : 0;
-
-            int faltantes = target - tokensActuales;
 
             // ViewModel
             var model = new TokenViewModel
@@ -75,9 +70,6 @@ namespace LuminaReto.Controllers
                 WhirlTokens = points,
                 GanadosMes = ganados,
                 UltimaRecompensa = ultimaRecompensa,
-                TargetProgreso = target,
-                PorcentajeProgreso = porcentaje,
-                RestantesProgreso = faltantes,
 
                 DateFilter = DateFilter,
                 TypeFilter = TypeFilter,

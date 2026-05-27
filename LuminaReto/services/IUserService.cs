@@ -8,4 +8,5 @@ public interface IUserService
     Task<int> GetUserPoints(int id);
     Task UpdatePoints(int id, int points);
     Task CrearTransaccion(int userId, int recompensaId, int monto, string descripcion);
+    Task<int> GetUserPointsMonth(int id);
 }
