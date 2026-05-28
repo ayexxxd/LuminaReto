@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using LuminaReto.Helpers;
 using LuminaReto.Models;
 
 namespace LuminaReto.Controllers
@@ -19,7 +18,8 @@ namespace LuminaReto.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string DateFilter = "todas", string TypeFilter = "todas")
         {
-            int userId = SessionHelper.GetUserId(HttpContext.Session);
+            //int userId = SessionHelper.GetUserId(HttpContext.Session) ?? 0;
+            int userId = 1;
             try
             {
                 string fechaStandard = "2000-01-01";
@@ -92,13 +92,8 @@ namespace LuminaReto.Controllers
             var rewards = await _service.GetRecompensas();
             var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
 
-            if (recompensa == null)
-            {
-                TempData["SuccessMessage"] = "La recompensa no existe";
-                return Redirect("/Tokens/Index");
-            }
-
-            int userId = SessionHelper.GetUserId(HttpContext.Session);
+            //int userId = SessionHelper.GetUserId(HttpContext.Session);
+            int userId = 1;
             var points = await _service.GetUserPoints(userId);
             var model = new CanjeConfirmationViewModel
             {
@@ -106,26 +101,21 @@ namespace LuminaReto.Controllers
                 TokensActuales = points
             };
             
-            return View("~/Views/Tokens/ConfirmarCanje.cshtml", model);
+            return View("~/Views/Home/Tokens.cshtml", model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Canjear(int recompensaId)
         {
-            int userId = SessionHelper.GetUserId(HttpContext.Session);
+            int userId = 1;
+            //int userId = SessionHelper.GetUserId(HttpContext.Session);
             var rewards = await _service.GetRecompensas();
             var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
-            
-            if (recompensa == null)
-            {
-                TempData["SuccessMessage"] = "La recompensa no existe";
-                return Redirect("/Tokens/Index");
-            }
         
             var points = await _service.GetUserPoints(userId);
             if (points < recompensa.Costo)
             {
-                return Redirect("/Tokens/Index");
+                return Redirect("/Tokens");
             }
 
             await _service.UpdatePoints(userId, -recompensa.Costo);
