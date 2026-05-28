@@ -1,0 +1,145 @@
+@model TokenViewModel
+@{
+    ViewData["Title"] = "Tokens";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
+}
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="MESSAGE MESSAGE-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<div class="tokens-page">
+    <h1 class="tokens-title">Mis Tokens</h1>
+    <section class="tokens-resumen"><!-- Resumen OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+        <article class="token-card card-primary">
+            <div class="token-card-head">
+                <p>Balance Total</p>
+                <img src="~/imagenes/WTokens.png" alt="Icono" />
+            </div>
+
+            <h2>@Model.WhirlTokens</h2>
+            <span>Tokens disponibles</span>
+        </article>
+
+        <article class="token-card card-positive">
+            <div class="token-card-head">
+                <p>Whirl Tokens</p>
+                <img src="~/imagenes/Racha.png" alt="Icono" />
+            </div>
+
+            <h2>+@Model.GanadosMes</h2>
+            <span>↑Obtenidos este mes</span>
+        </article>
+
+        <article class="token-card card-goal">
+            <div class="token-card-head">
+                <p>Última Recompensa</p>
+                <img src="~/imagenes/Nivel.png" alt="Icono" />
+            </div>
+
+            <h2>@Model.UltimaRecompensa</h2>
+            <span>¡Disfruta!</span>
+        </article>
+    </section>
+
+    <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+        <h3>Historial de Tokens</h3><h6>(Últimos 7 días)</h6>
+        <div class="chart-container">
+            <img src="~/imagenes/placeholder.png"alt="Gráfico"class="chart-icon" />
+        </div>
+    </section>
+
+    
+    <div class="bottom-dashboard dashboard-split">
+        <section class="panel-tokens transactions-panel"><!-- Transacciones OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+            <div class="transactions-head">
+                <h3>Transacciones Recientes</h3>
+                <div class="transactions-filters">
+                    <form method="get" asp-controller="Tokens" asp-action="Index">
+                        <div class="transactions-filters">
+                            <select name="DateFilter" class="form-select" onchange="this.form.submit()">
+                                <option value="todas" selected="@(Model.DateFilter == "todas")">Filtro por fecha</option>
+                                <option value="hoy" selected="@(Model.DateFilter == "hoy")">Hoy</option>
+                                <option value="semana" selected="@(Model.DateFilter == "semana")">Esta semana</option>
+                                <option value="mes" selected="@(Model.DateFilter == "mes")">Este mes</option>
+                            </select>
+                        
+                            <select name="TypeFilter" class="form-select" onchange="this.form.submit()">
+                                <option value="todas" selected="@(Model.TypeFilter == "todas")">Filtro por tipo</option>
+                                <option value="ganadas" selected="@(Model.TypeFilter == "ganadas")">Adquiridas</option>
+                                <option value="gastadas" selected="@(Model.TypeFilter == "gastadas")">Gastadas</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="transactions-list" id="listaTransacciones">
+                @foreach (var t in Model.ListaTransacciones)
+                {
+                    <article class="transaction-item">
+                        <div class="tx-main">
+                            <div class="tx-icon @(t.Monto > 0 ? "tx-positive" : "tx-negative")">
+                                @if (t.Monto > 0)
+                                {
+                                    <img src="~/imagenes/trend.png" alt="Ganada" />
+                                }
+                                else
+                                {
+                                    <img src="~/imagenes/downtrend.png" alt="Gastada" />}
+                            </div>
+
+                            <div class="tx-text">
+                                <h4>@t.Descripcion</h4>
+                                <p>@t.Fecha.Substring(4, 12)</p><!--el valor de r.Fecha es algo como Sun May 05 2026 14:48:00 GMT-0500 y entonces solo quiero mostrar May 05 2026-->
+                            </div>
+                        </div>
+
+                        <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">@(t.Monto > 0 ? "+" : "")@t.Monto</div>
+                    </article>
+                }
+            </div>
+        </section>
+
+        <section class="panel-tokens rewards-panel"><!-- Recompensas OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+            <h3>Tienda</h3>
+            <div class="rewards-window">
+                <div class="rewards-grid">
+                    @foreach (var r in Model.ListaRecompensas)
+                    {
+                        <article class="reward-card @(r.PuedeCanjear ? "reward-active" : "reward-disabled")">
+
+                            <div class="reward-icon">
+                                <img src="imagenes/@r.Imagen"alt="Icono" />
+                            </div>
+
+                            <h4>@r.NombreRecompensa</h4>
+                            <div class="reward-price">@r.Costo Tokens</div>
+                            @if (r.PuedeCanjear)
+                            {
+                                <a class="btn-red" href="@Url.Action("ConfirmarCanje", "Tokens", new { recompensaId = r.IdRecompensa })">Canjear</a>
+                            }
+                            else
+                            {
+                                <button class="btn-disabled" disabled>Necesitas @r.TokensFaltantes más</button>
+                            }
+                        </article>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+   
+
+
+
+    
+</div>

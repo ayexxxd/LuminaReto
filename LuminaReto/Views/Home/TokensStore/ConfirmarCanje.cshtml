@@ -1,0 +1,36 @@
+@model CanjeConfirmationViewModel
+@{
+    ViewData["Title"] = "Confirmar canje";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
+}
+
+<div class="tokens-page confirm-page">
+    <div class="confirm-card">
+        <p class="confirm-kicker">Confirmación de compra</p>
+        <h1>Canjear @Model.Recompensa.NombreRecompensa</h1>
+
+        <div class="confirm-summary">
+            <div>
+                <span>Coste</span>
+                <strong>@Model.Recompensa.Costo tokens</strong>
+            </div>
+            <div>
+                <span>Tienes</span>
+                <strong>@Model.TokensActuales tokens</strong>
+            </div>
+        </div>
+
+        <p class="confirm-text">Vas a gastar @Model.Recompensa.Costo tokens para obtener esta recompensa. Esta acción no se puede deshacer.</p>
+
+        <div class="confirm-actions">
+            <a class="btn-disabled confirm-cancel" href="/Tokens/Index">Cancelar</a>
+            <form method="post" action="/Tokens/Canjear">
+                <input type="hidden" name="recompensaId" value="@Model.Recompensa.IdRecompensa" />
+                <button type="submit" class="btn-red">Confirmar canje</button>
+            </form>
+        </div>
+    </div>
+</div>
