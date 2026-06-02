@@ -1,0 +1,40 @@
+@{
+		ViewData["Title"] = "Login";
+}
+
+<div class="row justify-content-center mt-5">
+	<div class="col-md-5 col-lg-4">
+		<div class="card shadow-sm">
+			<div class="card-body">
+				<h3 class="card-title text-center mb-4">Iniciar sesión</h3>
+
+				<form asp-controller="Home" asp-action="Login" method="post">
+					@Html.AntiForgeryToken()
+					<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+					<div class="mb-3">
+						<label for="username" class="form-label">Correo electrónico</label>
+						<input type="email" class="form-control" id="username" name="username" placeholder="tucorreo@empresa.com" required />
+					</div>
+
+					<div class="mb-3">
+						<label for="password" class="form-label">Contraseña</label>
+						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required />
+					</div>
+
+					<div class="mb-3 form-check">
+						<input type="checkbox" class="form-check-input" id="remember" name="remember" />
+						<label class="form-check-label" for="remember">Recuérdame</label>
+					</div>
+
+					<button type="submit" class="btn btn-primary w-100">Entrar</button>
+				</form>
+
+				<div class="mt-3 text-center">
+					<a asp-action="Index" asp-controller="Home">Volver al inicio</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

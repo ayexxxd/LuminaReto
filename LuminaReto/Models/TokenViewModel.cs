@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class TokenViewModel
 {
-    public int WhirlTokens { get; set; }
+    public string WhirlTokens { get; set; }
     public int GanadosMes { get; set; }
     public string UltimaRecompensa { get; set; }
 
