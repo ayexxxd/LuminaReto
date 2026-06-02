@@ -17,9 +17,7 @@
         <h1>¡Bienvenido a Whirlpool!</h1>
         <p>Completa formularios, gana Whirl-Tokens y disfruta del juego</p>
     </section>
-    <form asp-controller="Home" asp-action="Login" method="post">
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-    </form>
+    <a asp-controller="Login" asp-action="Login" class="btn btn-primary">Iniciar Sesión</a>
 
 
     <!------ESTADÍSTICAS--------->
@@ -81,9 +79,6 @@
                             <span>@actividad.Descripcion</span> <!--jala la info de controller pero de lo de Descripcion-->
                         </div>
                         <span class = "tiempo actividad">@actividad.Tiempo</span>
-
-
-                    
                     </div>
                 }
             </div>

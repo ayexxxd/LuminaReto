@@ -1,7 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace LuminaReto.Models;
+
 public class User
 {
-    public int Id {get; set;}
-    public string UserNombre {get; set;}
-    public int WhirlTokens {get; set;}
-    public int Points {get; set;}
+    public int Id { get; set; }
+    [Required]
+    [Display(Name = "Username")]
+    public string? Username { get; set; }
+
+    [Required]
+    [DataType(DataType.Password)]
+    [Display(Name = "Password")]
+    public string? Password { get; set; }
 }

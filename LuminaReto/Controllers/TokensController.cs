@@ -21,7 +21,7 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario")??0;
+                var userId = HttpContext.Session.GetInt32("IdUsuario")??1;
             
                 string fechaStandard = "2000-01-01";
                 switch (DateFilter)//DATE FILTER
@@ -49,12 +49,12 @@ namespace LuminaReto.Controllers
                     transactions = transactions.Where(t => t.Monto < 0).ToList();
                 }
                 
-                var ganados = await _service.GetUserPointsMonth(userId);
+                var tempganados = await _service.GetUserPointsMonth(userId);
+                var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture);
                 var rewards = await _service.GetRecompensas();
                 string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);
                 var temppoints = await _service.GetUserPoints(userId);
-                var temppointsStr = temppoints.ToString("N0", CultureInfo.InvariantCulture);
-                var points = temppointsStr;
+                var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);
                 
                 foreach (var recompensa in rewards)
                 {
@@ -64,6 +64,7 @@ namespace LuminaReto.Controllers
                 //viewModel
                 var model = new TokenViewModel
                 {
+                    IdUser = userId,
                     WhirlTokens = points,
                     GanadosMes = ganados,
                     UltimaRecompensa = ultimaRecompensa,

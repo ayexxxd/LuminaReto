@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Tokens";
 }
+
 @section Styles {
     <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
 }
@@ -11,7 +12,7 @@
         @TempData["SuccessMessage"]
     </div>
 }
-
+<h1>@Model.IdUser</h1>
 <div class="tokens-page">
     <h1 class="tokens-title">Mis Tokens</h1>
     <section class="tokens-resumen"><!-- Resumen OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
@@ -47,13 +48,10 @@
     </section>
 
     <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
-        <h3>Historial de Tokens</h3><h6>(Últimos 7 días)</h6>
-        <div class="chart-container">
-            <iframe width="2000" height="300" src="https://datastudio.google.com/embed/reporting/ffc304a6-1b53-46f6-a55f-0affba76a3bd/page/NEmzF" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
-        </div>
+        <h3>Historial de Tokens</h3>
+        <iframe width="1140" height="320" src="https://datastudio.google.com/u/0/reporting/fede5ef6-97e0-4fd2-b1f5-94b604aaf0c2/page/9nmzF?params=%7B%22IdUser%22:"+@Model.IdUser+"%7D" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
     </section>
 
-    
     <div class="bottom-dashboard dashboard-split">
         <section class="panel-tokens transactions-panel"><!-- Transacciones OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
             <div class="transactions-head">
