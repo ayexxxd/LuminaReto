@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
 
@@ -51,14 +52,15 @@ namespace LuminaReto.Controllers
                 var ganados = await _service.GetUserPointsMonth(userId);
                 var rewards = await _service.GetRecompensas();
                 string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);
-                var points = await _service.GetUserPoints(userId);
-
+                var temppoints = await _service.GetUserPoints(userId);
+                var temppointsStr = temppoints.ToString("N0", CultureInfo.InvariantCulture);
+                var points = temppointsStr;
+                
                 foreach (var recompensa in rewards)
                 {
-                    recompensa.PuedeCanjear = points >= recompensa.Costo;
-                    recompensa.TokensFaltantes = recompensa.Costo - points;
+                    recompensa.PuedeCanjear = temppoints >= recompensa.Costo;
+                    recompensa.TokensFaltantes = recompensa.Costo - temppoints;
                 }
-
                 //viewModel
                 var model = new TokenViewModel
                 {
