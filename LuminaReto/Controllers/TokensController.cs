@@ -19,10 +19,10 @@ namespace LuminaReto.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string DateFilter = "todas", string TypeFilter = "todas")
         {
-            //int userId = SessionHelper.GetUserId(HttpContext.Session) ?? 0;
-            int userId = 1;
             try
             {
+                var userId = HttpContext.Session.GetInt32("IdUsuario")??0;
+            
                 string fechaStandard = "2000-01-01";
                 switch (DateFilter)//DATE FILTER
                 {
