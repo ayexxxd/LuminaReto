@@ -21,8 +21,8 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario")??1;
-            
+                //var userId = HttpContext.Session.GetInt32("IdUsuario")??1;
+                var userId = 1;
                 string fechaStandard = "2000-01-01";
                 switch (DateFilter)//DATE FILTER
                 {
@@ -40,7 +40,7 @@ namespace LuminaReto.Controllers
                 }
                 var transactions = await _service.GetTransacciones(userId, fechaStandard);
                 
-                if (TypeFilter == "ganadas")//TYPE FILTER//
+                if (TypeFilter == "ganadas")//TYPE FILTER
                 {
                     transactions = transactions.Where(t => t.Monto > 0).ToList();
                 }
@@ -51,15 +51,17 @@ namespace LuminaReto.Controllers
                 
                 var tempganados = await _service.GetUserPointsMonth(userId);
                 var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture);
+
                 var rewards = await _service.GetRecompensas();
                 string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);
+
                 var temppoints = await _service.GetUserPoints(userId);
                 var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);
                 
                 foreach (var recompensa in rewards)
                 {
-                    recompensa.PuedeCanjear = temppoints >= recompensa.Costo;
-                    recompensa.TokensFaltantes = recompensa.Costo - temppoints;
+                    recompensa.PuedeCanjear = temppoints >= (recompensa.Costo);
+                    recompensa.TokensFaltantes = (recompensa.Costo) - temppoints;
                 }
                 //viewModel
                 var model = new TokenViewModel
@@ -85,8 +87,7 @@ namespace LuminaReto.Controllers
                 ListaTransacciones = new List<Transaccion>(),
                 ListaRecompensas = new List<Recompensa>()}
                 );
-            }
-            
+            }   
         }
 
         [HttpGet]
@@ -98,37 +99,33 @@ namespace LuminaReto.Controllers
             //int userId = SessionHelper.GetUserId(HttpContext.Session);
             int userId = 1;
             var points = await _service.GetUserPoints(userId);
-            var model = new CanjeConfirmationViewModel
-            {
-                Recompensa = recompensa,
-                TokensActuales = points
-            };
-            
-            return View("~/Views/Home/Tokens.cshtml", model);
+    
+            return View("~/Views/Home/Tokens.cshtml");
         }
 
         [HttpPost]
         public async Task<IActionResult> Canjear(int recompensaId)
-        {
-            int userId = 1;
-            //int userId = SessionHelper.GetUserId(HttpContext.Session);
-            var rewards = await _service.GetRecompensas();
-            var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
-        
-            var points = await _service.GetUserPoints(userId);
-            if (points < recompensa.Costo)
             {
-                return Redirect("/Tokens");
+                int userId = 1;
+                //int userId = SessionHelper.GetUserId(HttpContext.Session);
+                var rewards = await _service.GetRecompensas();
+                var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
+        
+                var points = await _service.GetUserPoints(userId);
+                if (points < (recompensa.Costo))
+                {
+                    return Redirect("/Tokens");
+                }
+
+                await _service.UpdatePoints(userId, -(recompensa.Costo));
+                await _service.CrearTransaccion(userId, recompensaId, -(recompensa.Costo),"Canjeó: " + recompensa.NombreRecompensa);
+                TempData["SuccessMessage"] = "Canjeaste " + recompensa.NombreRecompensa;
+                return Redirect("/Tokens/Index");
             }
 
-            await _service.UpdatePoints(userId, -recompensa.Costo);
-            await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa);
-            TempData["SuccessMessage"] = "Canjeaste " + recompensa.NombreRecompensa;
-            return Redirect("/Tokens/Index");
-        }
-    public IActionResult Regresar()
-        {
-            return RedirectToAction(nameof(Index), "Home");
-        }
-    }
+            public IActionResult Regresar()
+                {
+                    return RedirectToAction(nameof(Index), "Home");
+                }
+            }
 }
