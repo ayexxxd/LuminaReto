@@ -21,7 +21,7 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario")??1;
+                var userId = HttpContext.Session.GetInt32("IdUsuario")??0;
             
                 string fechaStandard = "2000-01-01";
                 switch (DateFilter)//DATE FILTER

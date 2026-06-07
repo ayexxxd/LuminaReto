@@ -1,41 +1,39 @@
 @model User
 @{
-		ViewData["Title"] = "Login";
+    ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<div class="row justify-content-center mt-5">
-	<div class="col-md-5 col-lg-4">
-		<div class="card shadow-sm">
-			<div class="card-body">
-				<h3 class="card-title text-center mb-4">Iniciar sesión</h3>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Whirlpool</title>
+    <link rel="icon" type="image/png" href="~/imagenes/wlogo.png" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="login-card">
+        <img src="~/imagenes/logo.png" alt="Whirlpool Logo" class="login-logo" />
+        <h3 class="login-title">Bienvenido</h3>
+        <p class="login-subtitle">Inicia sesión en tu cuenta</p>
 
-				<form asp-controller="Login" asp-action="Login" method="post">
-					@Html.AntiForgeryToken()
-					<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+        <form asp-controller="Login" asp-action="Login" method="post">
+            <div class="mb-3 input-icon-wrapper">
+                <i class="bi bi-envelope-fill"></i>
+                <input type="email" class="form-control" id="username" name="username" placeholder="tucorreo@whirlpool.com" required />
+            </div>
 
-					<div class="mb-3">
-						<label for="username" class="form-label">Correo electrónico</label>
-						<input type="email" class="form-control" id="username" name="username" placeholder="tucorreo@whirlpool.com" required />
-					</div>
+            <div class="mb-3 input-icon-wrapper">
+                <i class="bi bi-lock-fill"></i>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required />
+            </div>
 
-					<div class="mb-3">
-						<label for="password" class="form-label">Contraseña</label>
-						<input type="password" class="form-control" id="password" name="password" placeholder="Contraseña" required />
-					</div>
-
-					<div class="mb-3 form-check">
-						<input type="checkbox" class="form-check-input" id="remember" name="remember" />
-						<label class="form-check-label" for="remember">Recuérdame</label>
-					</div>
-
-					<button type="submit" class="btn btn-primary w-100">Entrar</button>
-				</form>
-
-				<div class="mt-3 text-center">
-					<a asp-action="Index" asp-controller="Home">Volver al inicio</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>
