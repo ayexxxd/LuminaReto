@@ -9,14 +9,19 @@ public class LoginController : Controller
 	{
 		_loginService = loginService;
 	}
+
 	[HttpGet]
 	public IActionResult Login()
 	{
+		if (HttpContext.Session.GetInt32("IdUsuario") != null)
+		{
+			return RedirectToAction("Index", "Home");
+		}
 		return View("~/Views/Home/Login.cshtml");
 	}
 
 	[HttpPost]
-	public IActionResult Login(string username, string password, bool remember = false)
+	public async Task<IActionResult> Login(string username, string password)
 	{
 		if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
 		{
@@ -24,12 +29,24 @@ public class LoginController : Controller
 			return View("~/Views/Home/Login.cshtml");
 		}
 
-		var userId = _loginService.Login(username, password).Result;
+		try
+		{
+			var userId = await _loginService.Login(username, password);
 
-		HttpContext.Session.SetInt32("IdUsuario", userId);
-		HttpContext.Session.SetString("LoginRemember", remember ? "true" : "false");
+			if (userId <= 0)
+			{
+				ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectos.");
+				return View("~/Views/Home/Login.cshtml");
+			}
 
-		return RedirectToAction("Index", "Home");
+			HttpContext.Session.SetInt32("IdUsuario", userId);
+			return RedirectToAction("Index", "Home");
+		}
+		catch (HttpRequestException)
+		{
+			ModelState.AddModelError(string.Empty, "No se pudo conectar con el servidor de autenticación. Inténtalo más tarde.");
+			return View("~/Views/Home/Login.cshtml");
+		}
 	}
 
 	[HttpPost]
@@ -38,7 +55,6 @@ public class LoginController : Controller
 	{
 		HttpContext.Session.Remove("IdUsuario");
 		HttpContext.Session.Remove("LoginRemember");
-
 		return RedirectToAction("Index", "Home");
 	}
 }

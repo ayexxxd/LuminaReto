@@ -2,6 +2,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+// HttpClient tipado para LoginService (API con certificado autofirmado)
+builder.Services.AddHttpClient<ILoginService, LoginService>(client =>
+{
+    client.BaseAddress = new Uri("https://127.0.0.1:5010");
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
+
 // Servicio UserService con HttpClient (requiere certificado autofirmado)
 builder.Services
     .AddHttpClient<IUserService, UserService>()
@@ -48,7 +59,7 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Login}/{action=Login}/{id?}")
     .WithStaticAssets();
 
 app.Run();
