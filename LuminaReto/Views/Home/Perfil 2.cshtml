@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/siteXimena.css" asp-append-version="true" />
+}
+
+<div class="cont-principal">
+    <h1 class=" fw-bold">Mi Perfil</h1>
+    <p class="pagina-sub">Gestiona tu información personal y sigue tu progreso.</p>
+
+    <div class="dos-columnas">
+
+        <!-- ===== COLUMNA IZQUIERDA ===== -->
+        <div class="col-izq">
+
+    <div class="tarjeta">
+    <form class="formulario-perfil" method="post" action="/Home/Perfil">
+        <div class="perfil-header">
+            <div class="circulo-foto">
+                <img src="/imagenes/perfilfoto.png" alt="Foto de perfil" class="foto-perfil">
+            </div>
+            <div class="pinfo">
+                <h3>Juan Pérez</h3>
+                <p class="departamento">🏢 Marketing </p>
+                <span class="meta-nivel">¡A por el nivel 10! 🎯</span>
+            </div>
+        </div>
+
+        <div class="formulario">
+            <div class="field">
+                <div  class="pagina-subt">Nombre Completo</div>
+                <input type="text" name="nombre" class="form-control" required id="exampleInputNombre1" aria-describedby="nombreHelp" placeholder="Ejemplo: Juan Pérez" value="@ViewData["NombreCliente"]" @(ViewData["Editable"] as bool? == true ? "" : "readonly") >
+            </div>
+
+            <div class="field">
+                <div  class="pagina-subt">Correo electrónico</div>
+                <input type="email" name="correo" class="form-control" required id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ejemplo: juanperez@whirlpool.com" value="@ViewData["CorreoCliente"]"@(ViewData["Editable"] as bool? == true ? "" : "readonly") />
+            </div>
+
+            <div class="field">
+                <div  class="pagina-subt">Departamento</div>
+                <input type="text" name="departamento" class="form-control" required id="exampleInputDepartamento1"  aria-describedby="depaHelp" placeholder="Ejemplo: Marketing" value="@ViewData["DepaCliente"]" @(ViewData["Editable"] as bool? == true ? "" : "readonly")>
+            </div>
+
+            <div class="field">
+                <div  class="pagina-subt">ID de empleado</div>
+                <input type="text" name="id" class="form-control" required id="exampleInputId1" aria-describedby="idHelp" placeholder="Ingresa tu ID de empleado" value="@ViewData["IdCliente"]" @(ViewData["Editable"] as bool? == true ? "" : "readonly")   />
+            </div>
+        </div>
+        <button type="submit"  class="btn btn-primary btn-sm formulario-perfil">Guardar cambios</button>
+        <button type="submit" name="modo" value="editar" class="btn btn-secondary btn-sm formulario-perfil">Editar</button>
+    </form>
+</div>
+
+            <!-- ESTADÍSTICAS DE POR VIDA -->
+            <div class="tarjeta">
+                <p class="sec-titulo">  📊 Estadísticas de por vida</p>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-ico ico-t">💰</div>
+                        <div class="stat-data">
+                            <span class="stat-lbl">Tokens ganados</span>
+                            <span class="stat-num">15,420</span>
+                            <span class="stat-sub">Total acumulado</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-ico ico-r">📅</div>
+                        <div class="stat-data">
+                            <span class="stat-lbl">Racha máxima</span>
+                            <span class="stat-num">14 días</span>
+                            <span class="stat-sub">¡Sigue así!</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-ico ico-f">📋</div>
+                        <div class="stat-data">
+                            <span class="stat-lbl">Formularios totales</span>
+                            <span class="stat-num">110</span>
+                            <span class="stat-sub">Completados</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== COLUMNA DERECHA: LOGROS ===== -->
+        <div class="col-der">
+            <div class="tarjeta">
+
+                <div class="logros-header">
+                    <p class="sec-titulo" style="margin-bottom:0"> 🏆 Mis Logros</p>
+                </div>
+
+                <!-- Insignias destacadas -->
+                <p class="sub-seccion">Insignias destacadas</p>
+                <div class="dest-grid">
+                    <div class="ins-dest">
+                        <div class="medalla m-oro">⭐</div>
+                        <span class="badge-dest">Destacada</span>
+                        <p>Estrella de Producción</p>
+                    </div>
+                    <div class="ins-dest">
+                        <div class="medalla m-bronce">📝</div>
+                        <span class="badge-dest">Destacada</span>
+                        <p>Maestro del Formulario</p>
+                    </div>
+                    <div class="ins-dest">
+                        <div class="medalla m-dorado">🏅</div>
+                        <span class="badge-dest">Destacada</span>
+                        <p>Racha Legendaria</p>
+                    </div>
+                </div>
+
+                <!-- Catálogo de insignias -->
+                <p class="sub-seccion">Catálogo de insignias</p>
+                <div class="cat-grid">
+                    <div class="ins-cat">
+                        <div class="cat-med c-azul">✓</div>
+                        <div class="chk-verde">✔</div>
+                        <p>Primera Misión</p>
+                    </div>
+                    <div class="ins-cat">
+                        <div class="cat-med c-amarillo">🏆</div>
+                        <div class="chk-verde">✔</div>
+                        <p>Coleccionista</p>
+                    </div>
+                    <div class="ins-cat">
+                        <div class="cat-med c-gris">🔒</div>
+                        <p>Mentor de Equipo</p>
+                    </div>
+                    <div class="ins-cat">
+                        <div class="cat-med c-gris">🔒</div>
+                        <p>Maestro del Juego Nv.10</p>
+                    </div>
+                    <div class="ins-cat">
+                        <div class="cat-med c-gris">🔒</div>
+                        <p>Maestro del Juego Nv.3</p>
+                    </div>
+                    <div class="ins-cat">
+                        <div class="cat-med c-gris">🔒</div>
+                        <p>Mentor de Equipo Nv.5</p>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
