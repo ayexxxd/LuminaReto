@@ -2,16 +2,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
-// HttpClient tipado para LoginService (API con certificado autofirmado)
-builder.Services.AddHttpClient<ILoginService, LoginService>(client =>
-{
-    client.BaseAddress = new Uri("https://127.0.0.1:5010");
-})
-.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
-{
-    ServerCertificateCustomValidationCallback =
-        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
-});
+// HttpClient tipado para LoginService
+builder.Services
+    .AddHttpClient<ILoginService, LoginService>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
 
 // Servicio TokensService con HttpClient (requiere certificado autofirmado)
 builder.Services
