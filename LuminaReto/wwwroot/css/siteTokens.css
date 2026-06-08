@@ -328,6 +328,124 @@ body {
     cursor: not-allowed;
 }
 
+/* ===== Modal de confirmación de canje ===== */
+.modal-canje {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-canje-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(16, 36, 59, 0.45);
+    backdrop-filter: blur(4px);
+}
+
+.modal-canje-content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 28px 32px;
+    width: min(420px, 92%);
+    box-shadow: 0 24px 48px rgba(16, 36, 59, 0.18);
+    text-align: center;
+    animation: modalPop 0.25s ease;
+}
+
+@keyframes modalPop {
+    from { opacity: 0; transform: scale(0.92) translateY(10px); }
+    to   { opacity: 1; transform: scale(1)    translateY(0); }
+}
+
+.modal-canje-content h3 {
+    margin: 0 0 18px;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #10243b;
+}
+
+.modal-reward-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(13,90,173,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+}
+
+.modal-reward-icon img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+}
+
+.modal-reward-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #10243b;
+    margin: 0 0 6px;
+}
+
+.modal-reward-cost,
+.modal-reward-balance {
+    margin: 4px 0;
+    font-size: 0.9rem;
+    color: #4b5563;
+}
+
+.modal-reward-cost span {
+    color: #b36a00;
+    font-weight: 700;
+}
+
+.modal-reward-balance span {
+    color: #0f5eb5;
+    font-weight: 700;
+}
+
+.modal-canje-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.modal-canje-actions button {
+    flex: 1;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-cancelar {
+    background: #eef2f7;
+    color: #4b5563;
+}
+
+.btn-cancelar:hover {
+    background: #e2e8f0;
+}
+
+.btn-confirmar {
+    background: linear-gradient(135deg, #0f5eb5, #1f79df);
+    color: #fff;
+    box-shadow: 0 8px 16px rgba(15, 94, 181, 0.22);
+}
+
+.btn-confirmar:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(15, 94, 181, 0.28);
+}
+
 .confirm-page {
     min-height: calc(100vh - 60px);
     display: grid;

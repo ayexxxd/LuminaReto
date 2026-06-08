@@ -13,9 +13,12 @@ builder.Services.AddHttpClient<ILoginService, LoginService>(client =>
         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
-// Servicio UserService con HttpClient (requiere certificado autofirmado)
+// Servicio TokensService con HttpClient (requiere certificado autofirmado)
 builder.Services
-    .AddHttpClient<IUserService, UserService>()
+    .AddHttpClient<ITokensService, TokensService>(client =>
+    {
+        client.Timeout = TimeSpan.FromSeconds(10);
+    })
     .ConfigurePrimaryHttpMessageHandler(() =>
         new HttpClientHandler
         {
@@ -57,6 +60,8 @@ app.UseSession(); // antes de UseAuthorization
 app.UseAuthorization();
 
 app.MapStaticAssets();
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Login}/{action=Login}/{id?}")

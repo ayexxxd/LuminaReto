@@ -9,6 +9,7 @@ public class TokenViewModel
 
     public string DateFilter { get; set; } = "todas";
     public string TypeFilter { get; set; } = "todas";
+    public string TokensGraphUrl { get; set; }
 
     public List<Transaccion> ListaTransacciones { get; set; } = new();
     public List<Recompensa> ListaRecompensas { get; set; } = new();
