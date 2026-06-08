@@ -6,10 +6,10 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
 }
-@if (TempData["SuccessMessage"] != null)
+@if (TempData["Message"] != null)
 {
     <div class="MESSAGE MESSAGE-success">
-        @TempData["SuccessMessage"]
+        @TempData["Message"]
     </div>
 }
 
@@ -49,7 +49,7 @@
 
     <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
         <h3>Historial de Tokens</h3>
-        <iframe width="1140" height="300" src="@Model.TokensGraphUrl" frameborder="0" style="border:0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe width="1140" height="350" src="@Model.TokensGraphUrl" frameborder="0" style="border:0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
     <div class="bottom-dashboard dashboard-split">
@@ -139,9 +139,6 @@
     </div>
 </div>
 
-<img src="" alt="Confeti" class="confetti" />
-
-<!-- Modal de confirmación de canje -->
 <div id="modalCanje" class="modal-canje" style="display:none;">
     <div class="modal-canje-overlay"></div>
     <div class="modal-canje-content">

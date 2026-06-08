@@ -84,7 +84,7 @@ namespace LuminaReto.Controllers
             }
             catch (Exception ex)
             {
-                TempData["SuccessMessage"] = "Error al Cargar Datos: " + ex.Message;
+                TempData["Message"] = "Error al Cargar Datos: " + ex.Message;
 
                 return View("~/Views/Home/Tokens.cshtml", new TokenViewModel{
                 ListaTransacciones = new List<Transaccion>(),
@@ -114,7 +114,7 @@ namespace LuminaReto.Controllers
 
             await _service.UpdatePoints(userId, -recompensa.Costo);
             await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa);
-            TempData["SuccessMessage"] = "Canjeaste " + recompensa.NombreRecompensa;
+            TempData["Message"] = "Canjeaste " + recompensa.NombreRecompensa;
             return Redirect("/Tokens/Index");
         }
     public IActionResult Regresar()
