@@ -9,9 +9,9 @@ namespace LuminaReto.Controllers
 {
     public class TokensController : Controller
     {
-        private readonly IUserService _service;
+        private readonly ITokensService _service;
 
-        public TokensController(IUserService service)
+        public TokensController(ITokensService service)
         {
             _service = service;
         }
@@ -21,8 +21,12 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario")??0;
-            
+                var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+                if (userId == 0)
+                {
+                    return RedirectToAction("Login", "Login");
+                }
+
                 string fechaStandard = "2000-01-01";
                 switch (DateFilter)//DATE FILTER
                 {
@@ -73,13 +77,14 @@ namespace LuminaReto.Controllers
                     TypeFilter = TypeFilter,
 
                     ListaTransacciones = transactions,
-                    ListaRecompensas = rewards
+                    ListaRecompensas = rewards,
+                    TokensGraphUrl = await _service.TokensGraph(userId)
                 };
                 return View("~/Views/Home/Tokens.cshtml", model);
             }
-            catch(Exception)
+            catch (Exception ex)
             {
-                TempData["SuccessMessage"] = "Error al Cargar Datos";
+                TempData["SuccessMessage"] = "Error al Cargar Datos: " + ex.Message;
 
                 return View("~/Views/Home/Tokens.cshtml", new TokenViewModel{
                 ListaTransacciones = new List<Transaccion>(),
@@ -89,29 +94,15 @@ namespace LuminaReto.Controllers
             
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ConfirmarCanje(int recompensaId)
-        {
-            var rewards = await _service.GetRecompensas();
-            var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
-
-            //int userId = SessionHelper.GetUserId(HttpContext.Session);
-            int userId = 1;
-            var points = await _service.GetUserPoints(userId);
-            var model = new CanjeConfirmationViewModel
-            {
-                Recompensa = recompensa,
-                TokensActuales = points
-            };
-            
-            return View("~/Views/Home/Tokens.cshtml", model);
-        }
-
         [HttpPost]
         public async Task<IActionResult> Canjear(int recompensaId)
         {
-            int userId = 1;
-            //int userId = SessionHelper.GetUserId(HttpContext.Session);
+            var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (userId == 0)
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             var rewards = await _service.GetRecompensas();
             var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
         

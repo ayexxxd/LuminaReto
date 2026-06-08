@@ -23,19 +23,43 @@ public class LoginController : Controller
 	[HttpPost]
 	public async Task<IActionResult> Login(string username, string password)
 	{
-		if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+		if (string.IsNullOrWhiteSpace(username) && string.IsNullOrWhiteSpace(password))
 		{
-			ModelState.AddModelError(string.Empty, "Ingresa tu correo y contraseña.");
+			TempData["Message"] = "Ingresa tu correo y contraseña.";
+			ViewData["Username"] = username;
+			return View("~/Views/Home/Login.cshtml");
+		}
+
+		if (string.IsNullOrWhiteSpace(username))
+		{
+			TempData["Message"] = "El correo electrónico es obligatorio.";
+			ViewData["Username"] = username;
+			return View("~/Views/Home/Login.cshtml");
+		}
+
+		if (!username.Contains("@") || !username.Contains("."))
+		{
+			TempData["Message"] = "El correo electrónico no es válido.";
+			ViewData["Username"] = username;
+			return View("~/Views/Home/Login.cshtml");
+		}
+
+		if (string.IsNullOrWhiteSpace(password))
+		{
+			TempData["Message"] = "La contraseña es obligatoria.";
+			ViewData["Username"] = username;
 			return View("~/Views/Home/Login.cshtml");
 		}
 
 		try
 		{
-			var userId = await _loginService.Login(username, password);
+			var email = username.ToLower();
+			var userId = await _loginService.Login(email, password);
 
 			if (userId <= 0)
 			{
-				ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectos.");
+				TempData["Message"] = "Usuario o contraseña incorrectos.";
+				ViewData["Username"] = username;
 				return View("~/Views/Home/Login.cshtml");
 			}
 
@@ -44,7 +68,8 @@ public class LoginController : Controller
 		}
 		catch (HttpRequestException)
 		{
-			ModelState.AddModelError(string.Empty, "No se pudo conectar con el servidor de autenticación. Inténtalo más tarde.");
+			TempData["Message"] = "No se pudo conectar con el servidor de autenticación.";
+			ViewData["Username"] = username;
 			return View("~/Views/Home/Login.cshtml");
 		}
 	}
@@ -54,7 +79,6 @@ public class LoginController : Controller
 	public IActionResult Logout()
 	{
 		HttpContext.Session.Remove("IdUsuario");
-		HttpContext.Session.Remove("LoginRemember");
 		return RedirectToAction("Index", "Home");
 	}
 }

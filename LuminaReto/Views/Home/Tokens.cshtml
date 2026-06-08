@@ -12,7 +12,7 @@
         @TempData["SuccessMessage"]
     </div>
 }
-<h1>@Model.IdUser</h1>
+
 <div class="tokens-page">
     <h1 class="tokens-title">Mis Tokens</h1>
     <section class="tokens-resumen"><!-- Resumen OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
@@ -49,7 +49,7 @@
 
     <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
         <h3>Historial de Tokens</h3>
-        <iframe width="1140" height="320" src="https://datastudio.google.com/u/0/reporting/fede5ef6-97e0-4fd2-b1f5-94b604aaf0c2/page/9nmzF?params=%7B%22IdUser%22:"+@Model.IdUser+"%7D" frameborder="0" style="border:0" allowfullscreen sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        <iframe width="1140" height="300" src="@Model.TokensGraphUrl" frameborder="0" style="border:0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
     <div class="bottom-dashboard dashboard-split">
@@ -96,7 +96,7 @@
                             </div>
                         </div>
 
-                        <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">@(t.Monto > 0 ? "+" : "")@t.Monto</div>
+                        <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">@(t.Monto > 0 ? "+" : "")@t.Monto.ToString("N0")</div>
                     </article>
                 }
             </div>
@@ -111,18 +111,25 @@
                         <article class="reward-card @(r.PuedeCanjear ? "reward-active" : "reward-disabled")">
 
                             <div class="reward-icon">
-                                <img src="imagenes/@r.Imagen"alt="Icono" />
+                                <img src="~/imagenes/@r.Imagen" alt="Icono" />
                             </div>
 
                             <h4>@r.NombreRecompensa</h4>
-                            <div class="reward-price">@r.Costo Tokens</div>
+                            <div class="reward-price">@r.Costo.ToString("N0") Tokens</div>
                             @if (r.PuedeCanjear)
                             {
-                                <a class="btn-red" href="@Url.Action("ConfirmarCanje", "Tokens", new { recompensaId = r.IdRecompensa })">Canjear</a>
+                                <button type="button" class="btn-red btn-canjear"
+                                        data-id="@r.IdRecompensa"
+                                        data-nombre="@r.NombreRecompensa"
+                                        data-imagen="@r.Imagen"
+                                        data-costo="@r.Costo.ToString("N0")"
+                                        data-tokens="@Model.WhirlTokens">
+                                    Canjear
+                                </button>
                             }
                             else
                             {
-                                <button class="btn-disabled" disabled>Necesitas @r.TokensFaltantes más</button>
+                                <button class="btn-disabled" disabled>Necesitas @r.TokensFaltantes.ToString("N0") más</button>
                             }
                         </article>
                     }
@@ -132,10 +139,54 @@
     </div>
 </div>
 
+<img src="" alt="Confeti" class="confetti" />
 
-   
-
-
-
-    
+<!-- Modal de confirmación de canje -->
+<div id="modalCanje" class="modal-canje" style="display:none;">
+    <div class="modal-canje-overlay"></div>
+    <div class="modal-canje-content">
+        <h3>Confirmar Canje</h3>
+        <div class="modal-canje-body">
+            <div class="modal-reward-icon">
+                <img id="modalImg" src="" alt="Recompensa" />
+            </div>
+            <p class="modal-reward-name" id="modalNombre"></p>
+            <p class="modal-reward-cost">Costo: <span id="modalCosto"></span> Tokens</p>
+            <p class="modal-reward-balance">Tus Tokens: <span id="modalTokens"></span></p>
+        </div>
+        <form method="post" asp-controller="Tokens" asp-action="Canjear">
+            <input type="hidden" name="recompensaId" id="modalRecompensaId" />
+            <div class="modal-canje-actions">
+                <button type="button" class="btn-cancelar" id="btnCancelarCanje">Cancelar</button>
+                <button type="submit" class="btn-confirmar">Confirmar compra</button>
+            </div>
+        </form>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        const modal = document.getElementById('modalCanje');
+        const btns = document.querySelectorAll('.btn-canjear');
+        const btnCancelar = document.getElementById('btnCancelarCanje');
+
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('modalRecompensaId').value = btn.dataset.id;
+                document.getElementById('modalNombre').textContent = btn.dataset.nombre;
+                document.getElementById('modalImg').src = '/imagenes/' + btn.dataset.imagen;
+                document.getElementById('modalCosto').textContent = btn.dataset.costo;
+                document.getElementById('modalTokens').textContent = btn.dataset.tokens;
+                modal.style.display = 'flex';
+            });
+        });
+
+        btnCancelar.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.querySelector('.modal-canje-overlay').addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    </script>
+}
