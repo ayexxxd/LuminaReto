@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {}
+    "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {}
   },
   "projects": {
-    "c:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {
+    "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
+        "projectUniqueName": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
         "projectName": "LuminaReto",
-        "projectPath": "c:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
+        "projectPath": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\LuminaReto.csproj",
         "packagesPath": "C:\\Users\\betsy\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\obj\\",
+        "outputPath": "C:\\Users\\betsy\\OneDrive\\Documentos\\VS_Videojuegos\\Nueva carpeta\\LuminaReto\\LuminaReto\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
