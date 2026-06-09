@@ -8,6 +8,8 @@ namespace LuminaReto.Models
         public int    WhirlTokens { get; set; }
         public int    TotalPuntos { get; set; }
         public int    RachaActual { get; set; }
+        public string? UrlFoto   { get; set; } 
+
     }
 
 }

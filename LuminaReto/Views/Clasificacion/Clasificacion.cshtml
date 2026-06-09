@@ -21,7 +21,7 @@
     <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4">
         <div>
             <h1 class="fw-bold mb-1">Tabla de Clasificación</h1>
-            <p class="text-muted mb-0">Compite con tus compañeros y sube en el ranking</p>
+            <p class="text-muted mb-0">Los mejores gamers de Whirpool</p>
         </div>
         <span class="badge rounded-pill border border-primary text-primary bg-white fs-6 px-3 py-2 d-inline-flex align-items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -151,7 +151,14 @@
                         <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
                             <div class="card-body py-3">
                                 <div class="lb-medal-circle lb-medal-silver mb-2">🥈</div>
-                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@segundo.Iniciales</div>
+                                @if (!string.IsNullOrEmpty(segundo.UrlFoto))
+                                {
+                                    <img src="@segundo.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
+                                }
+                                else
+                                {
+                                    <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@segundo.Iniciales</div>
+                                }
                                 <span class="badge badge-silver rounded-pill px-3 mb-2 d-inline-block">#2</span>
                                 <p class="fw-bold mb-1">@segundo.Nombre</p>
                                 <p class="fs-4 fw-bold mb-3">@segundo.WhirlTokens.ToString("N0")</p>
@@ -168,7 +175,14 @@
                         <div class="card bg-white bg-opacity-25 border border-white border-opacity-50 text-white text-center">
                             <div class="card-body py-4">
                                 <div class="lb-crown-circle mb-2">👑</div>
-                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white" style="width:80px;height:80px;font-size:1.7rem;">@primero.Iniciales</div>
+                                @if (!string.IsNullOrEmpty(primero.UrlFoto))
+                                {
+                                    <img src="@primero.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
+                                }
+                                else
+                                {
+                                    <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@primero.Iniciales</div>
+                                }
                                 <span class="badge badge-gold rounded-pill px-3 mb-2 d-inline-block">#1</span>
                                 <p class="fw-bold mb-1">@primero.Nombre</p>
                                 <p class="fs-3 fw-bold mb-3">@primero.WhirlTokens.ToString("N0")</p>
@@ -185,7 +199,14 @@
                         <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
                             <div class="card-body py-3">
                                 <div class="lb-medal-circle lb-medal-bronze mb-2">🥉</div>
-                                <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@tercero.Iniciales</div>
+                                @if (!string.IsNullOrEmpty(tercero.UrlFoto))
+                                {
+                                    <img src="@tercero.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
+                                }
+                                else
+                                {
+                                    <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@tercero.Iniciales</div>
+                                }
                                 <span class="badge badge-bronze rounded-pill px-3 mb-2 d-inline-block">#3</span>
                                 <p class="fw-bold mb-1">@tercero.Nombre</p>
                                 <p class="fs-4 fw-bold mb-3">@tercero.WhirlTokens.ToString("N0")</p>
@@ -236,9 +257,16 @@
 
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center gap-2">
-                                            <div class="lb-avatar @(esYo ? "bg-primary text-white" : "bg-primary bg-opacity-10 text-primary")">
-                                                @empleado.Iniciales
-                                            </div>
+                                            @if (!string.IsNullOrEmpty(empleado.UrlFoto))
+                                            {
+                                                <img src="@empleado.UrlFoto" class="lb-avatar rounded-circle object-fit-cover" />
+                                            }
+                                            else
+                                            {
+                                                <div class="lb-avatar @(esYo ? "bg-primary text-white" : "bg-primary bg-opacity-10 text-primary")">
+                                                    @empleado.Iniciales
+                                                </div>
+                                            }
                                             <div>
                                                 <div class="fw-semibold">@empleado.Nombre</div>
                                                 @if (esYo) { <small class="text-primary fw-semibold">Tú</small> }
@@ -276,23 +304,23 @@
     @* Cómo ganar tokens *@
     <div class="card shadow-sm mb-4">
         <div class="card-body">
-            <h3 class="fw-bold mb-3">🏆 Cómo Ganar Tokens</h3>
+            <h3 class="fw-bold mb-3">🏆 Cómo Ganar</h3>
             <div class="row row-cols-1 row-cols-md-3 g-3">
                 <div class="col">
                     <div class="card border-primary text-center p-3 h-100" style="background-color:#E3F2FD;">
-                        <p class="fs-2 fw-bold text-primary mb-1">+150</p>
+                        <p class="fs-2 fw-bold text-primary mb-1">+150 Tokens</p>
                         <p class="text-secondary mb-0">Por cada formulario completado</p>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card text-center p-3 h-100" style="background-color:#FFF8E1; border-color:#FFE082;">
-                        <p class="fs-2 fw-bold text-gold mb-1">+50</p>
+                        <p class="fs-2 fw-bold text-gold mb-1">+50 Puntos</p>
                         <p class="text-secondary mb-0">Por cada partida en el juego</p>
                     </div>
                 </div>
                 <div class="col">
                     <div class="card text-center p-3 h-100" style="background-color:#FFF3E0; border-color:#FFCC80;">
-                        <p class="fs-2 fw-bold text-fire mb-1">+200</p>
+                        <p class="fs-2 fw-bold text-fire mb-1">+200 Puntos</p>
                         <p class="text-secondary mb-0">Bonus por racha de 7 días</p>
                     </div>
                 </div>
