@@ -18,7 +18,7 @@ public class ClasificacionController : Controller
 
         var idUsuario = HttpContext.Session.GetInt32("IdUsuario");
         if (idUsuario is null)
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
 
         try
         {
