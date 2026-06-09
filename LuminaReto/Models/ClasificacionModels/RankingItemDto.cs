@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace LuminaReto.Models
 {
     public class RankingItemDto
@@ -8,7 +10,8 @@ namespace LuminaReto.Models
         public int    WhirlTokens { get; set; }
         public int    TotalPuntos { get; set; }
         public int    RachaActual { get; set; }
-        public string? UrlFoto   { get; set; } 
+        [JsonPropertyName("url_foto")]
+        public string? UrlFoto     { get; set; }
 
     }
 

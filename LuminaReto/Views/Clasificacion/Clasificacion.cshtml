@@ -151,7 +151,7 @@
                         <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
                             <div class="card-body py-3">
                                 <div class="lb-medal-circle lb-medal-silver mb-2">🥈</div>
-                                @if (!string.IsNullOrEmpty(segundo.UrlFoto))
+                                @if (segundo.TieneFoto)
                                 {
                                     <img src="@segundo.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
                                 }
@@ -175,13 +175,13 @@
                         <div class="card bg-white bg-opacity-25 border border-white border-opacity-50 text-white text-center">
                             <div class="card-body py-4">
                                 <div class="lb-crown-circle mb-2">👑</div>
-                                @if (!string.IsNullOrEmpty(primero.UrlFoto))
+                                @if (primero.TieneFoto)
                                 {
-                                    <img src="@primero.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
+                                    <img src="@primero.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" style="width:80px;height:80px;" />
                                 }
                                 else
                                 {
-                                    <div class="lb-avatar-lg bg-white bg-opacity-25 text-white">@primero.Iniciales</div>
+                                    <div class="lb-avatar-lg bg-white bg-opacity-25 text-white" style="width:80px;height:80px;font-size:1.7rem;">@primero.Iniciales</div>
                                 }
                                 <span class="badge badge-gold rounded-pill px-3 mb-2 d-inline-block">#1</span>
                                 <p class="fw-bold mb-1">@primero.Nombre</p>
@@ -199,7 +199,7 @@
                         <div class="card bg-white bg-opacity-10 border border-white border-opacity-25 text-white text-center">
                             <div class="card-body py-3">
                                 <div class="lb-medal-circle lb-medal-bronze mb-2">🥉</div>
-                                @if (!string.IsNullOrEmpty(tercero.UrlFoto))
+                                @if (tercero.TieneFoto)
                                 {
                                     <img src="@tercero.UrlFoto" class="lb-avatar-lg rounded-circle object-fit-cover" />
                                 }
@@ -223,7 +223,7 @@
         </div>
     }
 
-    @* Tabla completa - emojis conservados *@
+    @* Tabla completa *@
     <div class="card shadow-sm mb-4">
         <div class="card-body p-0">
             <h2 class="fw-bold p-3 mb-0 border-bottom">Clasificación Completa</h2>
@@ -243,33 +243,33 @@
                         {
                             @foreach (var empleado in Model.Ranking)
                             {
-                                bool esYo = Model.UsuarioActual != null
-                                            && empleado.IdUsuario == Model.UsuarioActual.IdUsuario;
-
-                                <tr class="@(esYo ? "fila-yo" : "")">
+                                <tr class="@(empleado.EsUsuarioActual ? "fila-yo" : "")">
 
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center gap-2">
-                                            <span>@(empleado.Posicion switch { 1 => "👑", 2 => "🥈", 3 => "🥉", _ => "" })</span>
+                                            <span>@empleado.Medalla</span>
                                             <span class="fw-bold text-secondary">#@empleado.Posicion</span>
                                         </div>
                                     </td>
 
                                     <td class="align-middle">
                                         <div class="d-flex align-items-center gap-2">
-                                            @if (!string.IsNullOrEmpty(empleado.UrlFoto))
+                                            @if (empleado.TieneFoto)
                                             {
                                                 <img src="@empleado.UrlFoto" class="lb-avatar rounded-circle object-fit-cover" />
                                             }
                                             else
                                             {
-                                                <div class="lb-avatar @(esYo ? "bg-primary text-white" : "bg-primary bg-opacity-10 text-primary")">
+                                                <div class="lb-avatar @(empleado.EsUsuarioActual ? "bg-primary text-white" : "bg-primary bg-opacity-10 text-primary")">
                                                     @empleado.Iniciales
                                                 </div>
                                             }
                                             <div>
                                                 <div class="fw-semibold">@empleado.Nombre</div>
-                                                @if (esYo) { <small class="text-primary fw-semibold">Tú</small> }
+                                                @if (empleado.EsUsuarioActual)
+                                                {
+                                                    <small class="text-primary fw-semibold">Tú</small>
+                                                }
                                             </div>
                                         </div>
                                     </td>
