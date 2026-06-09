@@ -26,7 +26,7 @@ public class ClasificacionController : Controller
 
             if (dto is null)
             {
-                modelo.ErrorMessage = "Error 503 — No fue posible cargar la tabla de clasificación. Intenta de nuevo más tarde.";
+                modelo.ErrorMessage = "No fue posible cargar la tabla de clasificación. Intenta de nuevo más tarde.";
                 return View(modelo);
             }
 
@@ -60,7 +60,7 @@ public class ClasificacionController : Controller
         }
         catch (Exception ex)
         {
-            modelo.ErrorMessage = "Error 503 — Ocurrió un problema al conectar con el servidor. Intenta de nuevo más tarde.";
+            modelo.ErrorMessage = "Ocurrió un problema al conectar con el servidor. Intenta de nuevo más tarde.";
         }
 
         return View(modelo);
