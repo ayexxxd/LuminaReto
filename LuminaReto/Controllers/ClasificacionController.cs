@@ -18,7 +18,7 @@ public class ClasificacionController : Controller
 
         var idUsuario = HttpContext.Session.GetInt32("IdUsuario");
         if (idUsuario is null)
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
 
         try
         {
@@ -26,7 +26,7 @@ public class ClasificacionController : Controller
 
             if (dto is null)
             {
-                modelo.ErrorMessage = "Error al obtener el ranking";
+                modelo.ErrorMessage = "Error 503 — No fue posible cargar la tabla de clasificación. Intenta de nuevo más tarde.";
                 return View(modelo);
             }
 
@@ -37,7 +37,10 @@ public class ClasificacionController : Controller
                 Nombre      = r.Nombre,
                 WhirlTokens = r.WhirlTokens,
                 TotalPuntos = r.TotalPuntos,
-                RachaActual = r.RachaActual
+                RachaActual = r.RachaActual,
+                UrlFoto     = r.UrlFoto,
+                EsUsuarioActual = r.IdUsuario == idUsuario.Value 
+
             }).ToList();
 
             modelo.Ranking = empleados;
@@ -50,12 +53,14 @@ public class ClasificacionController : Controller
                 Nombre      = dto.UsuarioActual.Nombre,
                 WhirlTokens = dto.UsuarioActual.WhirlTokens,
                 TotalPuntos = dto.UsuarioActual.TotalPuntos,
-                RachaActual = dto.UsuarioActual.RachaActual
+                RachaActual = dto.UsuarioActual.RachaActual,
+                UrlFoto     = dto.UsuarioActual.UrlFoto
+                
             };
         }
         catch (Exception ex)
         {
-            modelo.ErrorMessage = ex.Message;
+            modelo.ErrorMessage = "Error 503 — Ocurrió un problema al conectar con el servidor. Intenta de nuevo más tarde.";
         }
 
         return View(modelo);
