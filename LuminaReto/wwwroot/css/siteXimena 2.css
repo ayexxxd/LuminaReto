@@ -1,7 +1,6 @@
-    body {
-        font-family: roboto, sans-serif;/*Tipo de letra */
+body {
         background-color: #f5f7fa;/*el color de fondo*/
-    }
+}
 
     .cont-principal {
         width: 90%;/* es el ancho de toda la info osea si quiero que sea mas largo o nel */
