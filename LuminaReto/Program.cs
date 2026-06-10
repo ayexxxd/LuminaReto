@@ -26,7 +26,7 @@ builder.Services
 
 builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
 {
-    client.BaseAddress = new Uri("https://10.22.194.109:8002");
+    client.BaseAddress = new Uri("https://10.14.255.45:8002/");
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
