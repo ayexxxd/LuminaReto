@@ -15,7 +15,14 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
-builder.Services.AddHttpClient<IHomeService, HomeService>();
+builder.Services
+    .AddHttpClient<IHomeService, HomeService>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
 
 builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
 {
