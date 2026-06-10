@@ -12,9 +12,18 @@ public class HomeService : IHomeService
     }
 
     public async Task<DashboardData> GetDashboard(int idUsuario)
-    {
-        var url = "http://localhost:4999/dashboard/" + idUsuario;
-        var data = await _httpClient.GetFromJsonAsync<DashboardData>(url, _jsonOptions);
-        return data ?? new DashboardData();
-    }
-}
+{
+    var url = "https://10.22.227.188:4999/dashboard/" + idUsuario;
+
+    var response = await _httpClient.GetAsync(url);
+
+    var body = await response.Content.ReadAsStringAsync();
+
+    Console.WriteLine("RESPONSE:");
+    Console.WriteLine(body);
+
+    response.EnsureSuccessStatusCode();
+
+    return JsonSerializer.Deserialize<DashboardData>(body, _jsonOptions)
+           ?? new DashboardData();
+}}
