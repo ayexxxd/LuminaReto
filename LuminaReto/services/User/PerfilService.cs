@@ -2,13 +2,13 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using LuminaReto.Models;
-using LuminaReto.Services;
+using LuminaReto.Models;      // Donde viven PerfilUsuario y EstadisticasUsuario
+using LuminaReto.Services;    // Donde vive la interfaz IPerfilService
 
 public class PerfilService : IPerfilService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _baseUrl = "https://10.22.188.150:5001"; // Asegúrate que coincida con tu API
+    private readonly string _baseUrl = "https://10.22.188.150:5001"; 
 
     public PerfilService(HttpClient httpClient)
     {
@@ -19,11 +19,12 @@ public class PerfilService : IPerfilService
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<PerfilUsuario>($"{_baseUrl}/perfil/obtenerPerfil/{idUsuario}");
+            var url = _baseUrl + "/perfil/obtenerPerfil/" + idUsuario;
+            return await _httpClient.GetFromJsonAsync<PerfilUsuario>(url);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al obtener perfil: {ex.Message}");
+            Console.WriteLine("Error al obtener perfil: " + ex.Message);
             return null;
         }
     }
@@ -32,13 +33,15 @@ public class PerfilService : IPerfilService
     {
         try
         {
+            var url = _baseUrl + "/api/usuario/editar";
             var body = new { id_usuario = idUsuario, nombre = nombre, correo = correo };
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/api/usuario/editar", body);
+            
+            var response = await _httpClient.PostAsJsonAsync(url, body);
             return response.IsSuccessStatusCode;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al editar perfil: {ex.Message}");
+            Console.WriteLine("Error al editar perfil: " + ex.Message);
             return false;
         }
     }
@@ -47,11 +50,12 @@ public class PerfilService : IPerfilService
     {
         try
         {
-            return await _httpClient.GetFromJsonAsync<EstadisticasUsuario>($"{_baseUrl}/perfil/obtenerEstadisticas/{idUsuario}");
+            var url = _baseUrl + "/perfil/obtenerEstadisticas/" + idUsuario;
+            return await _httpClient.GetFromJsonAsync<EstadisticasUsuario>(url);
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al obtener estadísticas: {ex.Message}");
+            Console.WriteLine("Error al obtener estadísticas: " + ex.Message);
             return null;
         }
     }
@@ -60,12 +64,13 @@ public class PerfilService : IPerfilService
     {
         try
         {
-            var response = await _httpClient.PostAsJsonAsync($"{_baseUrl}/perfil/guardarPerfil", perfil);
+            var url = _baseUrl + "/perfil/guardarPerfil";
+            var response = await _httpClient.PostAsJsonAsync(url, perfil);
             return response.IsSuccessStatusCode;
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error al guardar perfil: {ex.Message}");
+            Console.WriteLine("Error al guardar perfil: " + ex.Message);
             return false;
         }
     }
