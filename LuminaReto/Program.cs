@@ -1,3 +1,5 @@
+using LuminaReto.Services.Formularios;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -11,6 +13,16 @@ builder.Services
             ServerCertificateCustomValidationCallback =
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
+
+builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
+{
+    client.BaseAddress = new Uri("https://10.22.194.109:8002");
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
 
 // Servicio TokensService con HttpClient (requiere certificado autofirmado)
 builder.Services
