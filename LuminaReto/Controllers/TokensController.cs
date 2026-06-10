@@ -68,6 +68,7 @@ namespace LuminaReto.Controllers
                 foreach (var skin in catalogo)
                 {
                     skin.Owned = skinIds.Contains(skin.IdSkin);
+                    skin.Equipada = skinsUsuario.FirstOrDefault(s => s.IdSkin == skin.IdSkin)?.Equipada ?? false; // NEW
                     skin.PuedeComprar = !skin.Owned && temppoints >= skin.Costo;
                     skin.TokensFaltantes = skin.Costo - temppoints;
                 }
@@ -146,10 +147,20 @@ namespace LuminaReto.Controllers
             TempData["Message"] = "¡Compraste " + skin.Nombre + "!";
             return Redirect("/Tokens/Index");
         }
+        [HttpPost]
+        public async Task<IActionResult> EquiparSkin(int skinId)
+        {
+            var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (userId == 0)
+                return RedirectToAction("Login", "Login");
 
+            await _service.EquiparSkin(userId, skinId);
+            TempData["Message"] = "Skin equipada";
+            return Redirect("/Tokens/Index");
+        }
+        
         public IActionResult Regresar()
         {
             return RedirectToAction(nameof(Index), "Home");
         }
-    }
-}
+}}

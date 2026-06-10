@@ -1,14 +1,11 @@
 body {
     background-color: #f3f6fb;
-    font-family: "Roboto", sans-serif;
     font-weight: 400;
 }
 
 .tokens-page {
     width: min(1180px, 96%);
     margin: 28px auto;
-    /* inherit global body font to match other pages */
-    font-family: inherit;
     color: #1f2937;
 }
 
