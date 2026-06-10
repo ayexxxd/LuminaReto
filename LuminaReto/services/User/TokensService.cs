@@ -12,8 +12,8 @@ public class TokensService : ITokensService
 
     public async Task UpdatePoints(int id, int points)
     {
-    var url = "https://127.0.0.1:5010/updatepoints";
-    //var url = "https://10.14.255.45:5010/updatepoints";
+    //var url = "https://127.0.0.1:5010/updatepoints";
+    var url = "https://10.14.255.45:5010/updatepoints";
 
     var body = new
     {
@@ -25,8 +25,8 @@ public class TokensService : ITokensService
 
     public async Task<List<Recompensa>> GetRecompensas()
     {
-        string url = "https://127.0.0.1:5010/recompensas";
-        //string url = "https://10.14.255.45:5010/recompensas";
+        //string url = "https://127.0.0.1:5010/recompensas";
+        string url = "https://10.14.255.45:5010/recompensas";
          
         var listaRecompensas = await _httpClient.GetFromJsonAsync<List<Recompensa>>(url);
         return listaRecompensas ?? new List<Recompensa>();
@@ -34,8 +34,8 @@ public class TokensService : ITokensService
 
     public async Task<List<Transaccion>> GetTransacciones(int id, string date)
     {
-        var url = "https://127.0.0.1:5010/transacciones/" + id + "/" + date;
-        //var url = "https://10.14.255.45:5010/transacciones/" + id + "/" + date;
+        //var url = "https://127.0.0.1:5010/transacciones/" + id + "/" + date;
+        var url = "https://10.14.255.45:5010/transacciones/" + id + "/" + date;
 
         var listaTransacciones = await _httpClient.GetFromJsonAsync<List<Transaccion>>(url);
         return listaTransacciones ?? new List<Transaccion>();
