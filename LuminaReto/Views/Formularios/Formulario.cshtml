@@ -1,0 +1,290 @@
+@{ViewData["Title"] = "Formularios";}
+@model LuminaReto.Models.Formularios.ViewModels.FormulariosViewModel
+
+<!-- Toast -->
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 9999">
+    <div id="toastConfirmacion" class="toast align-items-center text-white bg-success border-0" role="alert">
+        <div class="d-flex">
+            <div class="toast-body fw-semibold" id="toastMensaje"></div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+        </div>
+    </div>
+</div>
+
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Formularios</h2>
+    <div class="progress-card d-flex align-items-center gap-3 px-4 py-3">
+        <div class="progress-circle" id="circuloPorcentaje">
+            <span id="textoPorcentaje">@(Model.MetaTotal > 0 ? Math.Round((double)Model.FormulariosCompletados / Model.MetaTotal * 100) : 0)%</span>
+        </div>
+        <div>
+            <div class="fw-semibold">Tu Meta Mensual</div>
+            <small class="text-muted">
+                <span id="contadorCompletados">@Model.FormulariosCompletados</span> /
+                <span id="contadorMeta">@Model.MetaTotal</span> formularios
+            </small>
+        </div>
+    </div>
+</div>
+
+<!-- Banner -->
+<div class="banner p-4 mb-4 d-flex justify-content-between align-items-center">
+    <div>
+        <h5 class="fw-bold text-white">¡Cada respuesta cuenta!</h5>
+        <p class="text-white mb-0">Completa formularios y gana tokens</p>
+    </div>
+    <div class="tokens-display">
+        <span class="fs-3 fw-bold text-white">+<span id="tokensMes">@Model.TokensMes</span></span>
+        <small class="text-white d-block">tokens este mes</small>
+    </div>
+</div>
+
+<!-- Formularios Disponibles -->
+<h5 class="mb-3 fw-semibold">Formularios Disponibles</h5>
+
+<div id="mensajeSinFormularios" style="display: @(Model.Formularios.Any() ? "none" : "block")">
+    <div class="alert alert-success">
+        🎉 ¡Ya completaste todos los formularios disponibles este mes! Vuelve el próximo mes.
+    </div>
+</div>
+
+<div class="row g-4" id="listaDisponibles">
+    @foreach (var form in Model.Formularios)
+    {
+        <div class="col-md-4" id="card-formulario-@form.IdFormulario">
+            <div class="form-card @(form.DobleTokens ? "highlight" : "")">
+                <img src="@form.ImagenFormulario" class="form-icon" />
+                <div class="token-badge">+💰@form.Tokens</div>
+                <h6 class="fw-semibold mt-3">@form.Titulo</h6>
+                <p class="text-muted small">@form.Descripcion</p>
+                <div class="meta d-flex justify-content-between small text-muted mb-2">
+                    <span>⭐ @form.Preguntas preguntas</span>
+                </div>
+                <button class="btn btn-primary w-100 btn-abrir-modal"
+                        data-id="@form.IdFormulario"
+                        data-titulo="@form.Titulo"
+                        data-tokens="@form.Tokens"
+                        data-bs-toggle="modal"
+                        data-bs-target="#modalFormulario">
+                    Comenzar
+                </button>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalFormulario" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitulo"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="modalCuerpo"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnEnviarModal">Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Completados -->
+<div class="completed mt-5 p-4">
+    <h6 class="fw-semibold mb-3">Formularios Completados</h6>
+
+    <p id="mensajeSinCompletados" class="text-muted small"
+       style="display: @(Model.FormulariosCompletadosLista.Any() ? "none" : "block")">
+        Aún no has completado ningún formulario este mes.
+    </p>
+
+    <div id="listaCompletados">
+        @foreach (var c in Model.FormulariosCompletadosLista)
+        {
+            <div class="completed-item d-flex justify-content-between align-items-center">
+                <div>✔ @c.Titulo</div>
+                <span class="text-success fw-semibold">+@c.Tokens</span>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    let tituloActual = "";
+    let tokensActual = 0;
+    let idFormularioActual = 0;
+
+    // Abrir modal y cargar preguntas
+    document.querySelectorAll('.btn-abrir-modal').forEach(btn => {
+        btn.addEventListener('click', async function () {
+            idFormularioActual = parseInt(this.dataset.id);
+            tituloActual       = this.dataset.titulo;
+            tokensActual       = parseInt(this.dataset.tokens);
+
+            document.getElementById('modalTitulo').textContent = tituloActual;
+            document.getElementById('modalCuerpo').innerHTML = `
+                <div class="text-center py-4">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-muted">Cargando preguntas...</p>
+                </div>`;
+
+            try {
+                const resPreguntas = await fetch(`/Formularios/ObtenerPreguntas?idFormulario=${idFormularioActual}`);
+                const preguntas    = await resPreguntas.json();
+
+                const preguntasConOpciones = await Promise.all(
+                    preguntas.map(async (p) => {
+                        if (p.tipoRespuesta === "opcion" || p.tipoRespuesta === "seleccion") {
+                            const resOpc = await fetch(`/Formularios/ObtenerOpciones?idPregunta=${p.idPregunta}`);
+                            p.opciones   = await resOpc.json();
+                        }
+                        return p;
+                    })
+                );
+
+                document.getElementById('modalCuerpo').innerHTML = renderPreguntas(preguntasConOpciones);
+            } catch {
+                document.getElementById('modalCuerpo').innerHTML =
+                    `<div class="alert alert-danger">Error al cargar las preguntas. Verifica que la API esté corriendo.</div>`;
+            }
+        });
+    });
+
+    function renderPreguntas(preguntas) {
+        return preguntas.map(p => {
+            let inputHtml = "";
+
+            if (p.tipoRespuesta === "abierta") {
+                inputHtml = `
+                    <textarea class="form-control campo-respuesta" rows="2" data-obligatoria="true"></textarea>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>`;
+            } else if (p.tipoRespuesta === "escala") {
+                const radios = [1,2,3,4,5].map(n => `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="preg_${p.idPregunta}" value="${n}">
+                        <label class="form-check-label">${n}</label>
+                    </div>`).join("");
+                inputHtml = `
+                    <div class="d-flex gap-3 mt-1 grupo-radio" data-obligatoria="true">${radios}</div>
+                    <div class="text-danger small mt-1 msg-radio" style="display:none;">Selecciona una opción.</div>`;
+            } else if (p.tipoRespuesta === "opcion") {
+                const radios = (p.opciones || []).map(op => `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="preg_${p.idPregunta}" value="${op.texto}">
+                        <label class="form-check-label">${op.texto}</label>
+                    </div>`).join("");
+                inputHtml = `
+                    <div class="d-flex gap-3 mt-1 flex-wrap grupo-radio" data-obligatoria="true">${radios}</div>
+                    <div class="text-danger small mt-1 msg-radio" style="display:none;">Selecciona una opción.</div>`;
+            } else if (p.tipoRespuesta === "seleccion") {
+                const options = (p.opciones || []).map(op =>
+                    `<option value="${op.texto}">${op.texto}</option>`).join("");
+                inputHtml = `
+                    <select class="form-select mt-1 campo-respuesta" data-obligatoria="true">
+                        <option value="">-- Selecciona --</option>${options}
+                    </select>
+                    <div class="invalid-feedback">Este campo es obligatorio.</div>`;
+            }
+
+            return `
+                <div class="mb-3">
+                    <label class="fw-semibold">${p.orden}. ${p.texto}</label>
+                    ${inputHtml}
+                </div>`;
+        }).join("");
+    }
+
+    document.getElementById('btnEnviarModal').addEventListener('click', async function () {
+        const modalEl = document.getElementById('modalFormulario');
+        let valido = true;
+
+        // Validar campos abiertos / selects
+        modalEl.querySelectorAll('.campo-respuesta[data-obligatoria="true"]').forEach(campo => {
+            campo.classList.remove('is-invalid');
+            if (!campo.value.trim()) {
+                campo.classList.add('is-invalid');
+                valido = false;
+            }
+        });
+
+        // Validar radios
+        modalEl.querySelectorAll('.grupo-radio[data-obligatoria="true"]').forEach(grupo => {
+            grupo.classList.remove('border', 'border-danger', 'rounded', 'p-1');
+            const msgError = grupo.nextElementSibling;
+            if (!grupo.querySelector('input[type="radio"]:checked')) {
+                grupo.classList.add('border', 'border-danger', 'rounded', 'p-1');
+                if (msgError) msgError.style.display = 'block';
+                valido = false;
+            } else {
+                if (msgError) msgError.style.display = 'none';
+            }
+        });
+
+        if (!valido) return;
+
+        // Deshabilitar botón mientras se procesa
+        this.disabled = true;
+        this.textContent = "Enviando...";
+
+        try {
+            // 1. Registrar formulario completado en el servidor
+            const res = await fetch('/Formularios/CompletarFormulario', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idFormulario: idFormularioActual })
+            });
+            const resultado = await res.json();
+
+            if (!resultado.ok) throw new Error("Error al guardar");
+
+            // 2. Cerrar modal
+            bootstrap.Modal.getInstance(modalEl).hide();
+
+            // 3. Quitar la tarjeta de disponibles
+            const cardEl = document.getElementById(`card-formulario-${idFormularioActual}`);
+            if (cardEl) cardEl.remove();
+
+            // 4. Si ya no quedan tarjetas, mostrar mensaje
+            const restantes = document.querySelectorAll('#listaDisponibles .col-md-4');
+            if (restantes.length === 0) {
+                document.getElementById('mensajeSinFormularios').style.display = 'block';
+            }
+
+            // 5. Agregar a la lista de completados
+            const lista = document.getElementById('listaCompletados');
+            document.getElementById('mensajeSinCompletados').style.display = 'none';
+            const item = document.createElement('div');
+            item.className = 'completed-item d-flex justify-content-between align-items-center';
+            item.innerHTML = `<div>✔ ${tituloActual}</div><span class="text-success fw-semibold">+${tokensActual}</span>`;
+            lista.appendChild(item);
+
+            // 6. Pedir progreso actualizado al servidor y refrescar UI
+            const resProgreso  = await fetch('/Formularios/ObtenerProgreso');
+            const progreso     = await resProgreso.json();
+
+            document.getElementById('tokensMes').textContent          = progreso.tokensMes;
+            document.getElementById('contadorCompletados').textContent = progreso.formulariosCompletados;
+            document.getElementById('contadorMeta').textContent        = progreso.metaTotal;
+
+            const pct = progreso.metaTotal > 0
+                ? Math.round(progreso.formulariosCompletados / progreso.metaTotal * 100)
+                : 0;
+            document.getElementById('textoPorcentaje').textContent = pct + '%';
+
+            // 7. Toast
+            document.getElementById('toastMensaje').textContent = `✔ "${tituloActual}" enviado — +${tokensActual} tokens`;
+            new bootstrap.Toast(document.getElementById('toastConfirmacion'), { delay: 3500 }).show();
+
+        } catch {
+            document.getElementById('modalCuerpo').innerHTML =
+                `<div class="alert alert-danger">Error al enviar el formulario. Intenta de nuevo.</div>`;
+        } finally {
+            this.disabled = false;
+            this.textContent = "Enviar";
+        }
+    });
+</script>
+}

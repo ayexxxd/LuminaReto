@@ -13,7 +13,6 @@ public class LoginService : ILoginService
     public async Task<int> Login(string email, string password)
     {
         var url = "https://10.14.255.45:5010/login";
-        //var url = "https://127.0.0.1:5010/login";
 
         var body = new
         {

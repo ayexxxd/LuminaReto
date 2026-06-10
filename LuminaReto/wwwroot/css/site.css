@@ -19,6 +19,7 @@ html { /*Hace que la página ocupe toda la altura de la pantalla.*/
 
 body {
   margin-bottom: 60px;
+  font-size: 1rem;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -30,7 +31,25 @@ body {
   text-align: start;
 }
 
-
+/* UX: font base más grande y menos espacio vacío */
+.fondo {
+    padding-top: 1.5rem !important;
+    padding-bottom: 1.5rem !important;
+}
+.form-card {
+    padding: 16px;
+}
+.completed {
+    padding: 16px !important;
+    margin-top: 2rem !important;
+}
+.modal-body label.fw-semibold {
+    font-size: 1rem;
+}
+.modal-body .form-control,
+.modal-body .form-select {
+    font-size: 1rem;
+}
 
 /*aqui empieza mi codigo*/
 /*Esto es de layout*/
