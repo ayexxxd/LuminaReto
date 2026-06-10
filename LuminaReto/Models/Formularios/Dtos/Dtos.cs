@@ -28,7 +28,7 @@ public class FormularioCompletadoDto
     public int      IdFormulario    { get; set; }
     public string   Nombre          { get; set; } = "";
     public int      Tokens          { get; set; }
-    public DateTime FechaCompletado { get; set; }
+    public string   FechaCompletado { get; set; } = "";
 }
 
 public class ProgresoDto
