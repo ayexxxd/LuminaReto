@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using LuminaReto.Models; // Asegúrate de que aquí estén tus clases
+using LuminaReto.Models; 
 
 namespace LuminaReto.Services 
 {
