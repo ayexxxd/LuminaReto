@@ -254,7 +254,29 @@ body {
 }
 
 .skins-panel {
-    height: 750px;
+    height: 520px;
+}
+
+.skins-panel .rewards-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.skin-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+}
+
+.skin-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+}
+
+.modal-skin-img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
 }
 .rewards-grid {
     display: grid;
