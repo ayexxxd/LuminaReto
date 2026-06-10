@@ -21,4 +21,3 @@ public class ClasificacionService : IClasificacionService
         return JsonSerializer.Deserialize<RankingResponseDto>(json, _jsonOptions);
     }
 }
-//hi

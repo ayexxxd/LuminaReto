@@ -12,5 +12,5 @@ public interface ITokensService
     Task<List<SkinData>> GetSkinsUsuario(int idUsuario);
     Task ComprarSkin(int idUsuario, int idSkin);
     Task EquiparSkin(int userId, int skinId);
-    Task<SkinData?> GetEquippedSkin(int userId); // NEW
+    Task<SkinData?> GetEquippedSkin(int userId); 
 }

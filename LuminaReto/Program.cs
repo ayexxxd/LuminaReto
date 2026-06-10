@@ -1,5 +1,6 @@
 using LuminaReto.Services.Formularios;
 using Microsoft.AspNetCore.StaticFiles;
+using LuminaReto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,15 @@ builder.Services
 
 builder.Services
     .AddHttpClient<IHomeService, HomeService>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
+
+builder.Services
+    .AddHttpClient<IPerfilService, PerfilService>()
     .ConfigurePrimaryHttpMessageHandler(() =>
         new HttpClientHandler
         {

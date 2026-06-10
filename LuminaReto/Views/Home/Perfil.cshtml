@@ -12,14 +12,14 @@
 
     <div class="dos-columnas">
 
-        <!-- ===== COLUMNA IZQUIERDA ===== -->
+        
         <div class="col-izq">
 
     <div class="tarjeta">
-    <form class="formulario-perfil" method="post" action="/Home/Perfil">
+    <form class="formulario-perfil" method="post" action="/Perfil/Perfil">
         <div class="perfil-header">
             <div class="circulo-foto">
-                <img src="/imagenes/perfilfoto.png" alt="Foto de perfil" class="foto-perfil">
+                <img src="@(ViewData["FotoUrl"]?.ToString() ?? "/imagenes/perfilfoto.png")" alt="Foto de perfil" class="foto-perfil">
             </div>
             <div class="pinfo">
                 <h3>@ViewData["NombreCliente"]</h3>
@@ -60,6 +60,7 @@
                 <input type="text" class="form-control" readonly value="@ViewData["FechaRegistro"]" />
             </div>
         </div>
+        <input type="hidden" name="fechaRegistro" value="@ViewData["FechaRegistro"]" />
         <button type="submit"  class="btn btn-primary btn-sm formulario-perfil">Guardar cambios</button>
         <button type="submit" name="modo" value="editar" class="btn btn-secondary btn-sm formulario-perfil">Editar</button>
     </form>
@@ -70,7 +71,7 @@
                 var rachaVal       = Convert.ToInt32(ViewData["Racha"]       ?? 0);
                 var formulariosVal = Convert.ToInt32(ViewData["Formularios"] ?? 0);
             }
-            <!-- ESTADÍSTICAS DE POR VIDA -->
+            
             <div class="tarjeta">
                 <p class="sec-titulo">  📊 Estadísticas</p>
                 <div class="stats-grid">
@@ -103,7 +104,7 @@
 
         </div>
 
-        <!-- ===== COLUMNA DERECHA: LOGROS ===== -->
+        
         <div class="col-der">
             <div class="tarjeta">
 
@@ -111,7 +112,7 @@
                     <p class="sec-titulo" style="margin-bottom:0"> 🏆 Mis Logros</p>
                 </div>
 
-                <!-- Insignias destacadas -->
+                
                 <p class="sub-seccion">Insignias destacadas</p>
                 <div class="dest-grid">
                     <div class="ins-dest">
@@ -131,7 +132,7 @@
                     </div>
                 </div>
 
-                <!-- Catálogo de insignias -->
+            
                 <p class="sub-seccion">Catálogo de insignias</p>
                 <div class="cat-grid">
                     <div class="ins-cat">
@@ -174,7 +175,7 @@
         document.addEventListener("DOMContentLoaded", function() {
             var alerta = document.getElementById("alertaExito");
             if (alerta) {
-                // Esperar 3 segundos y luego quitar la clase
+                
                 setTimeout(function() {
                     alerta.classList.remove("mostrar");
                 }, 5000);

@@ -21,12 +21,12 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;             //OBTENER ID USUARIO DE LA SESIÓN
+                var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;             
                 if (userId == 0)
-                    return RedirectToAction("Login", "Login");                           //REDIRIGIR A LOGIN SI NO HAY USUARIO EN SESIÓN
+                    return RedirectToAction("Login", "Login");                           
 
                 string fechaStandard = "2000-01-01";                        
-                switch (DateFilter)                                                      //FILTRO DE FECHA PARA TRANSACCIONES
+                switch (DateFilter)                                                      
                 {
                     case "hoy":
                         fechaStandard = DateTime.Today.ToString("yyyy-MM-dd");
@@ -38,23 +38,23 @@ namespace LuminaReto.Controllers
                         fechaStandard = DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd");
                         break;
                 }
-                var transactions = await _service.GetTransacciones(userId, fechaStandard); //TRANSACCIONES DEL USUARIO
+                var transactions = await _service.GetTransacciones(userId, fechaStandard); 
 
                 if (TypeFilter == "ganadas")
                     transactions = transactions.Where(t => t.Monto > 0).ToList();
                 else if (TypeFilter == "gastadas")
-                    transactions = transactions.Where(t => t.Monto < 0).ToList();          //FILTRO DE TIPO DE TRANSACCIONES
+                    transactions = transactions.Where(t => t.Monto < 0).ToList();          
 
-                var temppoints = await _service.GetUserPoints(userId);                  //PUNTOS TOTALES DEL USUARIO
-                var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);   //PUNTOS TOTALES DEL USUARIO FORMATEADOS
+                var temppoints = await _service.GetUserPoints(userId);                  
+                var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);   
 
-                var tempganados = await _service.GetUserPointsMonth(userId);            //PUNTOS GANADOS EN EL MES
-                var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture); //PUNTOS GANADOS EN EL MES FORMATEADOS
+                var tempganados = await _service.GetUserPointsMonth(userId);            
+                var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture); 
 
-                var rewards = await _service.GetRecompensas();                          //RECOMPENSAS DISPONIBLES
-                string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);   //ULTIMA RECOMPENSA CANJEADA
+                var rewards = await _service.GetRecompensas();                          
+                string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);   
 
-                foreach (var recompensa in rewards)                                     //VERIFICAR SI EL USUARIO PUEDE CANJEAR CADA RECOMPENSA
+                foreach (var recompensa in rewards)                                     
                 {
                     recompensa.PuedeCanjear = temppoints >= recompensa.Costo;
                     recompensa.TokensFaltantes = recompensa.Costo - temppoints;
@@ -68,11 +68,11 @@ namespace LuminaReto.Controllers
                 foreach (var skin in catalogo)
                 {
                     skin.Owned = skinIds.Contains(skin.IdSkin);
-                    skin.Equipada = skinsUsuario.FirstOrDefault(s => s.IdSkin == skin.IdSkin)?.Equipada ?? false; // NEW
+                    skin.Equipada = skinsUsuario.FirstOrDefault(s => s.IdSkin == skin.IdSkin)?.Equipada ?? false; 
                     skin.PuedeComprar = !skin.Owned && temppoints >= skin.Costo;
                     skin.TokensFaltantes = skin.Costo - temppoints;
                 }
-                //SKIN CATALOG END
+                
 
                 var model = new TokenViewModel
                 {
@@ -141,7 +141,6 @@ namespace LuminaReto.Controllers
                 return Redirect("/Tokens");
             }
 
-            // check ownership first
             var skinsUsuario = await _service.GetSkinsUsuario(userId);
             if (skinsUsuario.Any(s => s.IdSkin == skinId))
             {

@@ -5,7 +5,6 @@
     --fire:   #FF6D00;
 }
 
-/* ── Tarjetas de estadísticas ── */
 .stat-card {
     border: 1px solid #E5E7EB;
     border-radius: 14px;
@@ -24,7 +23,7 @@
 }
 
 .stat-text {
-    min-width: 0;          /* evita overflow del flex */
+    min-width: 0;          
     flex: 1;
 }
 
@@ -52,7 +51,6 @@
     margin: 0 0 0.1rem;
 }
 
-/* ── Icon boxes (mismo patrón que el dashboard) ── */
 .stat-icon-box {
     width: 44px;
     height: 44px;
@@ -69,7 +67,6 @@
 .stat-icon-purple { background-color: #F3E8FF; color: #9333EA; }
 .stat-icon-fire   { background-color: #FFEDD5; color: #EA580C; }
 
-/* ── Avatares ── */
 .lb-avatar {
     width: 40px;
     height: 40px;
@@ -95,22 +92,18 @@
     margin: 0 auto 0.75rem;
 }
 
-/* ── Badges de medalla ── */
 .badge-gold   { background-color: var(--gold);   color: #5D3A00; }
 .badge-silver { background-color: var(--silver); color: #fff;    }
 .badge-bronze { background-color: var(--bronze); color: #fff;    }
 
-/* ── Fila del usuario actual ── */
 .fila-yo {
     border-left: 4px solid #0071DB !important;
     background-color: #E3F2FD !important;
 }
 
-/* ── Colores de texto ── */
 .text-fire { color: var(--fire); font-weight: 700; }
 .text-gold { color: var(--gold); font-weight: 700; }
 
-/* ── Círculos de medalla del Top 3 ── */
 .lb-medal-circle,
 .lb-crown-circle {
     width: 56px;
