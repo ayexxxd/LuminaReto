@@ -4,7 +4,8 @@ using System.Text.Json;
 public class TokensService : ITokensService
 {
     private readonly HttpClient _httpClient;
-    
+    private static readonly JsonSerializerOptions _jsonOptions = new() { PropertyNameCaseInsensitive = true };
+
     public TokensService(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -12,8 +13,8 @@ public class TokensService : ITokensService
 
     public async Task UpdatePoints(int id, int points)
     {
-    var url = "https://127.0.0.1:5010/updatepoints";
-    //var url = "https://10.14.255.45:5010/updatepoints";
+    //var url = "https://127.0.0.1:5010/updatepoints";
+    var url = "https://10.14.255.45:5010/updatepoints";
 
     var body = new
     {
@@ -25,19 +26,19 @@ public class TokensService : ITokensService
 
     public async Task<List<Recompensa>> GetRecompensas()
     {
-        string url = "https://127.0.0.1:5010/recompensas";
-        //string url = "https://10.14.255.45:5010/recompensas";
+        //string url = "https://127.0.0.1:5010/recompensas";
+        string url = "https://10.14.255.45:5010/recompensas";
          
-        var listaRecompensas = await _httpClient.GetFromJsonAsync<List<Recompensa>>(url);
+        var listaRecompensas = await _httpClient.GetFromJsonAsync<List<Recompensa>>(url, _jsonOptions);
         return listaRecompensas ?? new List<Recompensa>();
     }
 
     public async Task<List<Transaccion>> GetTransacciones(int id, string date)
     {
-        var url = "https://127.0.0.1:5010/transacciones/" + id + "/" + date;
-        //var url = "https://10.14.255.45:5010/transacciones/" + id + "/" + date;
+        //var url = "https://127.0.0.1:5010/transacciones/" + id + "/" + date;
+        var url = "https://10.14.255.45:5010/transacciones/" + id + "/" + date;
 
-        var listaTransacciones = await _httpClient.GetFromJsonAsync<List<Transaccion>>(url);
+        var listaTransacciones = await _httpClient.GetFromJsonAsync<List<Transaccion>>(url, _jsonOptions);
         return listaTransacciones ?? new List<Transaccion>();
     }
 
@@ -65,7 +66,7 @@ public class TokensService : ITokensService
         return int.Parse(responseJson);
     }
 
-    public async Task CrearTransaccion(int userId,int recompensaId,int monto,string descripcion)
+    public async Task CrearTransaccion(int userId,int? recompensaId,int monto,string descripcion)
     {
         var url = "https://127.0.0.1:5010/transaccion";
         //var url = "https://10.14.255.45:5010/transaccion";
@@ -105,4 +106,28 @@ public class TokensService : ITokensService
         var encoded = Uri.EscapeDataString(json);//para que { y " no rompan la url
         return url + "?params=" + encoded;//junto
     }
+
+    public async Task<List<SkinData>> GetCatalogoSkins()
+    {
+        //var url = "https://10.14.255.45:5010/catalogo_skins";
+        var url = "https://127.0.0.1:5010/catalogo_skins";
+        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
+        return lista ?? new List<SkinData>();
+    }
+
+    public async Task<List<SkinData>> GetSkinsUsuario(int idUsuario)
+    {
+        var url= "https://127.0.0.1:5010/misSkins/" + idUsuario;
+        //var url = "https://10.14.255.45:5010/misSkins/" + idUsuario;
+        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
+        return lista ?? new List<SkinData>();
+    }
+
+    public async Task ComprarSkin(int idUsuario, int idSkin)
+    {
+        var url = "https://127.0.0.1:5010/comprarSkin";
+        //var url = "https://10.14.255.45:5010/comprarSkin";
+        var body = new { idUser = idUsuario, idSkin = idSkin };
+        await _httpClient.PostAsJsonAsync(url, body);
+}
 }

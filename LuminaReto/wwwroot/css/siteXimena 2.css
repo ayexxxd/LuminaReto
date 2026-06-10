@@ -1,0 +1,344 @@
+    body {
+        font-family: roboto, sans-serif;/*Tipo de letra */
+        background-color: #f5f7fa;/*el color de fondo*/
+    }
+
+    .cont-principal {
+        width: 90%;/* es el ancho de toda la info osea si quiero que sea mas largo o nel */
+        max-width: 1100px;/*es que tan largo quieres que esten cada tarjetas */
+        margin: 28px auto;/* es el espacio arriba que quiero separar del menu
+                            /* y que auto osea que este centradro horzontalmente */
+    }
+    .foto-perfil {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    object-fit: cover; /* evita que se deforme */
+}
+
+        /* Contenedor base */
+    .navbar {
+        background-color: #0071DB;
+    }
+
+    /* Links */
+    .nav-custom {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        color: white !important;
+        font-weight: 500;
+
+        padding: 8px 14px;
+        border-radius: 10px;
+
+        transition: 0.2s ease;
+    }
+
+    /* Iconos */
+    .nav-custom img {
+        width: 25px;
+        height: 25px;
+        object-fit: contain;
+        opacity: 0.9;
+    }
+
+    /* Hover */
+    .nav-custom:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Activo (como tu imagen) */
+    .active-link {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .pagina-titulo {
+        font-size: 40px;
+        font-weight: 700;
+        color: #1A1A1A;
+        margin-bottom: 4px;
+    }
+
+    .pagina-sub {
+        font-size: 14px;
+        color: #6c757d;
+        margin-bottom: 18px;
+    }
+
+        .whirl-esp {
+    margin-left: 35px;
+    display: flex;
+    }
+
+    .main-color {
+    background-color: #0071DB;
+    }
+
+    .derecha {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 35px;
+    }
+
+    .margen {
+    margin-right: 10px;
+    margin-left: 10px;
+    }
+
+    .margen-princ {
+    background-color: #F7f7f750;
+    border-radius: 8px;
+    }
+
+    .text-main {
+    color: #F5F5F5;
+    }
+
+    .margen:hover {
+    background-color: #F5f5f550;
+    border-radius: 8px;
+    }
+
+    .dos-columnas{
+        display: grid;/*organiza el contenido y divide el espacio*/
+        grid-template-columns: 1fr 390px;/*agarra una fraccion que es todo el espcio 
+                                        que le sobra a los de 390px y luego el 390 agarra su parte */
+        gap: 20px;/*espacio entre las columnas*/
+        align-items: stretch;/* la cuenta con estadisticas se alinea con los logros 
+                            /*y esten parejos y no esten abajo o mal acomodados */
+    }
+
+    .col-izq, .col-der {
+        display: flex;/*organiza el contenido y divide el espacio*/
+        flex-direction: column;/*para q esten acomodadas como columnas el perfil arriba de estadisticas*/
+        gap: 20px; /*espacio entre cada seccion*/
+        height: 100%;
+    }
+
+    .col-der { /*para que me quede alineado con estadistica y perfil y no me quede abajo*/
+    display: flex;
+    }
+
+    .col-der .tarjeta {
+        flex: 1;/*para que tome todo el espacio disponible y no se quede chiquita la tarjeta de logros*/
+    }
+
+    .tarjeta {
+        background: white; /* color*/
+        border-radius: 12px; /* que quede redondito las tarjetas*/
+        padding: 20px;/*espacio dentro de la tarjeta*/
+        box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+        display: flex;
+        flex-direction: column;
+        /*0 sombra horizontal
+        /*2px sombre vertical 
+        /*10px de borroso la sombra
+        /*el color de la sombra , los primeros 3 0s son si es rojo, verde y 
+        /*azul y el ultimo 0.07 es si lo quieres casi transparente*/
+    }
+
+    .perfil-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .foto-perfil {
+    width: 95px;
+    height: 95px;
+    border-radius: 50%;
+    object-fit: cover; /* evita que se deforme */
+}
+.avatar {
+    display: none;
+}
+
+
+    .pinfo { /*la informacion del perfil como el nombre, departamento y meta**/
+        flex: 1; /*para que tome todo el espacio que le sobra al avatar y al boton de camara*/
+    }
+
+    .pinfo h3 {/*el nombre del usuario*/
+        font-size: 30px;/*el tamaño de la letra*/
+        font-weight: 700;/*que quede en negrita*/
+        color: #111;
+        margin-bottom: 3px;/*espacio debajo del nombre*/
+    }
+
+    .departamento {
+        font-size: 0.85rem;/*el tamaño de la letra*/
+        color: #666;
+        margin-bottom: 3px;/*espacio debajo del departamento*/
+    }
+
+    .meta-nivel {
+        display: inline-block; /*para que el fondo se ajuste al texto y no ocupe toda la linea*/
+        background: #fff8e1;/*fondo*/
+        color: #7a5800;/*color de la letra*/
+        font-size: 0.78rem;/*el tamaño de la letra*/
+        padding: 3px 10px;/* espacio 3px arriba y abajo y 10px a los lados*/
+        border-radius: 20px;/*redondo*/
+    }
+    .formulario-perfil .btn {
+    margin-top: 10px;
+    margin-right: 12px;
+}
+
+    .formulario {
+        display: grid;/*organiza el contenido y divide el espacio*/
+        grid-template-columns: 1fr 1fr;/*divide el espacio en 2 columnas iguales*/
+        gap: 16px;/*espacio entre las columnas y filas*/
+    }
+
+    .field label {/*las etiquetas de cada campo como nombre completo, correo, departamento*/
+        font-size: 0.78rem;
+        color: #888;
+        display: block;/*ocupa toda la fila */
+        margin-bottom: 5px;/*espacio debajo de la etiqueta*/
+    }
+
+    .field input { /*info de las etiquetas*/
+        width: 100%;
+        padding: 8px 10px;/*espacio arriba y abajo y 10px a los lados*/
+        border: 1px solid #ddd;/*grosor,estilo y color*/
+        border-radius: 7px;
+        font-size: 0.9rem;
+        background: #fafafa;
+        color: #111;
+    }
+
+    .sec-titulo{
+        font-size: 19px;
+        font-weight: 700;/*que quede en negrita*/
+        color: #111;
+        margin-bottom: 16px;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+    }
+
+    .stat-item {
+        background: #f5f7fa;
+        border-radius: 10px;
+        padding: 13px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stat-ico {
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 29px;
+        flex-shrink: 0;
+    }
+
+    .ico-t { background: #e3f0ff; }
+    .ico-r { background: #e8f5e9; }
+    .ico-f { background: #f3e8ff; }
+
+    .stat-data { display: flex; flex-direction: column; }
+    .stat-lbl { font-size: 12px; color: #888; }
+    .stat-num { font-size: 17px; font-weight: 700; color: #111; }
+    .stat-sub { font-size: 12px; color: #aaa; }
+
+
+    .sub-seccion {
+        font-size: 14px;
+        color: #666;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .dest-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+
+    .ins-dest { text-align: center; }
+
+    .medalla {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        margin: 0 auto 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 29px;
+    }
+
+    .m-oro    { background: linear-gradient(135deg, #f9d423, #e65c00); }
+    .m-bronce { background: linear-gradient(135deg, #cd7f32, #8B4513); }
+    .m-dorado { background: linear-gradient(135deg, #ffd700, #ffa500); }
+
+    .badge-dest {
+        display: inline-block;
+        background: #0d4f9a;
+        color: white;
+        font-size: 0.65rem;
+        padding: 2px 8px;
+        border-radius: 10px;
+        margin-bottom: 4px;
+    }
+
+    .ins-dest p { font-size: 0.72rem; color: #555; }
+
+    .cat-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .ins-cat { text-align: center; position: relative; }
+
+    .cat-med {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        margin: 0 auto 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 29px;
+    }
+
+    .c-azul     { background: #0d4f9a; color: white; }
+    .c-amarillo { background: linear-gradient(135deg, #ffd700, #ffa500); }
+    .c-gris     { background: #d0d0d0; color: #aaa; opacity: 0.7; }
+
+    .chk-verde {
+        position: absolute;
+        top: 32px;
+        left: calc(50% + 11px);
+        width: 16px;
+        height: 16px;
+        background: #28a745;
+        border-radius: 50%;
+        color: white;
+        font-size: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ins-cat p { font-size: 0.7rem; color: #666; }
+
+
+    @media (max-width: 900px) {
+        .dos-columnas  { grid-template-columns: 1fr; }
+        .stats-grid     { grid-template-columns: 1fr; }
+    }

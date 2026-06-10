@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
+
 public class PerfilViewModel
 {
     [Required(ErrorMessage = "El nombre es obligatorio")]
@@ -15,9 +16,7 @@ public class PerfilViewModel
     [StringLength(50, ErrorMessage = "Máximo 50 caracteres")]
     public string Departamento { get; set; }
 
-    [Required(ErrorMessage = "El ID es obligatorio")]
-    [RegularExpression(@"^\d+$", ErrorMessage = "Solo números")]
-    public string IdEmpleado { get; set; }
+    public string FechaRegistro { get; set; }
 
     // opcional
     [ValidateNever]

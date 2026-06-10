@@ -4,6 +4,7 @@ using LuminaReto.Models;
 public class LoginService : ILoginService
 {
     private readonly HttpClient _httpClient;
+
     public LoginService(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -22,6 +23,6 @@ public class LoginService : ILoginService
         var response = await _httpClient.PostAsJsonAsync(url, body);
         var responseJson = await response.Content.ReadAsStringAsync();
 
-        return int.Parse(responseJson);
+        return int.Parse(responseJson.Trim());
     }
 }
