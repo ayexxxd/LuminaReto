@@ -44,8 +44,8 @@ public class TokensService : ITokensService
 
     public async Task<int> GetUserPoints(int id)
     {
-        var url = "https://127.0.0.1:5010/getpoints/" + id;
-        //var url = "https://10.14.255.45:5010/getpoints/" + id;
+        //var url = "https://127.0.0.1:5010/getpoints/" + id;
+        var url = "https://10.14.255.45:5010/getpoints/" + id;
 
         var response = await _httpClient.GetAsync(url);
         if (!response.IsSuccessStatusCode)
@@ -55,8 +55,8 @@ public class TokensService : ITokensService
     }
     public async Task<int> GetUserPointsMonth(int id)
     {
-        var url = "https://127.0.0.1:5010/getpointsMes/" + id;
-        //var url = "https://10.14.255.45:5010/getpointsMes/" + id;
+        //var url = "https://127.0.0.1:5010/getpointsMes/" + id;
+        var url = "https://10.14.255.45:5010/getpointsMes/" + id;
 
         var response = await _httpClient.GetAsync(url);
 
@@ -68,8 +68,8 @@ public class TokensService : ITokensService
 
     public async Task CrearTransaccion(int userId,int? recompensaId,int monto,string descripcion)
     {
-        var url = "https://127.0.0.1:5010/transaccion";
-        //var url = "https://10.14.255.45:5010/transaccion";
+        //var url = "https://127.0.0.1:5010/transaccion";
+        var url = "https://10.14.255.45:5010/transaccion";
 
         var body = new
         {
@@ -83,8 +83,8 @@ public class TokensService : ITokensService
 
     public async Task<string> GetUltimaRecompensa(int userId)
     {
-        var url = "https://127.0.0.1:5010/lastreward/"+ userId;
-        //var url ="https://10.14.255.45:5010/lastreward/"+ userId;
+        //var url = "https://127.0.0.1:5010/lastreward/"+ userId;
+        var url ="https://10.14.255.45:5010/lastreward/"+ userId;
 
         var response = await _httpClient.GetAsync(url);
 
@@ -109,30 +109,32 @@ public class TokensService : ITokensService
 
     public async Task<List<SkinData>> GetCatalogoSkins()
     {
-        //var url = "https://10.14.255.45:5010/catalogo_skins";
-        var url = "https://127.0.0.1:5010/catalogo_skins";
+        var url = "https://10.14.255.45:5010/catalogo_skins";
+        //var url = "https://127.0.0.1:5010/catalogo_skins";
         var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
         return lista ?? new List<SkinData>();
     }
 
     public async Task<List<SkinData>> GetSkinsUsuario(int idUsuario)
     {
-        var url= "https://127.0.0.1:5010/misSkins/" + idUsuario;
-        //var url = "https://10.14.255.45:5010/misSkins/" + idUsuario;
+        //var url= "https://127.0.0.1:5010/misSkins/" + idUsuario;
+        var url = "https://10.14.255.45:5010/misSkins/" + idUsuario;
         var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
         return lista ?? new List<SkinData>();
     }
 
     public async Task EquiparSkin(int userId, int skinId)
     {
-        var url = "https://127.0.0.1:5010/equiparSkin";
+        //var url = "https://127.0.0.1:5010/equiparSkin";
+        var url = "https://10.14.255.45:5010/equiparSkin";
         var body = new { idUsuario = userId, idSkin = skinId };
         await _httpClient.PostAsJsonAsync(url, body);
     }
 
     public async Task<SkinData?> GetEquippedSkin(int userId)
     {
-        var url = "https://127.0.0.1:5010/equippedSkin/" + userId;
+        //var url = "https://127.0.0.1:5010/equippedSkin/" + userId;
+        var url = "https://10.14.255.45:5010/equippedSkin/" + userId;
         var response = await _httpClient.GetFromJsonAsync<SkinData>(url, _jsonOptions);
         return response;
     }
@@ -140,7 +142,8 @@ public class TokensService : ITokensService
 
     public async Task ComprarSkin(int idUsuario, int idSkin)
     {
-        var url = "https://127.0.0.1:5010/comprarSkin";
+        //var url = "https://10.14.255.45:5010/comprarSkin";
+        var url = "https://10.14.255.45:5010/comprarSkin";
         var body = new { idUser = idUsuario, idSkin = idSkin };
         await _httpClient.PostAsJsonAsync(url, body);
     }

@@ -15,6 +15,8 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
+builder.Services.AddHttpClient<IHomeService, HomeService>();
+
 builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
 {
     client.BaseAddress = new Uri("https://10.22.194.109:8002");

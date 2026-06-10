@@ -9,34 +9,44 @@ namespace LuminaReto.Controllers;
 public class HomeController : Controller
 {
     /*ACCIÓN INDEX*/
-    public IActionResult Index()
+    private readonly IHomeService _service;
+
+public HomeController(IHomeService service)
+{
+    _service = service;
+}
+
+public async Task<IActionResult> Index()
+{
+    var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+
+    var dashboard = await _service.GetDashboard(userId);
+
+    var modelo = new ModeloInicioGeneral
     {
-        ModeloInicioGeneral modelo = new ModeloInicioGeneral();
-
-        modelo.ListaEstadisticas = new List<Estadisticas>()
+        ListaEstadisticas = new List<Estadisticas>
         {
-            new Estadisticas { Titulo = "Whirl-Tokens Totales" , Valor = "1,250" , Icono = "/imagenes/WTokens.png"},
-            new Estadisticas { Titulo = "Formularios Completados" , Valor = "12" , Icono = "/imagenes/Formulario.png"},
-            new Estadisticas { Titulo = "Nivel Alcanzado" , Valor = "5" , Icono = "/imagenes/Nivel.png"},
-            new Estadisticas { Titulo = "Racha Activa" , Valor = "7 días" , Icono = "/imagenes/Racha.png"}
-        };
-
-        modelo.ListaAccionesRapidas = new List<AccionesRapidas>()
+            new() { Titulo = "Whirl-Tokens Totales", Valor = dashboard.WhirlTokens.ToString("N0"), Icono = "/imagenes/WTokens.png" },
+            new() { Titulo = "Formularios Completados", Valor = dashboard.FormulariosTotales.ToString(), Icono = "/imagenes/Formulario.png" },
+            new() { Titulo = "Puntos", Valor = dashboard.Puntos.ToString("N0"), Icono = "/imagenes/Nivel.png" },
+            new() { Titulo = "Racha Activa", Valor = dashboard.RachaActual + " días", Icono = "/imagenes/Racha.png" }
+        },
+        ListaAccionesRapidas = new List<AccionesRapidas>
         {
-            new AccionesRapidas { Texto = "Completar un nuevo formulario" , Controlador = "Home" , Accion = "Formularios" , Icono = "/imagenes/Formulario.png"},
-            new AccionesRapidas { Texto = "Jugar ahora" , Controlador = "Home" , Accion = "Juego" , Icono = "/imagenes/Racha.png"},
-            new AccionesRapidas { Texto = "Ver mis Whirl-Tokens" , Controlador = "Tokens" , Accion = "Index" , Icono = "/imagenes/WTokens.png"}
-        };
-
-        modelo.ListaActividadReciente = new List<ActividadReciente>()
+            new() { Texto = "Completar un nuevo formulario", Controlador = "Home", Accion = "Formularios", Icono = "/imagenes/Formulario.png" },
+            new() { Texto = "Jugar ahora", Controlador = "Home", Accion = "Juego", Icono = "/imagenes/Racha.png" },
+            new() { Texto = "Ver mis Whirl-Tokens", Controlador = "Tokens", Accion = "Index", Icono = "/imagenes/WTokens.png" }
+        },
+        ListaActividadReciente = new List<ActividadReciente>
         {
-            new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "Hace 2 horas" , Icono = "/imagenes/Formulario.png"},
-            new ActividadReciente { Descripcion = "+150 Whirl-Tokens ganados" , Tiempo = "Hace 5 horas" , Icono = "/imagenes/WTokens.png"},
-            new ActividadReciente { Descripcion = "Nivel alcanzado = 5" , Tiempo = "Hace 1 día" , Icono = "/imagenes/Nivel.png"}
-        };
+            new() { Descripcion = "Formulario completado", Tiempo = "Hace 2 horas", Icono = "/imagenes/Formulario.png" },
+            new() { Descripcion = "+150 Whirl-Tokens ganados", Tiempo = "Hace 5 horas", Icono = "/imagenes/WTokens.png" },
+            new() { Descripcion = "Nivel alcanzado = 5", Tiempo = "Hace 1 día", Icono = "/imagenes/Nivel.png" }
+        }
+    };
 
-        return View(modelo);
-    }
+    return View(modelo);
+}
 
     /*ACCIÓN JUEGO*/
     public IActionResult Juego()

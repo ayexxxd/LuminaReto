@@ -151,7 +151,7 @@ namespace LuminaReto.Controllers
 
     await _service.ComprarSkin(userId, skinId);
     await _service.UpdatePoints(userId, -skin.Costo);
-    await _service.CrearTransaccion(userId, null, -skin.Costo, "Compró skin: " + skin.Nombre);
+    await _service.CrearTransaccion(userId, null, -skin.Costo, "Compró música: " + skin.Nombre);
     TempData["Message"] = "¡Compraste " + skin.Nombre + "!";
     return Redirect("/Tokens/Index");
 }
