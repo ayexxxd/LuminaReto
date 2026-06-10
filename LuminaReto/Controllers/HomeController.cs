@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
 using Microsoft.AspNetCore.Http;
 using Perfil.Models;
+using System.Text.Json;
 
 namespace LuminaReto.Controllers;
 
@@ -34,7 +35,19 @@ public class HomeController : Controller
             new ActividadReciente { Descripcion = "+150 Whirl-Tokens ganados" , Tiempo = "Hace 5 horas" , Icono = "/imagenes/WTokens.png"},
             new ActividadReciente { Descripcion = "Nivel alcanzado = 5" , Tiempo = "Hace 1 día" , Icono = "/imagenes/Nivel.png"}
         };
-
+        var userId  = HttpContext.Session.GetInt32("IdUsuario") ?? 1;
+        var baseUrl = "https://datastudio.google.com/embed/reporting/365a6ae2-42a4-40f5-8641-88b6aad2f7ca/page/9Pn0F";
+        var parameters = new { 
+            Bid_usuario  = userId,
+            Tid_usuario  = userId,
+            Eid_usuario  = userId,
+            Rid_usuario  = userId,
+            T5id_usuario = userId,
+            T6d_usuario  = userId
+        };
+        var json    = JsonSerializer.Serialize(parameters);
+        var encoded = Uri.EscapeDataString(json);
+        modelo.DashboardUrl = baseUrl + "?params=" + encoded;
         return View(modelo);
     }
 
@@ -139,5 +152,5 @@ public class HomeController : Controller
 
         return View("Perfil");
     }
-
+    
 }
