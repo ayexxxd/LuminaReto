@@ -1,26 +1,24 @@
 body {
-        background-color: #f5f7fa;/*el color de fondo*/
+        background-color: #f5f7fa;
 }
 
     .cont-principal {
-        width: 90%;/* es el ancho de toda la info osea si quiero que sea mas largo o nel */
-        max-width: 1100px;/*es que tan largo quieres que esten cada tarjetas */
-        margin: 28px auto;/* es el espacio arriba que quiero separar del menu
-                            /* y que auto osea que este centradro horzontalmente */
+        width: 90%;
+        max-width: 1100px;
+        margin: 28px auto;
+                            
     }
     .foto-perfil {
     width: 68px;
     height: 68px;
     border-radius: 50%;
-    object-fit: cover; /* evita que se deforme */
+    object-fit: cover; 
 }
 
-        /* Contenedor base */
     .navbar {
         background-color: #0071DB;
     }
 
-    /* Links */
     .nav-custom {
         display: flex;
         align-items: center;
@@ -35,7 +33,6 @@ body {
         transition: 0.2s ease;
     }
 
-    /* Iconos */
     .nav-custom img {
         width: 25px;
         height: 25px;
@@ -43,12 +40,10 @@ body {
         opacity: 0.9;
     }
 
-    /* Hover */
     .nav-custom:hover {
         background-color: rgba(255, 255, 255, 0.15);
     }
 
-    /* Activo (como tu imagen) */
     .active-link {
         background-color: rgba(255, 255, 255, 0.25);
     }
@@ -101,41 +96,34 @@ body {
     }
 
     .dos-columnas{
-        display: grid;/*organiza el contenido y divide el espacio*/
-        grid-template-columns: 1fr 390px;/*agarra una fraccion que es todo el espcio 
-                                        que le sobra a los de 390px y luego el 390 agarra su parte */
-        gap: 20px;/*espacio entre las columnas*/
-        align-items: stretch;/* la cuenta con estadisticas se alinea con los logros 
-                            /*y esten parejos y no esten abajo o mal acomodados */
+        display: grid;
+        grid-template-columns: 1fr 390px;
+        gap: 20px;
+        align-items: stretch;
     }
 
     .col-izq, .col-der {
-        display: flex;/*organiza el contenido y divide el espacio*/
-        flex-direction: column;/*para q esten acomodadas como columnas el perfil arriba de estadisticas*/
-        gap: 20px; /*espacio entre cada seccion*/
+        display: flex;
+        flex-direction: column;
+        gap: 20px; 
         height: 100%;
     }
 
-    .col-der { /*para que me quede alineado con estadistica y perfil y no me quede abajo*/
+    .col-der { 
     display: flex;
     }
 
     .col-der .tarjeta {
-        flex: 1;/*para que tome todo el espacio disponible y no se quede chiquita la tarjeta de logros*/
+        flex: 1;
     }
 
     .tarjeta {
-        background: white; /* color*/
-        border-radius: 12px; /* que quede redondito las tarjetas*/
-        padding: 20px;/*espacio dentro de la tarjeta*/
+        background: white; 
+        border-radius: 12px; 
+        padding: 20px;
         box-shadow: 0 2px 10px rgba(0,0,0,0.07);
         display: flex;
         flex-direction: column;
-        /*0 sombra horizontal
-        /*2px sombre vertical 
-        /*10px de borroso la sombra
-        /*el color de la sombra , los primeros 3 0s son si es rojo, verde y 
-        /*azul y el ultimo 0.07 es si lo quieres casi transparente*/
     }
 
     .perfil-header {
@@ -149,37 +137,37 @@ body {
     width: 95px;
     height: 95px;
     border-radius: 50%;
-    object-fit: cover; /* evita que se deforme */
+    object-fit: cover; 
 }
 .avatar {
     display: none;
 }
 
 
-    .pinfo { /*la informacion del perfil como el nombre, departamento y meta**/
-        flex: 1; /*para que tome todo el espacio que le sobra al avatar y al boton de camara*/
+    .pinfo { 
+        flex: 1; 
     }
 
-    .pinfo h3 {/*el nombre del usuario*/
-        font-size: 30px;/*el tamaño de la letra*/
-        font-weight: 700;/*que quede en negrita*/
+    .pinfo h3 {
+        font-size: 30px;
+        font-weight: 700;
         color: #111;
-        margin-bottom: 3px;/*espacio debajo del nombre*/
+        margin-bottom: 3px;
     }
 
     .departamento {
-        font-size: 0.85rem;/*el tamaño de la letra*/
+        font-size: 0.85rem;
         color: #666;
-        margin-bottom: 3px;/*espacio debajo del departamento*/
+        margin-bottom: 3px;
     }
 
     .meta-nivel {
-        display: inline-block; /*para que el fondo se ajuste al texto y no ocupe toda la linea*/
-        background: #fff8e1;/*fondo*/
-        color: #7a5800;/*color de la letra*/
-        font-size: 0.78rem;/*el tamaño de la letra*/
-        padding: 3px 10px;/* espacio 3px arriba y abajo y 10px a los lados*/
-        border-radius: 20px;/*redondo*/
+        display: inline-block; 
+        background: #fff8e1;
+        color: #7a5800;
+        font-size: 0.78rem;
+        padding: 3px 10px;
+        border-radius: 20px;
     }
     .formulario-perfil .btn {
     margin-top: 10px;
@@ -187,22 +175,22 @@ body {
 }
 
     .formulario {
-        display: grid;/*organiza el contenido y divide el espacio*/
-        grid-template-columns: 1fr 1fr;/*divide el espacio en 2 columnas iguales*/
-        gap: 16px;/*espacio entre las columnas y filas*/
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
     }
 
-    .field label {/*las etiquetas de cada campo como nombre completo, correo, departamento*/
+    .field label {
         font-size: 0.78rem;
         color: #888;
-        display: block;/*ocupa toda la fila */
-        margin-bottom: 5px;/*espacio debajo de la etiqueta*/
+        display: block;
+        margin-bottom: 5px;
     }
 
-    .field input { /*info de las etiquetas*/
+    .field input { 
         width: 100%;
-        padding: 8px 10px;/*espacio arriba y abajo y 10px a los lados*/
-        border: 1px solid #ddd;/*grosor,estilo y color*/
+        padding: 8px 10px;
+        border: 1px solid #ddd;
         border-radius: 7px;
         font-size: 0.9rem;
         background: #fafafa;
@@ -211,7 +199,7 @@ body {
 
     .sec-titulo{
         font-size: 19px;
-        font-weight: 700;/*que quede en negrita*/
+        font-weight: 700;
         color: #111;
         margin-bottom: 16px;
     }
@@ -323,7 +311,7 @@ body {
         .alerta {
             position: fixed;
             top: 20px;
-            right: -300px; /* empieza fuera de pantalla */
+            right: -300px; 
             
             display: flex;
             align-items: center;
@@ -355,18 +343,15 @@ body {
         }
     }
 
-        /* Verde */
         .alerta.success {
             background-color: #28a745;
         }
 
-        /* Cuando aparece */
         .alerta.mostrar {
             right: 20px;
             opacity: 1;
         }
 
-        /* Icono */
         .alerta .icono {
             font-size: 16px;
         }

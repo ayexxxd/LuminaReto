@@ -1,4 +1,4 @@
-﻿@model LuminaReto.Models.ModeloInicioGeneral /*Indica que esta vista recibirá un modelo de tipo ModeloInicioGeneral con los datos de la página de inicio*/
+﻿@model LuminaReto.Models.ModeloInicioGeneral 
 
 @section Styles {
     <link rel="stylesheet" href="~/css/siteLya.css" asp-append-version="true" />
@@ -8,20 +8,18 @@
     ViewData["Title"] = "Inicio";
 }
 
-<div class = "pagina-inicio"> <!-- Este es el conteneder general que va a llevar pues todo lo de la página de inicio-->
-    <!-- va a llevar lo del banner, las estadisticas, acciones rápidas y actividad reciente-->
+<div class = "pagina-inicio"> 
 
 
     <!------BANNER BIENVENIDA--------->
-    <section class = "banner-bienvenida"> <!-- Este es el conteneder especifico (o sea la seccion vaya) para el banner de bienvenida-->
+    <section class = "banner-bienvenida"> 
         <h1>¡Bienvenido a Whirlpool!</h1>
         <p>Completa formularios, gana Whirl-Tokens y disfruta del juego</p>
     </section>
 
 
     <!------ESTADÍSTICAS--------->
-    <section class = "estadisticas-tarjetas">  <!--En esta parte van a estar las 4 tarjetas de las estadisticas-->
-        <!--foreach dice que por cada elemento de una lista, va a repetir lo que esté dentor de las llaves-->
+    <section class = "estadisticas-tarjetas">  
         @foreach (var estadistica in Model.ListaEstadisticas)  
         {
             <div class = "tarjeta-estadisticas"> <!--adentro vendrá lo que va a contener cada tarjeta que anteriormente va a ser una instruccion repetida por foreach-->

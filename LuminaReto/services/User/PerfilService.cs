@@ -2,13 +2,13 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using LuminaReto.Models;      // Donde viven PerfilUsuario y EstadisticasUsuario
-using LuminaReto.Services;    // Donde vive la interfaz IPerfilService
+using LuminaReto.Models;
+using LuminaReto.Services;
 
 public class PerfilService : IPerfilService
 {
     private readonly HttpClient _httpClient;
-    private readonly string _baseUrl = "https://10.22.188.150:5001"; 
+    private readonly string _baseUrl = "https://10.22.188.150:5001";
 
     public PerfilService(HttpClient httpClient)
     {
@@ -33,9 +33,9 @@ public class PerfilService : IPerfilService
     {
         try
         {
-            var url = _baseUrl + "/api/usuario/editar";
+            var url  = _baseUrl + "/api/usuario/editar";
             var body = new { id_usuario = idUsuario, nombre = nombre, correo = correo };
-            
+
             var response = await _httpClient.PostAsJsonAsync(url, body);
             return response.IsSuccessStatusCode;
         }
@@ -64,7 +64,7 @@ public class PerfilService : IPerfilService
     {
         try
         {
-            var url = _baseUrl + "/perfil/guardarPerfil";
+            var url      = _baseUrl + "/perfil/guardarPerfil";
             var response = await _httpClient.PostAsJsonAsync(url, perfil);
             return response.IsSuccessStatusCode;
         }

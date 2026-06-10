@@ -261,7 +261,7 @@
 
 @section Scripts {
     <script>
-        //canjear recompensa
+        
         const modal = document.getElementById('modalCanje');
         const btns = document.querySelectorAll('.btn-canjear');
         const btnCancelar = document.getElementById('btnCancelarCanje');
@@ -280,7 +280,7 @@
         btnCancelar.addEventListener('click', () => modal.style.display = 'none');
         modal.querySelector('.modal-canje-overlay').addEventListener('click', () => modal.style.display = 'none');
 
-        //comprar skin
+        
         const modalSkin = document.getElementById('modalSkin');
         const btnsSkin = document.querySelectorAll('.btn-comprar-skin');
         const btnCancelarSkin = document.getElementById('btnCancelarSkin');
@@ -299,7 +299,7 @@
         btnCancelarSkin.addEventListener('click', () => modalSkin.style.display = 'none');
         modalSkin.querySelector('.modal-canje-overlay').addEventListener('click', () => modalSkin.style.display = 'none');
 
-        //equipar skin
+        
         const modalEquipar = document.getElementById('modalEquipar');
         const btnsEquipar = document.querySelectorAll('.btn-equipar-skin');
         const btnCancelarEquipar = document.getElementById('btnCancelarEquipar');

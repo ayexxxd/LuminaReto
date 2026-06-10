@@ -2,6 +2,7 @@ namespace LuminaReto.Models
 {
     public class PerfilUsuario
     {
+        public int IdUsuario { get; set; }
         public string Correo { get; set; }
         public string Nombre { get; set; }
         public string Departamento { get; set; }

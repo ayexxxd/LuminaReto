@@ -1,5 +1,6 @@
 using LuminaReto.Services.Formularios;
 using Microsoft.AspNetCore.StaticFiles;
+using LuminaReto.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,9 +25,18 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
+builder.Services
+    .AddHttpClient<IPerfilService, PerfilService>()
+    .ConfigurePrimaryHttpMessageHandler(() =>
+        new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback =
+                HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+        });
+
 builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
 {
-    client.BaseAddress = new Uri("https://10.22.194.109:8002");
+    client.BaseAddress = new Uri("https://10.14.255.45:8002/");
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
