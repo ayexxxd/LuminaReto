@@ -41,7 +41,7 @@ builder.Services
 // HttpClient tipado para ClasificacionService
 builder.Services.AddHttpClient<IClasificacionService, ClasificacionService>(client =>
 {
-    client.BaseAddress = new Uri("https://127.0.0.1:5001");
+    client.BaseAddress = new Uri("https://10.14.255.45:5001");
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
