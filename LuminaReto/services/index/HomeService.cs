@@ -13,7 +13,7 @@ public class HomeService : IHomeService
 
     public async Task<DashboardData> GetDashboard(int idUsuario)
 {
-    var url = "https://10.22.227.188:4999/dashboard/" + idUsuario;
+    var url = "https://10.14.255.45:4999/dashboard/" + idUsuario;
 
     var response = await _httpClient.GetAsync(url);
 
