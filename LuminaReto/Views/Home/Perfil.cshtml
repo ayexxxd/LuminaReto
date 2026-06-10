@@ -22,12 +22,19 @@
                 <img src="/imagenes/perfilfoto.png" alt="Foto de perfil" class="foto-perfil">
             </div>
             <div class="pinfo">
-                <h3>Juan Pérez</h3>
-                <p class="departamento">🏢 Marketing </p>
+                <h3>@ViewData["NombreCliente"]</h3>
+                <p class="departamento">🏢 @ViewData["DepaCliente"]</p>
                 <span class="meta-nivel">¡A por el nivel 10! 🎯</span>
             </div>
         </div>
-
+        @if (TempData["Confirmacion"] != null)
+        {
+            var conf = TempData["Confirmacion"] as Perfil.Models.Confirmacion;
+            <div id="alertaExito" class="alerta @conf.Tipo mostrar">
+                <span>@conf.Mensaje</span>
+            </div>
+        }
+        
         <div class="formulario">
             <div class="field">
                 <div  class="pagina-subt">Nombre Completo</div>
@@ -41,12 +48,16 @@
 
             <div class="field">
                 <div  class="pagina-subt">Departamento</div>
-                <input type="text" name="departamento" class="form-control" required id="exampleInputDepartamento1"  aria-describedby="depaHelp" placeholder="Ejemplo: Marketing" value="@ViewData["DepaCliente"]" @(ViewData["Editable"] as bool? == true ? "" : "readonly")>
+                <input type="text" name="departamento" class="form-control" list="listaDepartamentos" required id="exampleInputDepartamento1" aria-describedby="depaHelp" placeholder="Ejemplo: Marketing" value="@ViewData["DepaCliente"]" readonly>                <datalist id="listaDepartamentos">@foreach (var depa in (List<string>)ViewData["ListaDepartamentos"])
+                {
+                    <option value="@depa"></option>
+                }
+                </datalist>
             </div>
 
             <div class="field">
-                <div  class="pagina-subt">ID de empleado</div>
-                <input type="text" name="id" class="form-control" required id="exampleInputId1" aria-describedby="idHelp" placeholder="Ingresa tu ID de empleado" value="@ViewData["IdCliente"]" @(ViewData["Editable"] as bool? == true ? "" : "readonly")   />
+                <div class="pagina-subt">Fecha de registro</div>
+                <input type="text" class="form-control" readonly value="@ViewData["FechaRegistro"]" />
             </div>
         </div>
         <button type="submit"  class="btn btn-primary btn-sm formulario-perfil">Guardar cambios</button>
@@ -54,15 +65,20 @@
     </form>
 </div>
 
+@{
+                var tokensVal      = Convert.ToInt32(ViewData["Tokens"]      ?? 0);
+                var rachaVal       = Convert.ToInt32(ViewData["Racha"]       ?? 0);
+                var formulariosVal = Convert.ToInt32(ViewData["Formularios"] ?? 0);
+            }
             <!-- ESTADÍSTICAS DE POR VIDA -->
             <div class="tarjeta">
-                <p class="sec-titulo">  📊 Estadísticas de por vida</p>
+                <p class="sec-titulo">  📊 Estadísticas</p>
                 <div class="stats-grid">
                     <div class="stat-item">
                         <div class="stat-ico ico-t">💰</div>
                         <div class="stat-data">
                             <span class="stat-lbl">Tokens ganados</span>
-                            <span class="stat-num">15,420</span>
+                            <span class="stat-num">@tokensVal.ToString("N0")</span>
                             <span class="stat-sub">Total acumulado</span>
                         </div>
                     </div>
@@ -70,7 +86,7 @@
                         <div class="stat-ico ico-r">📅</div>
                         <div class="stat-data">
                             <span class="stat-lbl">Racha máxima</span>
-                            <span class="stat-num">14 días</span>
+                            <span class="stat-num">@rachaVal.ToString("N0") días</span>
                             <span class="stat-sub">¡Sigue así!</span>
                         </div>
                     </div>
@@ -78,7 +94,7 @@
                         <div class="stat-ico ico-f">📋</div>
                         <div class="stat-data">
                             <span class="stat-lbl">Formularios totales</span>
-                            <span class="stat-num">110</span>
+                            <span class="stat-num">@formulariosVal.ToString("N0")</span>
                             <span class="stat-sub">Completados</span>
                         </div>
                     </div>
@@ -152,3 +168,17 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var alerta = document.getElementById("alertaExito");
+            if (alerta) {
+                // Esperar 3 segundos y luego quitar la clase
+                setTimeout(function() {
+                    alerta.classList.remove("mostrar");
+                }, 5000);
+            }
+        });
+    </script>
+}

@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
 using Microsoft.AspNetCore.Http;
+using Perfil.Models;
 
 namespace LuminaReto.Controllers;
 
@@ -133,14 +134,66 @@ public class HomeController : Controller
         return RedirectToAction("Index", "Home");
     }
 
-    /*ACCIÓN PERFIL POST — recibe datos del formulario y los guarda*/
+    public IActionResult Perfil()
+    {
+        ViewData["NombreCliente"] = "Juan Pérez";
+        ViewData["DepaCliente"] = "Marketing";
+        ViewData["CorreoCliente"] = "juanperez@whirlpool.com";
+        ViewData["FechaRegistro"] = new DateTime(2024, 3, 15).ToString("dd/MM/yyyy");
+        Estadisticas();
+        Departamentos();
+
+        return View();
+    }
+
+    private void Estadisticas()
+    {
+        ViewData["Tokens"] = 1500;
+        ViewData["Racha"] = 20;
+        ViewData["Formularios"] = 110;
+    }
+
+    private void Departamentos()
+    {
+        ViewData["ListaDepartamentos"] = new List<string>
+        {
+            "Marketing",
+            "Recursos Humanos",
+            "IT",
+            "Producción",
+            "Logística",
+            "Ventas",
+            "Legal y Cumplimiento",
+            "Finanzas y Administración",
+            "Atención al Cliente",
+            "Cadena de Suministro",
+            "Manufactura y Operaciones",
+            "Ingeniería y Tecnología",
+            "Gestión de Proyectos"
+        };
+    }
+
+    private void Confirmacion(string modo)
+    {
+        if (modo != "editar")
+        {
+            TempData["Confirmacion"] = new Confirmacion
+            {
+                Mensaje = "Cambios guardados correctamente",
+                Tipo = "success"
+            };
+        }
+    }
+
     [HttpPost]
-    public IActionResult Perfil(string nombre, string correo, string departamento, string id, string modo)
+    public IActionResult Perfil(string nombre, string correo, string departamento, string modo) 
     {
         ViewData["NombreCliente"] = nombre;
         ViewData["CorreoCliente"] = correo;
         ViewData["DepaCliente"] = departamento;
-        ViewData["IdCliente"] = id;
+        ViewData["FechaRegistro"] = new DateTime(2024, 3, 15).ToString("dd/MM/yyyy"); 
+        Estadisticas();
+        Departamentos();
 
         if (modo == "editar")
         {
@@ -149,25 +202,10 @@ public class HomeController : Controller
         else
         {
             ViewData["Editable"] = false;
-        }
-
-        // Guarda el id en sesión para que otras páginas (Tokens) puedan leerlo
-        if (!string.IsNullOrEmpty(id))
-        {
-            HttpContext.Session.SetString("UserId", id);
+            Confirmacion(modo);
         }
 
         return View("Perfil");
     }
 
-    /*ACCIÓN PERFIL GET — muestra la página la primera vez*/
-    public IActionResult Perfil()
-    {
-        ViewData["NombreCliente"] = "";
-        ViewData["DepaCliente"] = "";
-        ViewData["CorreoCliente"] = "";
-        ViewData["IdCliente"] = "";
-        ViewData["Editable"] = false;
-        return View();
-    }
 }
