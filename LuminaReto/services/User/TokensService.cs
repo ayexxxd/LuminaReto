@@ -4,7 +4,8 @@ using System.Text.Json;
 public class TokensService : ITokensService
 {
     private readonly HttpClient _httpClient;
-    
+    private static readonly JsonSerializerOptions _jsonOptions = new() { PropertyNameCaseInsensitive = true };
+
     public TokensService(HttpClient httpClient)
     {
         _httpClient = httpClient;
@@ -28,7 +29,7 @@ public class TokensService : ITokensService
         //string url = "https://127.0.0.1:5010/recompensas";
         string url = "https://10.14.255.45:5010/recompensas";
          
-        var listaRecompensas = await _httpClient.GetFromJsonAsync<List<Recompensa>>(url);
+        var listaRecompensas = await _httpClient.GetFromJsonAsync<List<Recompensa>>(url, _jsonOptions);
         return listaRecompensas ?? new List<Recompensa>();
     }
 
@@ -37,7 +38,7 @@ public class TokensService : ITokensService
         //var url = "https://127.0.0.1:5010/transacciones/" + id + "/" + date;
         var url = "https://10.14.255.45:5010/transacciones/" + id + "/" + date;
 
-        var listaTransacciones = await _httpClient.GetFromJsonAsync<List<Transaccion>>(url);
+        var listaTransacciones = await _httpClient.GetFromJsonAsync<List<Transaccion>>(url, _jsonOptions);
         return listaTransacciones ?? new List<Transaccion>();
     }
 
@@ -110,7 +111,7 @@ public class TokensService : ITokensService
     {
         //var url = "https://10.14.255.45:5010/catalogo_skins";
         var url = "https://127.0.0.1:5010/catalogo_skins";
-        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url);
+        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
         return lista ?? new List<SkinData>();
     }
 
@@ -118,7 +119,7 @@ public class TokensService : ITokensService
     {
         var url= "https://127.0.0.1:5010/misSkins/" + idUsuario;
         //var url = "https://10.14.255.45:5010/misSkins/" + idUsuario;
-        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url);
+        var lista = await _httpClient.GetFromJsonAsync<List<SkinData>>(url, _jsonOptions);
         return lista ?? new List<SkinData>();
     }
 
