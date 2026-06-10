@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using LuminaReto.Models;
 using Microsoft.AspNetCore.Http;
 using Perfil.Models;
+using System.Text.Json;
 
 namespace LuminaReto.Controllers;
 
@@ -39,6 +40,7 @@ public async Task<IActionResult> Index()
         },
         ListaActividadReciente = new List<ActividadReciente>
         {
+<<<<<<< HEAD
             new() { Descripcion = "Formulario completado", Tiempo = "Hace 2 horas", Icono = "/imagenes/Formulario.png" },
             new() { Descripcion = "+150 Whirl-Tokens ganados", Tiempo = "Hace 5 horas", Icono = "/imagenes/WTokens.png" },
             new() { Descripcion = "Nivel alcanzado = 5", Tiempo = "Hace 1 día", Icono = "/imagenes/Nivel.png" }
@@ -47,6 +49,27 @@ public async Task<IActionResult> Index()
 
     return View(modelo);
 }
+=======
+            new ActividadReciente { Descripcion = "Formulario completado" , Tiempo = "Hace 2 horas" , Icono = "/imagenes/Formulario.png"},
+            new ActividadReciente { Descripcion = "+150 Whirl-Tokens ganados" , Tiempo = "Hace 5 horas" , Icono = "/imagenes/WTokens.png"},
+            new ActividadReciente { Descripcion = "Nivel alcanzado = 5" , Tiempo = "Hace 1 día" , Icono = "/imagenes/Nivel.png"}
+        };
+        var userId  = HttpContext.Session.GetInt32("IdUsuario") ?? 1;
+        var baseUrl = "https://datastudio.google.com/embed/reporting/365a6ae2-42a4-40f5-8641-88b6aad2f7ca/page/9Pn0F";
+        var parameters = new { 
+            Bid_usuario  = userId,
+            Tid_usuario  = userId,
+            Eid_usuario  = userId,
+            Rid_usuario  = userId,
+            T5id_usuario = userId,
+            T6d_usuario  = userId
+        };
+        var json    = JsonSerializer.Serialize(parameters);
+        var encoded = Uri.EscapeDataString(json);
+        modelo.DashboardUrl = baseUrl + "?params=" + encoded;
+        return View(modelo);
+    }
+>>>>>>> 3eca4365709a965adb44965fe71d916f7861c40d
 
     /*ACCIÓN JUEGO*/
     public IActionResult Juego()
@@ -149,5 +172,5 @@ public async Task<IActionResult> Index()
 
         return View("Perfil");
     }
-
+    
 }
