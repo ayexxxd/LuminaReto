@@ -51,9 +51,9 @@ public class HomeController : Controller
             },
             ListaActividadReciente = new List<ActividadReciente>
             {
-                new() { Descripcion = "Formulario completado", Tiempo = "Hace 2 horas", Icono = "/imagenes/Formulario.png" },
-                new() { Descripcion = "+150 Whirl-Tokens ganados", Tiempo = "Hace 5 horas", Icono = "/imagenes/WTokens.png" },
-                new() { Descripcion = "Puntos = 5", Tiempo = "Hace 1 día", Icono = "/imagenes/Nivel.png" }
+                new() { Descripcion = "Formulario completado", Icono = "/imagenes/Formulario.png" },
+                new() { Descripcion = "+150 Whirl-Tokens ganados", Icono = "/imagenes/WTokens.png" },
+                new() { Descripcion = "Puntos = 5", Icono = "/imagenes/Nivel.png" }
             }
         };
 
