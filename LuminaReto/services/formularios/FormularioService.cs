@@ -11,7 +11,7 @@ public class FormularioService : IFormularioService
     private readonly JsonSerializerOptions _json = new() 
     { 
         PropertyNameCaseInsensitive = true,
-        // Esta línea le permite a C# leer números aunque la API los mande con comillas ""
+        
         NumberHandling = System.Text.Json.Serialization.JsonNumberHandling.AllowReadingFromString
     };
     public FormularioService(HttpClient httpClient)
@@ -83,21 +83,6 @@ public class FormularioService : IFormularioService
         }
     }
 
-    /*public async Task<ProgresoDto> ObtenerProgresoAsync(int idUsuario)
-    {
-        try
-        {
-            var res = await _httpClient.GetAsync($"/PF/usuarios/{idUsuario}/progreso");
-            if (!res.IsSuccessStatusCode) return new();
-            return JsonSerializer.Deserialize<ProgresoDto>(
-                await res.Content.ReadAsStringAsync(), _json) ?? new();
-        }
-        catch (Exception ex)
-        {
-            System.Diagnostics.Debug.WriteLine($"ObtenerProgresoAsync: {ex.Message}");
-            return new();
-        }
-    }*/
     public async Task<ProgresoDto> ObtenerProgresoAsync(int idUsuario)
     {
         try
@@ -105,7 +90,7 @@ public class FormularioService : IFormularioService
             var res = await _httpClient.GetAsync($"/PF/usuarios/{idUsuario}/progreso");
             if (!res.IsSuccessStatusCode) return new();
             
-            // Ya puedes dejarlo directo; las nuevas opciones de _json se encargarán del string "100"
+            
             return JsonSerializer.Deserialize<ProgresoDto>(
                 await res.Content.ReadAsStringAsync(), _json) ?? new();
         }

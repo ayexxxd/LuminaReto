@@ -74,7 +74,7 @@ body {
 }
 
 .card-goal h2 {
-    color: #8b5cf6; /* lighter purple for better contrast */
+    color: #8b5cf6; 
 }
 
 .panel-tokens {
@@ -96,7 +96,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Chart container and placeholder sizing tweaks */
 .chart-container {
     width: 100%;
     overflow: hidden;
@@ -163,7 +162,7 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     padding-left: 14px;
-    padding-right: 16px; /* breathing room from scrollbar */
+    padding-right: 16px; 
     box-sizing: border-box;
     scrollbar-gutter: stable;
 }
@@ -245,7 +244,6 @@ body {
     }
 }
 
-/* Recompensas */
 .rewards-panel h3 { margin-bottom: 12px; }
 .rewards-panel {
     height: 510px;
@@ -310,7 +308,6 @@ body {
     opacity: 0.55;
 }
 
-/* Game badge */
 .game-badge {
     position: absolute;
     top: 8px;
@@ -331,15 +328,13 @@ body {
     object-fit: contain;
 }
 
-/* Default fallback for any other game ID */
 .reward-card[class*="game-id-"] { border-top: 4px solid #95a5a6; }
 
-/* Game ID color coding overrides (5 juegos) */
-.reward-card.game-id-1 { border-top-color: #e74c3c; }  /* Rojo */
-.reward-card.game-id-2 { border-top-color: #3498db; }  /* Azul */
-.reward-card.game-id-3 { border-top-color: #2ecc71; }  /* Verde */
-.reward-card.game-id-4 { border-top-color: #f39c12; }  /* Naranja */
-.reward-card.game-id-5 { border-top-color: #9b59b6; }  /* Morado */
+.reward-card.game-id-1 { border-top-color: #e74c3c; }  
+.reward-card.game-id-2 { border-top-color: #3498db; }  
+.reward-card.game-id-3 { border-top-color: #2ecc71; }  
+.reward-card.game-id-4 { border-top-color: #f39c12; }  
+.reward-card.game-id-5 { border-top-color: #9b59b6; }  
 .reward-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(13,90,173,0.08); display:flex; align-items:center; justify-content:center; }
 .reward-icon img { width: 30px; height: 30px; object-fit: contain; opacity: 0.95; }
 .reward-card h4 { margin: 0; text-align: center; font-size: 0.9rem; font-weight: 700; color: #10243b; line-height: 1.15; }
@@ -382,7 +377,6 @@ body {
     cursor: not-allowed;
 }
 
-/* ===== Modal de confirmación de canje ===== */
 .modal-canje {
     position: fixed;
     inset: 0;
@@ -611,7 +605,6 @@ body {
     }
 }
 
-/* Scrollbars */
 .transactions-list::-webkit-scrollbar,
 .rewards-window::-webkit-scrollbar {
     width: 10px;
@@ -628,7 +621,6 @@ body {
     background: transparent;
 }
 
-/*alerts*/
 .MESSAGE {
     position: fixed;
 

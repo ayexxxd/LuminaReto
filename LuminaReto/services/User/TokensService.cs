@@ -91,7 +91,7 @@ public class TokensService : ITokensService
         if (!response.IsSuccessStatusCode)
             return "Sin canjes";
 
-        return (await response.Content.ReadAsStringAsync()).Trim('"'); // Elimina comillas si la respuesta es un string JSON
+        return (await response.Content.ReadAsStringAsync()).Trim('"'); 
     }
 
     public async Task<string> TokensGraph(int userId)
@@ -103,8 +103,8 @@ public class TokensService : ITokensService
         };
 
         var json = JsonSerializer.Serialize(parameters);
-        var encoded = Uri.EscapeDataString(json);//para que { y " no rompan la url
-        return url + "?params=" + encoded;//junto
+        var encoded = Uri.EscapeDataString(json);
+        return url + "?params=" + encoded;
     }
 
     public async Task<List<SkinData>> GetCatalogoSkins()

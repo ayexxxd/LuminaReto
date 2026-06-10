@@ -82,7 +82,6 @@ public class FormulariosController : Controller
         return Json(new { ok = true });
     }
 
-    // Endpoint nuevo: el JS lo llama después de completar para refrescar progreso
     [HttpGet]
     public async Task<IActionResult> ObtenerProgreso()
     {

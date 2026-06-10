@@ -1,8 +1,8 @@
 html {
-  font-size: 14px; /*Define el tamaño texto.*/
+  font-size: 14px; 
 }
 
-@media (min-width: 768px) { /*si la pantalla es más grande (tipo tablet o compu) hace la letra más grande*/
+@media (min-width: 768px) { 
   html {
     font-size: 16px; 
   }
@@ -12,7 +12,7 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-html { /*Hace que la página ocupe toda la altura de la pantalla.*/
+html { 
   position: relative;
   min-height: 100%;
 }
@@ -31,7 +31,6 @@ body {
   text-align: start;
 }
 
-/* UX: font base más grande y menos espacio vacío */
 .fondo {
     padding-top: 1.5rem !important;
     padding-bottom: 1.5rem !important;
@@ -51,8 +50,6 @@ body {
     font-size: 1rem;
 }
 
-/*aqui empieza mi codigo*/
-/*Esto es de layout*/
 .whirl-logo {
   width: 48px;
   height: 48px;
@@ -107,13 +104,11 @@ body {
     background-color: #ffffff;
 }
 
-/* Banner  degradado*/
 .banner {
     background: linear-gradient(135deg, #0071DB, #005bb5);
     border-radius: 12px;
 }
 
-/* Progreso */
 .progress-card {
     background: white;
     border-radius: 12px;
@@ -126,8 +121,8 @@ body {
     border-radius: 50%;
     border: 5px solid #0071DB;
     display: flex;
-    align-items: center; /*Centra el contenido verticalmente (arriba/abajo).*/
-    justify-content: center;  /*Centra el contenido horizontalmente (izq/der).*/
+    align-items: center; 
+    justify-content: center;  
     font-weight: bold;
     position: relative;
 }
@@ -149,25 +144,22 @@ body {
 
 }
 
-/* Icono */
 .form-icon {
     width: 45px;
 }
-
-/* Tokens */
 .token-badge {
     position: absolute;
-    top: 15px; /*15 px al borde sup*/
-    right: 15px; /*15 px a la derecha*/
+    top: 15px; 
+    right: 15px; 
     background: #fff3cd;
     color: #856404;
-    padding: 4px 10px; /*espacio que hay entre el tecto y los bordes x,y*/
+    padding: 4px 10px; 
     border-radius: 20px;
     font-size: 12px;
     font-weight: 600;
 }
 
-/* Extras */
+
 .extra-badge {
     font-size: 12px;
     padding: 6px;
@@ -185,18 +177,16 @@ body {
     color: #721c24;
 }
 
-/* Completados */
 .completed {
     background: white;
     border-radius: 12px;
 }
 
 .completed-item {
-    padding: 10px 0; /*espacio que deja a los lados*/
+    padding: 10px 0; 
     border-top: 1px solid #eee;
 }
 
-/* Botón */
 .btn-primary {
     background-color: #0071DB;
     border: none;
@@ -206,12 +196,10 @@ body {
     background-color: #005bb5;
 }
 
-/* Contenedor base */
 .navbar {
     background-color: #0071DB;
 }
 
-/* Links */
 .nav-custom {
     display: flex;
     align-items: center;
@@ -226,7 +214,6 @@ body {
     transition: 0.2s ease;
 }
 
-/* Iconos */
 .nav-custom img {
     width: 25px;
     height: 25px;
@@ -234,12 +221,10 @@ body {
     opacity: 0.9;
 }
 
-/* Hover */
 .nav-custom:hover {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* Activo (como tu imagen) */
 .active-link {
     background-color: rgba(255, 255, 255, 0.25);
 }
