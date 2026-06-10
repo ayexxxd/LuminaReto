@@ -7,5 +7,7 @@ namespace LuminaReto.Models
         public List<Estadisticas> ListaEstadisticas {get; set;} /*Guarda la lista de tarjetas de estadísticas de arriba*/
         public List<AccionesRapidas> ListaAccionesRapidas {get; set;} /*Guarda la lista de acciones rápidas clickeables*/
         public List<ActividadReciente> ListaActividadReciente {get; set;} /*Guarda la lista de actividades recientes que solo se muestran como texto plano diria yo*/
+        public string DashboardUrl { get; set; }
     }
+    
 }
