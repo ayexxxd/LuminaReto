@@ -1,3 +1,5 @@
+using LuminaReto.Services.Formularios;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
@@ -6,6 +8,16 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient<ILoginService, LoginService>(client =>
 {
     client.BaseAddress = new Uri("https://127.0.0.1:5010");
+})
+.ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
+{
+    ServerCertificateCustomValidationCallback =
+        HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+});
+
+builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
+{
+    client.BaseAddress = new Uri("https://10.22.194.109:8002");
 })
 .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler
 {
