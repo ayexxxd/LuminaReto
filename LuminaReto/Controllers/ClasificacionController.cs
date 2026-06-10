@@ -12,7 +12,7 @@ public class ClasificacionController : Controller
         _clasificacionService = clasificacionService;
     }
 
-    public async Task<IActionResult> Clasificacion()
+    public async Task<IActionResult> Index()
     {
         var modelo = new ClasificacionViewModel();
 
@@ -26,8 +26,8 @@ public class ClasificacionController : Controller
 
             if (dto is null)
             {
-                modelo.ErrorMessage = "No fue posible cargar la tabla de clasificación. Intenta de nuevo más tarde.";
-                return View(modelo);
+                modelo.ErrorMessage = "Error al obtener el ranking";
+                return View("Clasificacion", modelo);
             }
 
             var empleados = dto.Ranking.Select(r => new EmpleadoRanking
@@ -63,6 +63,6 @@ public class ClasificacionController : Controller
             modelo.ErrorMessage = "Ocurrió un problema al conectar con el servidor. Intenta de nuevo más tarde.";
         }
 
-        return View(modelo);
+        return View("Clasificacion", modelo);
     }
 }

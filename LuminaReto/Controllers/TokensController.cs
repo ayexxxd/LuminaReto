@@ -21,77 +21,86 @@ namespace LuminaReto.Controllers
         {
             try
             {
-                var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+                var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;             //OBTENER ID USUARIO DE LA SESIÓN
                 if (userId == 0)
-                {
-                    return RedirectToAction("Login", "Login");
-                }
+                    return RedirectToAction("Login", "Login");                           //REDIRIGIR A LOGIN SI NO HAY USUARIO EN SESIÓN
 
-                string fechaStandard = "2000-01-01";
-                switch (DateFilter)//DATE FILTER
+                string fechaStandard = "2000-01-01";                        
+                switch (DateFilter)                                                      //FILTRO DE FECHA PARA TRANSACCIONES
                 {
                     case "hoy":
                         fechaStandard = DateTime.Today.ToString("yyyy-MM-dd");
                         break;
-
                     case "semana":
                         fechaStandard = DateTime.Today.AddDays(-7).ToString("yyyy-MM-dd");
                         break;
-
                     case "mes":
                         fechaStandard = DateTime.Today.AddMonths(-1).ToString("yyyy-MM-dd");
                         break;
                 }
-                var transactions = await _service.GetTransacciones(userId, fechaStandard);
-                
-                if (TypeFilter == "ganadas")//TYPE FILTER//
-                {
+                var transactions = await _service.GetTransacciones(userId, fechaStandard); //TRANSACCIONES DEL USUARIO
+
+                if (TypeFilter == "ganadas")
                     transactions = transactions.Where(t => t.Monto > 0).ToList();
-                }
                 else if (TypeFilter == "gastadas")
-                {
-                    transactions = transactions.Where(t => t.Monto < 0).ToList();
-                }
-                
-                var tempganados = await _service.GetUserPointsMonth(userId);
-                var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture);
-                var rewards = await _service.GetRecompensas();
-                string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);
-                var temppoints = await _service.GetUserPoints(userId);
-                var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);
-                
-                foreach (var recompensa in rewards)
+                    transactions = transactions.Where(t => t.Monto < 0).ToList();          //FILTRO DE TIPO DE TRANSACCIONES
+
+                var temppoints = await _service.GetUserPoints(userId);                  //PUNTOS TOTALES DEL USUARIO
+                var points = temppoints.ToString("N0", CultureInfo.InvariantCulture);   //PUNTOS TOTALES DEL USUARIO FORMATEADOS
+
+                var tempganados = await _service.GetUserPointsMonth(userId);            //PUNTOS GANADOS EN EL MES
+                var ganados = tempganados.ToString("N0", CultureInfo.InvariantCulture); //PUNTOS GANADOS EN EL MES FORMATEADOS
+
+                var rewards = await _service.GetRecompensas();                          //RECOMPENSAS DISPONIBLES
+                string ultimaRecompensa = await _service.GetUltimaRecompensa(userId);   //ULTIMA RECOMPENSA CANJEADA
+
+                foreach (var recompensa in rewards)                                     //VERIFICAR SI EL USUARIO PUEDE CANJEAR CADA RECOMPENSA
                 {
                     recompensa.PuedeCanjear = temppoints >= recompensa.Costo;
                     recompensa.TokensFaltantes = recompensa.Costo - temppoints;
                 }
-                //viewModel
+
+                //SKIN CATALOG
+                var catalogo = await _service.GetCatalogoSkins();
+                var skinsUsuario = await _service.GetSkinsUsuario(userId);
+                var skinIds = skinsUsuario.Select(s => s.IdSkin).ToHashSet();
+
+                foreach (var skin in catalogo)
+                {
+                    skin.Owned = skinIds.Contains(skin.IdSkin);
+                    skin.PuedeComprar = !skin.Owned && temppoints >= skin.Costo;
+                    skin.TokensFaltantes = skin.Costo - temppoints;
+                }
+                //SKIN CATALOG END
+
                 var model = new TokenViewModel
                 {
                     IdUser = userId,
                     WhirlTokens = points,
                     GanadosMes = ganados,
                     UltimaRecompensa = ultimaRecompensa,
-
                     DateFilter = DateFilter,
                     TypeFilter = TypeFilter,
-
                     ListaTransacciones = transactions,
                     ListaRecompensas = rewards,
+                    ListaSkins = catalogo,
+                    SkinsUsuario = skinsUsuario,
                     TokensGraphUrl = await _service.TokensGraph(userId)
                 };
+
                 return View("~/Views/Home/Tokens.cshtml", model);
             }
-            catch (Exception ex)
+            catch (Exception x)
             {
-                TempData["Message"] = "Error al Cargar Datos: " + ex.Message;
-
-                return View("~/Views/Home/Tokens.cshtml", new TokenViewModel{
-                ListaTransacciones = new List<Transaccion>(),
-                ListaRecompensas = new List<Recompensa>()}
-                );
+                TempData["Message"] = "Error al Cargar Datos: ";
+                return View("~/Views/Home/Tokens.cshtml", new TokenViewModel
+                {
+                    ListaTransacciones = new List<Transaccion>(),
+                    ListaRecompensas = new List<Recompensa>(),
+                    ListaSkins = new List<SkinData>(),
+                    SkinsUsuario = new List<SkinData>()
+                });
             }
-            
         }
 
         [HttpPost]
@@ -99,25 +108,46 @@ namespace LuminaReto.Controllers
         {
             var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
             if (userId == 0)
-            {
                 return RedirectToAction("Login", "Login");
-            }
 
             var rewards = await _service.GetRecompensas();
             var recompensa = rewards.FirstOrDefault(r => r.IdRecompensa == recompensaId);
-        
+
             var points = await _service.GetUserPoints(userId);
             if (points < recompensa.Costo)
-            {
                 return Redirect("/Tokens");
-            }
 
             await _service.UpdatePoints(userId, -recompensa.Costo);
-            await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo,"Canjeó: " + recompensa.NombreRecompensa);
+            await _service.CrearTransaccion(userId, recompensaId, -recompensa.Costo, "Canjeó: " + recompensa.NombreRecompensa);
             TempData["Message"] = "Canjeaste " + recompensa.NombreRecompensa;
             return Redirect("/Tokens/Index");
         }
-    public IActionResult Regresar()
+
+        [HttpPost]
+        public async Task<IActionResult> ComprarSkin(int skinId)
+        {
+            var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (userId == 0)
+                return RedirectToAction("Login", "Login");
+
+            var catalogo = await _service.GetCatalogoSkins();
+            var skin = catalogo.FirstOrDefault(s => s.IdSkin == skinId);
+
+            var points = await _service.GetUserPoints(userId);
+            if (points < skin.Costo)
+            {
+                TempData["Message"] = "No tienes suficientes tokens";
+                return Redirect("/Tokens");
+            }
+
+            await _service.ComprarSkin(userId, skinId);
+            await _service.UpdatePoints(userId, -skin.Costo);
+            await _service.CrearTransaccion(userId, null, -skin.Costo, "Compró skin: " + skin.Nombre);
+            TempData["Message"] = "¡Compraste " + skin.Nombre + "!";
+            return Redirect("/Tokens/Index");
+        }
+
+        public IActionResult Regresar()
         {
             return RedirectToAction(nameof(Index), "Home");
         }
