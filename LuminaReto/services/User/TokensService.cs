@@ -123,11 +123,25 @@ public class TokensService : ITokensService
         return lista ?? new List<SkinData>();
     }
 
+    public async Task EquiparSkin(int userId, int skinId)
+    {
+        var url = "https://127.0.0.1:5010/equiparSkin";
+        var body = new { idUsuario = userId, idSkin = skinId };
+        await _httpClient.PostAsJsonAsync(url, body);
+    }
+
+    public async Task<SkinData?> GetEquippedSkin(int userId)
+    {
+        var url = "https://127.0.0.1:5010/equippedSkin/" + userId;
+        var response = await _httpClient.GetFromJsonAsync<SkinData>(url, _jsonOptions);
+        return response;
+    }
+
+
     public async Task ComprarSkin(int idUsuario, int idSkin)
     {
         var url = "https://127.0.0.1:5010/comprarSkin";
-        //var url = "https://10.14.255.45:5010/comprarSkin";
         var body = new { idUser = idUsuario, idSkin = idSkin };
         await _httpClient.PostAsJsonAsync(url, body);
-}
+    }
 }

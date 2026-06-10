@@ -1,4 +1,5 @@
 using LuminaReto.Services.Formularios;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,7 @@ builder.Services.AddHttpClient<IFormularioService, FormularioService>(client =>
         HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
 });
 
-// Servicio TokensService con HttpClient (requiere certificado autofirmado)
+// Servicio TokensService con HttpClient
 builder.Services
     .AddHttpClient<ITokensService, TokensService>(client =>
     {
@@ -37,7 +38,7 @@ builder.Services
                 HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
         });
 
-// HttpClient tipado para ClasificacionService (API Flask)
+// HttpClient tipado para ClasificacionService
 builder.Services.AddHttpClient<IClasificacionService, ClasificacionService>(client =>
 {
     client.BaseAddress = new Uri("https://127.0.0.1:5001");
@@ -52,12 +53,44 @@ builder.Services.AddHttpClient<IClasificacionService, ClasificacionService>(clie
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout        = TimeSpan.FromHours(10);
-    options.Cookie.HttpOnly    = true;
+    options.IdleTimeout = TimeSpan.FromHours(10);
+    options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
+
+// Configuración MIME para Unity WebGL
+var provider = new FileExtensionContentTypeProvider();
+
+provider.Mappings[".data"] = "application/octet-stream";
+provider.Mappings[".wasm"] = "application/wasm";
+provider.Mappings[".br"] = "application/octet-stream";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider,
+    OnPrepareResponse = ctx =>
+    {
+        var path = ctx.File.PhysicalPath ?? "";
+
+        if (path.EndsWith(".wasm.br"))
+        {
+            ctx.Context.Response.Headers["Content-Encoding"] = "br";
+            ctx.Context.Response.Headers["Content-Type"] = "application/wasm";
+        }
+        else if (path.EndsWith(".js.br"))
+        {
+            ctx.Context.Response.Headers["Content-Encoding"] = "br";
+            ctx.Context.Response.Headers["Content-Type"] = "application/javascript";
+        }
+        else if (path.EndsWith(".data.br"))
+        {
+            ctx.Context.Response.Headers["Content-Encoding"] = "br";
+            ctx.Context.Response.Headers["Content-Type"] = "application/octet-stream";
+        }
+    }
+});
 
 if (!app.Environment.IsDevelopment())
 {
@@ -67,15 +100,12 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
-app.UseSession(); // antes de UseAuthorization
+
+app.UseSession();
 app.UseAuthorization();
-
-app.MapStaticAssets();
-
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Login}/{id?}")
-    .WithStaticAssets();
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();

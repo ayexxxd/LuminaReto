@@ -6,6 +6,7 @@
 @section Styles {
     <link rel="stylesheet" href="~/css/siteTokens.css" asp-append-version="true" />
 }
+
 @if (TempData["Message"] != null)
 {
     <div class="MESSAGE MESSAGE-success">
@@ -15,13 +16,14 @@
 
 <div class="tokens-page">
     <h1 class="tokens-title">Mis Tokens</h1>
-    <section class="tokens-resumen"><!-- Resumen OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+
+    <!-- RESUMEN -->
+    <section class="tokens-resumen">
         <article class="token-card card-primary">
             <div class="token-card-head">
                 <p>Balance Total</p>
                 <img src="~/imagenes/WTokens.png" alt="Icono" />
             </div>
-
             <h2>@Model.WhirlTokens</h2>
             <span>Tokens disponibles</span>
         </article>
@@ -31,7 +33,6 @@
                 <p>Whirl Tokens</p>
                 <img src="~/imagenes/Racha.png" alt="Icono" />
             </div>
-
             <h2>+@Model.GanadosMes</h2>
             <span>↑Obtenidos este mes</span>
         </article>
@@ -41,19 +42,21 @@
                 <p>Última Recompensa</p>
                 <img src="~/imagenes/Nivel.png" alt="Icono" />
             </div>
-
             <h2>@Model.UltimaRecompensa</h2>
             <span>¡Disfruta!</span>
         </article>
     </section>
 
-    <section class="panel-tokens chart-panel"><!-- Historial OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+    <!-- HISTORIAL -->
+    <section class="panel-tokens chart-panel">
         <h3>Historial de Tokens</h3>
         <iframe width="1140" height="350" src="@Model.TokensGraphUrl" frameborder="0" style="border:0" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
     </section>
 
     <div class="bottom-dashboard dashboard-split">
-        <section class="panel-tokens transactions-panel"><!-- Transacciones OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+
+        <!-- TRANSACCIONES -->
+        <section class="panel-tokens transactions-panel">
             <div class="transactions-head">
                 <h3>Transacciones Recientes</h3>
                 <div class="transactions-filters">
@@ -65,7 +68,6 @@
                                 <option value="semana" selected="@(Model.DateFilter == "semana")">Esta semana</option>
                                 <option value="mes" selected="@(Model.DateFilter == "mes")">Este mes</option>
                             </select>
-                        
                             <select name="TypeFilter" class="form-select" onchange="this.form.submit()">
                                 <option value="todas" selected="@(Model.TypeFilter == "todas")">Filtro por tipo</option>
                                 <option value="ganadas" selected="@(Model.TypeFilter == "ganadas")">Adquiridas</option>
@@ -87,33 +89,33 @@
                                 }
                                 else
                                 {
-                                    <img src="~/imagenes/downtrend.png" alt="Gastada" />}
+                                    <img src="~/imagenes/downtrend.png" alt="Gastada" />
+                                }
                             </div>
-
                             <div class="tx-text">
                                 <h4>@t.Descripcion</h4>
-                                <p>@t.Fecha.Substring(4, 12)</p><!--el valor de r.Fecha es algo como Sun May 05 2026 14:48:00 GMT-0500 y entonces solo quiero mostrar May 05 2026-->
+                                <p>@t.Fecha.Substring(4, 12)</p>
                             </div>
                         </div>
-
-                        <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">@(t.Monto > 0 ? "+" : "")@t.Monto.ToString("N0")</div>
+                        <div class="@(t.Monto > 0 ? "amount-positive" : "amount-negative")">
+                            @(t.Monto > 0 ? "+" : "")@t.Monto.ToString("N0")
+                        </div>
                     </article>
                 }
             </div>
         </section>
 
-        <section class="panel-tokens rewards-panel"><!-- Recompensas OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
+        <!-- RECOMPENSAS -->
+        <section class="panel-tokens rewards-panel">
             <h3>Tienda</h3>
             <div class="rewards-window">
                 <div class="rewards-grid">
                     @foreach (var r in Model.ListaRecompensas)
                     {
                         <article class="reward-card @(r.PuedeCanjear ? "reward-active" : "reward-disabled")">
-
                             <div class="reward-icon">
                                 <img src="~/imagenes/@r.Imagen" alt="Icono" />
                             </div>
-
                             <h4>@r.NombreRecompensa</h4>
                             <div class="reward-price">@r.Costo.ToString("N0") Tokens</div>
                             @if (r.PuedeCanjear)
@@ -138,71 +140,59 @@
         </section>
     </div>
 
-    <section class="panel-tokens rewards-panel skins-panel"><!-- Skins OOOOOOOOOOOOOOOOOOOOO)O)O)O)O)O)O)O)O0o0o0o0o0o0o0o0o0o0o0o-->
-    <h3>Skins del Juego</h3>
-    <div class="rewards-window">
-        <div class="rewards-grid">
-            @foreach (var s in Model.ListaSkins)
-            {
-                <article class="reward-card @(s.Owned ? "reward-owned" : s.PuedeComprar ? "reward-active" : "reward-disabled") game-id-@s.IdJuego">
-                    <div class="reward-icon" style="background-color: @s.ColorHex; border-radius: 50%; width: 60px; height: 60px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
-                        <img src="/imagenes/@s.Imagen" alt="Icono" style="width: 30px; height: 30px; object-fit: contain;" />
+    <!-- SKINS -->
+    <section class="panel-tokens rewards-panel skins-panel">
+        <h3>Skins del Juego</h3>
+        <div class="rewards-window">
+            <div class="rewards-grid">
+                @foreach (var s in Model.ListaSkins)
+                {
+                    <article class="reward-card @(s.Owned ? "reward-owned" : s.PuedeComprar ? "reward-active" : "reward-disabled") game-id-@s.IdJuego">
+                    <div class="reward-icon skin-icon">
+                        <img src="/imagenes/@s.Imagen" alt="@s.Nombre" class="skin-img" />
                     </div>
+                        <h4>@s.Nombre</h4>
+                        <div class="reward-price">@s.Costo.ToString("N0") Puntos</div>
 
-                    <h4>@s.Nombre</h4>
-                    <div class="reward-price">@s.Costo.ToString("N0") Puntos</div>
-                    
-                    @if (s.Owned)
-                    {
-                        <button class="btn-disabled" disabled>Comprado</button>
-                    }
-                    else if (s.PuedeComprar)
-                    {
-                        <button type="button" class="btn-red btn-comprar-skin"
-                            data-id="@s.IdSkin"
-                            data-nombre="@s.Nombre"
-                            data-imagen="@s.Imagen"
-                            data-color="@s.ColorHex"
-                            data-costo="@s.Costo.ToString("N0")"
-                            data-tokens="@Model.WhirlTokens">
-                            Comprar
-                        </button>
-                    }
-                    else
-                    {
-                        <button class="btn-disabled" disabled>Necesitas @s.TokensFaltantes.ToString("N0") más</button>
-                    }
-                </article>
-            }
-        </div>
-    </div>
-</section>
-
-<div id="modalSkin" class="modal-canje" style="display:none;">
-    <div class="modal-canje-overlay"></div>
-    <div class="modal-canje-content">
-        <h3>Confirmar Compra</h3>
-        <div class="modal-canje-body">
-            <div class="modal-reward-icon">
-                <div id="modalSkinColor" style="width: 60px; height: 60px; border-radius: 50%; margin: 0 auto;"></div>
+                        @if (s.Owned)
+                        {
+                            if (s.Equipada)
+                            {
+                                <button class="btn-disabled" disabled>Equipada ✓</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn-red btn-equipar-skin"
+                                        data-id="@s.IdSkin"
+                                        data-nombre="@s.Nombre"
+                                        data-imagen="@s.Imagen">
+                                    Equipar
+                                </button>
+                            }
+                        }
+                        else if (s.PuedeComprar)
+                        {
+                            <button type="button" class="btn-red btn-comprar-skin"
+                                    data-id="@s.IdSkin"
+                                    data-nombre="@s.Nombre"
+                                    data-imagen="@s.Imagen"
+                                    data-costo="@s.Costo.ToString("N0")"
+                                    data-tokens="@Model.WhirlTokens">
+                                Comprar
+                            </button>
+                        }
+                        else
+                        {
+                            <button class="btn-disabled" disabled>Necesitas @s.TokensFaltantes.ToString("N0") más</button>
+                        }
+                    </article>
+                }
             </div>
-            <p class="modal-reward-name" id="modalSkinNombre"></p>
-            <p class="modal-reward-cost">Costo: <span id="modalSkinCosto"></span> Tokens</p>
-            <p class="modal-reward-balance">Tus Tokens: <span id="modalSkinTokens"></span></p>
         </div>
-
-        <form method="post" asp-controller="Tokens" asp-action="ComprarSkin">
-            <input type="hidden" name="skinId" id="modalSkinId" />
-            <div class="modal-canje-actions">
-                <button type="button" class="btn-cancelar" id="btnCancelarSkin">Cancelar</button>
-                <button type="submit" class="btn-confirmar">Confirmar compra</button>
-            </div>
-        </form>
-    </div>
-</div>
+    </section>
 </div>
 
-
+<!-- MODAL: CANJEAR RECOMPENSA -->
 <div id="modalCanje" class="modal-canje" style="display:none;">
     <div class="modal-canje-overlay"></div>
     <div class="modal-canje-content">
@@ -219,7 +209,51 @@
             <input type="hidden" name="recompensaId" id="modalRecompensaId" />
             <div class="modal-canje-actions">
                 <button type="button" class="btn-cancelar" id="btnCancelarCanje">Cancelar</button>
+                <button type="submit" class="btn-confirmar">Confirmar canje</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: COMPRAR SKIN -->
+<div id="modalSkin" class="modal-canje" style="display:none;">
+    <div class="modal-canje-overlay"></div>
+    <div class="modal-canje-content">
+        <h3>Confirmar Compra</h3>
+        <div class="modal-canje-body">
+            <div class="modal-reward-icon">
+                <img id="modalSkinImg" src="" alt="Skin" class="modal-skin-img" />
+            </div>
+            <p class="modal-reward-name" id="modalSkinNombre"></p>
+            <p class="modal-reward-cost">Costo: <span id="modalSkinCosto"></span> Tokens</p>
+            <p class="modal-reward-balance">Tus Tokens: <span id="modalSkinTokens"></span></p>
+        </div>
+        <form method="post" asp-controller="Tokens" asp-action="ComprarSkin">
+            <input type="hidden" name="skinId" id="modalSkinId" />
+            <div class="modal-canje-actions">
+                <button type="button" class="btn-cancelar" id="btnCancelarSkin">Cancelar</button>
                 <button type="submit" class="btn-confirmar">Confirmar compra</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL: EQUIPAR SKIN -->
+<div id="modalEquipar" class="modal-canje" style="display:none;">
+    <div class="modal-canje-overlay"></div>
+    <div class="modal-canje-content">
+        <h3>Equipar Skin</h3>
+        <div class="modal-canje-body">
+            <div class="modal-reward-icon">
+                <img id="modalEquiparImg" src="" alt="Skin" class="modal-skin-img" />
+            </div>
+            <p class="modal-reward-name" id="modalEquiparNombre"></p>
+        </div>
+        <form method="post" asp-controller="Tokens" asp-action="EquiparSkin">
+            <input type="hidden" name="skinId" id="modalEquiparId" />
+            <div class="modal-canje-actions">
+                <button type="button" class="btn-cancelar" id="btnCancelarEquipar">Cancelar</button>
+                <button type="submit" class="btn-confirmar">Equipar</button>
             </div>
         </form>
     </div>
@@ -227,6 +261,7 @@
 
 @section Scripts {
     <script>
+        //canjear recompensa
         const modal = document.getElementById('modalCanje');
         const btns = document.querySelectorAll('.btn-canjear');
         const btnCancelar = document.getElementById('btnCancelarCanje');
@@ -242,14 +277,10 @@
             });
         });
 
-        btnCancelar.addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
+        btnCancelar.addEventListener('click', () => modal.style.display = 'none');
+        modal.querySelector('.modal-canje-overlay').addEventListener('click', () => modal.style.display = 'none');
 
-        modal.querySelector('.modal-canje-overlay').addEventListener('click', () => {
-            modal.style.display = 'none';
-        });
-
+        //comprar skin
         const modalSkin = document.getElementById('modalSkin');
         const btnsSkin = document.querySelectorAll('.btn-comprar-skin');
         const btnCancelarSkin = document.getElementById('btnCancelarSkin');
@@ -260,17 +291,29 @@
                 document.getElementById('modalSkinNombre').textContent = btn.dataset.nombre;
                 document.getElementById('modalSkinCosto').textContent = btn.dataset.costo;
                 document.getElementById('modalSkinTokens').textContent = btn.dataset.tokens;
-                document.getElementById('modalSkinColor').style.backgroundColor = btn.dataset.color;
+                document.getElementById('modalSkinImg').src = '/imagenes/' + btn.dataset.imagen;
                 modalSkin.style.display = 'flex';
             });
         });
 
-        btnCancelarSkin.addEventListener('click', () => {
-            modalSkin.style.display = 'none';
+        btnCancelarSkin.addEventListener('click', () => modalSkin.style.display = 'none');
+        modalSkin.querySelector('.modal-canje-overlay').addEventListener('click', () => modalSkin.style.display = 'none');
+
+        //equipar skin
+        const modalEquipar = document.getElementById('modalEquipar');
+        const btnsEquipar = document.querySelectorAll('.btn-equipar-skin');
+        const btnCancelarEquipar = document.getElementById('btnCancelarEquipar');
+
+        btnsEquipar.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('modalEquiparId').value = btn.dataset.id;
+                document.getElementById('modalEquiparNombre').textContent = btn.dataset.nombre;
+                document.getElementById('modalEquiparImg').src = '/imagenes/' + btn.dataset.imagen;
+                modalEquipar.style.display = 'flex';
+            });
         });
 
-        modalSkin.querySelector('.modal-canje-overlay').addEventListener('click', () => {
-            modalSkin.style.display = 'none';
-        });
+        btnCancelarEquipar.addEventListener('click', () => modalEquipar.style.display = 'none');
+        modalEquipar.querySelector('.modal-canje-overlay').addEventListener('click', () => modalEquipar.style.display = 'none');
     </script>
 }

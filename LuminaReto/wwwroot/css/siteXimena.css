@@ -1,7 +1,6 @@
-    body {
-        font-family: roboto, sans-serif;/*Tipo de letra */
+body {
         background-color: #f5f7fa;/*el color de fondo*/
-    }
+}
 
     .cont-principal {
         width: 90%;/* es el ancho de toda la info osea si quiero que sea mas largo o nel */
@@ -320,6 +319,57 @@
     .c-amarillo { background: linear-gradient(135deg, #ffd700, #ffa500); }
     .c-gris     { background: #d0d0d0; color: #aaa; opacity: 0.7; }
 
+
+        .alerta {
+            position: fixed;
+            top: 20px;
+            right: -300px; /* empieza fuera de pantalla */
+            
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 12px 18px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+
+            opacity: 0;
+            z-index: 999;
+
+            transition: all 0.5s ease;
+        }
+        @keyframes slideIn {
+        0% {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        80% {
+            transform: translateX(-10px);
+        }
+        100% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+        /* Verde */
+        .alerta.success {
+            background-color: #28a745;
+        }
+
+        /* Cuando aparece */
+        .alerta.mostrar {
+            right: 20px;
+            opacity: 1;
+        }
+
+        /* Icono */
+        .alerta .icono {
+            font-size: 16px;
+        }
     .chk-verde {
         position: absolute;
         top: 32px;

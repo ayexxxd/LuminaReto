@@ -68,6 +68,7 @@ namespace LuminaReto.Controllers
                 foreach (var skin in catalogo)
                 {
                     skin.Owned = skinIds.Contains(skin.IdSkin);
+                    skin.Equipada = skinsUsuario.FirstOrDefault(s => s.IdSkin == skin.IdSkin)?.Equipada ?? false; // NEW
                     skin.PuedeComprar = !skin.Owned && temppoints >= skin.Costo;
                     skin.TokensFaltantes = skin.Costo - temppoints;
                 }
@@ -140,16 +141,34 @@ namespace LuminaReto.Controllers
                 return Redirect("/Tokens");
             }
 
-            await _service.ComprarSkin(userId, skinId);
-            await _service.UpdatePoints(userId, -skin.Costo);
-            await _service.CrearTransaccion(userId, null, -skin.Costo, "Compró skin: " + skin.Nombre);
-            TempData["Message"] = "¡Compraste " + skin.Nombre + "!";
+            // check ownership first
+            var skinsUsuario = await _service.GetSkinsUsuario(userId);
+            if (skinsUsuario.Any(s => s.IdSkin == skinId))
+            {
+                TempData["Message"] = "Ya tienes esta skin";
+                return Redirect("/Tokens/Index");
+            }
+
+    await _service.ComprarSkin(userId, skinId);
+    await _service.UpdatePoints(userId, -skin.Costo);
+    await _service.CrearTransaccion(userId, null, -skin.Costo, "Compró skin: " + skin.Nombre);
+    TempData["Message"] = "¡Compraste " + skin.Nombre + "!";
+    return Redirect("/Tokens/Index");
+}
+        [HttpPost]
+        public async Task<IActionResult> EquiparSkin(int skinId)
+        {
+            var userId = HttpContext.Session.GetInt32("IdUsuario") ?? 0;
+            if (userId == 0)
+                return RedirectToAction("Login", "Login");
+
+            await _service.EquiparSkin(userId, skinId);
+            TempData["Message"] = "Skin equipada";
             return Redirect("/Tokens/Index");
         }
-
+        
         public IActionResult Regresar()
         {
             return RedirectToAction(nameof(Index), "Home");
         }
-    }
-}
+}}
