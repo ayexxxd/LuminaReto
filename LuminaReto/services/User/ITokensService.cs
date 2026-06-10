@@ -5,7 +5,12 @@ public interface ITokensService
     Task<string> GetUltimaRecompensa(int userId);
     Task<int> GetUserPoints(int id);
     Task UpdatePoints(int id, int points);
-    Task CrearTransaccion(int userId, int recompensaId, int monto, string descripcion);
+    Task CrearTransaccion(int userId, int? recompensaId, int monto, string descripcion);
     Task<int> GetUserPointsMonth(int id);
     Task<string> TokensGraph(int userId);
+
+
+    Task<List<SkinData>> GetCatalogoSkins();
+    Task<List<SkinData>> GetSkinsUsuario(int idUsuario);
+    Task ComprarSkin(int idUsuario, int idSkin);
 }

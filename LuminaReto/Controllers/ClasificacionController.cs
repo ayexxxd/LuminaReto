@@ -12,7 +12,7 @@ public class ClasificacionController : Controller
         _clasificacionService = clasificacionService;
     }
 
-    public async Task<IActionResult> Clasificacion()
+    public async Task<IActionResult> Index()
     {
         var modelo = new ClasificacionViewModel();
 
@@ -27,7 +27,7 @@ public class ClasificacionController : Controller
             if (dto is null)
             {
                 modelo.ErrorMessage = "Error al obtener el ranking";
-                return View(modelo);
+                return View("Clasificacion", modelo);
             }
 
             var empleados = dto.Ranking.Select(r => new EmpleadoRanking
@@ -58,6 +58,6 @@ public class ClasificacionController : Controller
             modelo.ErrorMessage = ex.Message;
         }
 
-        return View(modelo);
+        return View("Clasificacion", modelo);
     }
 }

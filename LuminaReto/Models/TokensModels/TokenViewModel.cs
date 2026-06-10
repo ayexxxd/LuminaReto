@@ -13,4 +13,6 @@ public class TokenViewModel
 
     public List<Transaccion> ListaTransacciones { get; set; } = new();
     public List<Recompensa> ListaRecompensas { get; set; } = new();
+    public List<SkinData> ListaSkins { get; set; } = new();
+    public List<SkinData> SkinsUsuario { get; set; } = new();
 }
